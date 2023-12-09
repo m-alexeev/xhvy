@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FC } from "react";
 import HomeStackComponent from "./HomeStack";
 
+
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
