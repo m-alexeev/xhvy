@@ -1,20 +1,23 @@
 import { FC } from "react";
-import { View } from "react-native";
+import { GestureResponderEvent, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import { IExercise } from "../../types/exercises";
 import { ListItem, useTheme } from "@rneui/themed";
 import { Button } from "@rneui/base";
 
 interface IExerciseListItem {
   exercise: IExercise;
+  onPress: (event: GestureResponderEvent) => void;
   handleDelete: (id: number) => void;
   handleEdit: (id: number) => void;
 }
 
-const ExerciseListItem: FC<IExerciseListItem> = ({ exercise, handleDelete, handleEdit }) => {
+const ExerciseListItem: FC<IExerciseListItem> = ({ exercise, handleDelete, handleEdit, onPress }) => {
   const { theme } = useTheme();
   return (
     <View>
       <ListItem.Swipeable
+        Component={TouchableHighlight}
+        onPress={onPress}
         bottomDivider
         rightWidth={90}
         leftWidth={90}

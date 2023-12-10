@@ -5,8 +5,19 @@ import { FlatList, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { exerciseList } from "../../utils/exercises";
 import ExerciseListItem from "../../components/exercises/exerciseItem";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { ExerciseStackParamList } from "../../types/navigation";
 
-const ExercisesScreen: FC = ({}) => {
+type ExercisesScreenProp = NativeStackScreenProps<
+  ExerciseStackParamList,
+  "View"
+>;
+
+interface IExercisePageProps {
+  navigation: ExercisesScreenProp["navigation"];
+}
+
+const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const { theme } = useTheme();
 
   const handleDelete = (id: number) => {
@@ -18,6 +29,7 @@ const ExercisesScreen: FC = ({}) => {
     console.log(id);
     //TODO: navigate to edit page / make a popup
   };
+
   return (
     <SafeAreaView>
       <View
@@ -31,6 +43,10 @@ const ExercisesScreen: FC = ({}) => {
             data={exerciseList}
             renderItem={({ item }) => (
               <ExerciseListItem
+                onPress={() =>
+                  navigation.navigate("Details", {
+                    exercise_id: item.id.toString(),
+                  })}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
                 exercise={item}
