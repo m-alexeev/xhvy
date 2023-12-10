@@ -3,6 +3,7 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserDetails from "../../components/profile/UserDetails";
+import OptionsConfigurator from "../../components/profile/Options";
 
 export type User = {
   name: string;
@@ -33,6 +34,8 @@ const ProfileScreen: FC = ({}) => {
             onPress={() =>
               updateTheme({ mode: theme.mode === "dark" ? "light" : "dark" })}
           />
+          <OptionsConfigurator/>
+
         </View>
       </View>
     </SafeAreaView>

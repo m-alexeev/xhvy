@@ -1,10 +1,16 @@
-import { createContext, FC, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { UnitsType } from "../types/general";
-import { useTheme } from "@rneui/themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type OptionsType = {
-  units?: UnitsType;
+export type OptionsType = {
+  units: UnitsType;
 };
 
 interface OptionsInterface {
@@ -19,28 +25,31 @@ interface OptionsContextProps {
   children: ReactNode;
 }
 
+const DEFAULT_OPTIONS: OptionsType = {
+  units: "metric",
+}
+
 const OptionsContext = createContext<OptionsInterface | null>(null);
 
 const OptionsProvider: FC<OptionsContextProps> = ({ children }) => {
-  const [options, setOptions] = useState<OptionsType>({});
+  const [options, setOptions] = useState<OptionsType>(DEFAULT_OPTIONS);
 
   useEffect(() => {
-    const fetchOptions = async() => {
+    const fetchOptions = async () => {
       const savedOpts = await AsyncStorage.getItem("options");
-      if (savedOpts !== null){
+      if (savedOpts !== null) {
         const parsedOpts = JSON.parse(savedOpts) as OptionsType;
-        if (parsedOpts){
+        if (parsedOpts) {
           setOptions(parsedOpts);
-        }        
+        }
       }
-    }
+    };
     fetchOptions();
-  },[]);
+  }, []);
 
   useEffect(() => {
     AsyncStorage.setItem("options", JSON.stringify(options));
-  },[options]);
-
+  }, [options]);
 
   const updateOptions = <K extends keyof OptionsType>(
     option: K,
