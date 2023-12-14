@@ -1,15 +1,14 @@
 import { StyleSheet, View } from 'react-native'
 import React, { FC } from 'react'
 import { User } from '../../pages/home/Profile'
-import { Text, useTheme } from '@rneui/themed'
-import { Avatar } from '@rneui/themed'
+import { Text, Avatar,useTheme } from 'react-native-paper'
 
 interface UserDetailsProps {
   user: User
 }
 
 const UserDetails: FC<UserDetailsProps> = ({user}) => {
-  const {theme} = useTheme();
+  const theme = useTheme();
 
   const getInitials = (): string =>{
     const split_name = user.name.trim().split(" ");
@@ -23,16 +22,15 @@ const UserDetails: FC<UserDetailsProps> = ({user}) => {
   return (
     <View style={[styles.container, {backgroundColor: theme.colors.background}]}>
       <View style={styles.avatar}>
-        <Avatar
+        <Avatar.Text
           size={64}
-          rounded
-          title={getInitials()}
-          containerStyle={{backgroundColor: theme.colors.primary}}
+          label={getInitials()}
+          labelStyle={{backgroundColor: theme.colors.primary}}
         />
       </View>
       <View style={styles.text}>
-        <Text h4>{user.name}</Text>
-        <Text style={[styles.email, {color: theme.colors.greyOutline}]}>{user.email}</Text>
+        <Text >{user.name}</Text>
+        <Text style={styles.email}>{user.email}</Text>
       </View>
     </View>
   )

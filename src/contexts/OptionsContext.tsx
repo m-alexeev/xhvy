@@ -13,6 +13,7 @@ export type OptionsType = {
   units: UnitsType;
 };
 
+
 interface OptionsInterface {
   options: OptionsType;
   updateOptions: <K extends keyof OptionsType>(

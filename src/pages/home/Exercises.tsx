@@ -1,5 +1,4 @@
-import { Button, Text } from "@rneui/themed";
-import { useTheme } from "@rneui/themed";
+import { Button, Text, useTheme } from "react-native-paper";
 import { FC } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -18,8 +17,7 @@ interface IExercisePageProps {
 }
 
 const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
-  const { theme } = useTheme();
-
+  const theme = useTheme();
   const handleDelete = (id: number) => {
     console.log(id);
     // TODO: create a delete exercise popup
@@ -37,7 +35,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
           backgroundColor: theme.colors.background,
         }]}
       >
-        <Text h4>Exercises</Text>
+        <Text>Exercises</Text>
         <View style={{ backgroundColor: theme.colors.background }}>
           <FlatList
             data={exerciseList}
@@ -55,8 +53,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
-        <Button containerStyle={{ marginTop: 10 }} title="Create Exercises">
-        </Button>
+        <Button style={{ marginTop: 10 }}>Create Exercises</Button>
       </View>
     </SafeAreaView>
   );

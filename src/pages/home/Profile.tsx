@@ -1,9 +1,10 @@
-import { Button, Divider, makeStyles, Text, useTheme } from "@rneui/themed";
+import { Button, Divider, Text} from "react-native-paper";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UserDetails from "../../components/profile/UserDetails";
 import OptionsConfigurator from "../../components/profile/Options";
+import { useThemeSwitch } from "../../contexts/ThemeContext";
 
 export type User = {
   name: string;
@@ -20,20 +21,15 @@ const TEMP_USER: User = {
 };
 
 const ProfileScreen: FC = ({}) => {
-  const { theme, updateTheme } = useTheme();
-  const styles = useStyles();
+  const {toggleTheme} = useThemeSwitch();
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <UserDetails user={TEMP_USER} />
         <Divider />
         <View>
-          <Text h4>Options</Text>
-          <Button
-            title="Toggle theme"
-            onPress={() =>
-              updateTheme({ mode: theme.mode === "dark" ? "light" : "dark" })}
-          />
+          <Text >Options</Text>
+          <Button onPress={() => {toggleTheme}}>Toggle theme</Button>
           <OptionsConfigurator/>
 
         </View>
@@ -42,11 +38,10 @@ const ProfileScreen: FC = ({}) => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.background,
-  },
-  profileContainer: {},
-}));
+
+  }
+})
 
 export default ProfileScreen;

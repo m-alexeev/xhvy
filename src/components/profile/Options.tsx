@@ -1,46 +1,37 @@
 import { FC, useState } from "react";
 import { OptionsType, useOptions } from "../../contexts/OptionsContext";
-import { TouchableHighlight, View } from "react-native";
-import { ListItem, makeStyles } from "@rneui/themed";
+import { StyleSheet, View } from "react-native"
+
 import OptionDialog from "./OptionPopup";
+import { List, Text } from "react-native-paper";
 
 const OptionsConfigurator: FC = () => {
   const { options, updateOptions } = useOptions();
-  const styles = useStyles();
   const [visible, setVisible] = useState(false);
 
   return (
     <View style={styles.container}>
       {Object.keys(options).map((option, index) => (
-        <ListItem
+        <List.Item
           key={index}
-          bottomDivider  
-          Component={TouchableHighlight} 
+          title={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
+          right={props => <Text>options[option as keyof OptionsType]</Text>}
           onPress={() => {setVisible(true)}}
         >
-          <ListItem.Content>
-            <ListItem.Title>{`${option.charAt(0).toUpperCase()}${option.slice(1)}`}</ListItem.Title>
-          </ListItem.Content>
-          <ListItem.Content right>
-            <ListItem.Subtitle style={styles.optionValueStyle}>{options[option as keyof OptionsType]}</ListItem.Subtitle>
-          </ListItem.Content>
-          <ListItem.Chevron/>
-        </ListItem>
+        </List.Item>
       ))}
       <OptionDialog visible={visible} onClose={() => setVisible(false)}/>
     </View>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: theme.colors.background,
+const styles = StyleSheet.create({
+ container: {
   },
   optionTitleStyle: { 
   },
   optionValueStyle: {
-    color: theme.colors.primary,
   },
-}));
+});
 
 export default OptionsConfigurator;

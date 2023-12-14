@@ -1,11 +1,10 @@
-import { Text } from "@rneui/themed";
-import { useTheme } from "@rneui/themed";
+import { Text, useTheme } from "react-native-paper";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const WorkoutsScreen: FC = ({}) => {
-  const { theme } = useTheme();
+  const theme = useTheme();
   return (
     <SafeAreaView>
       <View
@@ -13,7 +12,7 @@ const WorkoutsScreen: FC = ({}) => {
           backgroundColor: theme.colors.background,
         }]}
       >
-        <Text h4>Workouts</Text>
+        <Text>Workouts</Text>
       </View>
     </SafeAreaView>
   );

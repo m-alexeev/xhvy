@@ -1,10 +1,9 @@
-import { Text } from "@rneui/base";
-import { useTheme } from "@rneui/themed";
+import { Text, useTheme } from "react-native-paper"
 import { FC } from "react";
 import { View } from "react-native";
 
 const HomeScreen:FC = ({}) => {
-  const {theme} = useTheme();
+  const theme = useTheme();
   return(
     <View style={{backgroundColor: theme.colors.background, flex:1}}>
       <Text>Home</Text>

@@ -1,6 +1,6 @@
-import { Dialog, useTheme, makeStyles } from "@rneui/themed";
+import { Dialog, useTheme } from "react-native-paper";
 import { FC, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 interface DialogProps {
   visible: boolean;
@@ -8,19 +8,15 @@ interface DialogProps {
 }
 
 const OptionDialog: FC<DialogProps> = ({ visible, onClose }) => {
-  const styles = useStyles();
-
   return (
-    <Dialog isVisible={visible} onBackdropPress={onClose}>
+    <Dialog visible={visible} onDismiss={onClose}>
       <View style={styles.container}></View>
     </Dialog>
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    backgroundColor: theme.colors.background,
-  }
-}));
+const styles = StyleSheet.create({
+  container: {},
+});
 
-export default OptionDialog
+export default OptionDialog;
