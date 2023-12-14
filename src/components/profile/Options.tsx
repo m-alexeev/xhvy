@@ -15,7 +15,7 @@ const OptionsConfigurator: FC = () => {
         <List.Item
           key={index}
           title={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-          right={props => <Text>options[option as keyof OptionsType]</Text>}
+          right={() => <Text>{options[option as keyof OptionsType]}</Text>}
           onPress={() => {setVisible(true)}}
         >
         </List.Item>

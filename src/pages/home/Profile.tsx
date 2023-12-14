@@ -29,7 +29,7 @@ const ProfileScreen: FC = ({}) => {
         <Divider />
         <View>
           <Text >Options</Text>
-          <Button onPress={() => {toggleTheme}}>Toggle theme</Button>
+          <Button onPress={toggleTheme}>Toggle theme</Button>
           <OptionsConfigurator/>
 
         </View>

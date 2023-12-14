@@ -25,7 +25,6 @@ const UserDetails: FC<UserDetailsProps> = ({user}) => {
         <Avatar.Text
           size={64}
           label={getInitials()}
-          labelStyle={{backgroundColor: theme.colors.primary}}
         />
       </View>
       <View style={styles.text}>
