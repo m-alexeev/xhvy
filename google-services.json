@@ -15,11 +15,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "755490275970-8m8qa2hahbiajjhj8e72nm7t5dteo2p9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bouncyknight.xhvy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "755490275970-fu38gthb6uq1fba8588o2jbqksp6kc8g.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.bouncyknight.xhvy",
             "certificate_hash": "3167e2d4de6329acbcd2edc260bcdcb2343fac28"
+          }
+        },
+        {
+          "client_id": "755490275970-km7kse1h1vc0omv410c3p030af7m7rc5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bouncyknight.xhvy",
+            "certificate_hash": "f5fe838ec05767079e26854cd0d2a573f62c2683"
           }
         },
         {
