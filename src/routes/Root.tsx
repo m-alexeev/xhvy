@@ -5,44 +5,39 @@ import HomeStackComponent from "./HomeStack";
 import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
 import { useTheme } from "react-native-paper";
-import auth from "@react-native-firebase/auth"
-
+import auth from "@react-native-firebase/auth";
+import { useThemeSwitch } from "../contexts/ThemeContext";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
-  // TODO: Check for user object and send to home / auth
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
   const onAuthStateChanged = (user: any) => {
     setUser(user);
-    if (initializing){
+    if (initializing) {
       setInitializing(false);
     }
-  }  
-  
+  };
+
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber;
-  }, []); 
+  }, []);
 
-
-  const theme = useTheme();
+  const { isThemeDark } = useThemeSwitch();
 
   return (
     <>
-    <StatusBar backgroundColor={theme.colors.surface}/>
-    <RootStack.Navigator
-      screenOptions={{ headerShown: false }}
-    >
-      {user ? 
-        <RootStack.Screen name="HomeStack" component={HomeStackComponent}/>
-      :
-        <RootStack.Screen name="AuthStack" component={AuthStackRoutes}/>
-      }
-      
-    </RootStack.Navigator>
+      <StatusBar animated style={isThemeDark ? "light" : "dark"} />
+      <RootStack.Navigator
+        screenOptions={{ headerShown: false }}
+      >
+        {user
+          ? <RootStack.Screen name="HomeStack" component={HomeStackComponent} />
+          : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+      </RootStack.Navigator>
     </>
   );
 };
