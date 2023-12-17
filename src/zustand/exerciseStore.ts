@@ -1,5 +1,25 @@
-import {create} from "zustand";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { ExerciseType, IExercise } from "../types/exercises";
+import { DEFAULT_EXERCISES } from "../assets/data/exercise_obj";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ExerciseState = {
-  // exercises: Array<>
-}
+  exercises: Array<IExercise>;
+  pending_exercse_updates: Array<IExercise>;
+};
+
+type ExerciseAction = {
+  createExercise: (exercise: IExercise) => void;
+  updateExercise: (exercise_id: string) => void;
+  deleteExercise: (exercise_id: string) => void;
+};
+
+
+const ExerciseStore = create<ExerciseState & ExerciseType>()(persist(
+  (set) => (n),
+  {
+    name: "exercise-storage",
+    storage: createJSONStorage(() => AsyncStorage),
+  },
+));

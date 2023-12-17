@@ -71,5 +71,7 @@ export interface IExercise {
   secondaryMuscles:Array<Muscle>;
   secondaryMuscleGroups: Array<MajorMuscleGroup>;
   movement: Movement;
+  modifiable?: boolean; 
+  user_id?: string;
 }
 
