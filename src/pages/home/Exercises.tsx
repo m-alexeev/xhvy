@@ -1,11 +1,12 @@
 import { Button, Text, useTheme } from "react-native-paper";
 import { FC } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, Image, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { exerciseList } from "../../utils/exercises";
 import ExerciseListItem from "../../components/exercises/exerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ExerciseStackParamList } from "../../types/navigation";
+import { IExercise } from "../../types/exercises";
+import { EXERCISE_IMAGES } from "../../utils/exercises";
 
 type ExercisesScreenProp = NativeStackScreenProps<
   ExerciseStackParamList,
@@ -18,6 +19,10 @@ interface IExercisePageProps {
 
 const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const theme = useTheme();
+  const exerciseList = [] as Array<IExercise>;
+
+
+
   const handleDelete = (id: number) => {
     console.log(id);
     // TODO: create a delete exercise popup
@@ -35,6 +40,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
           backgroundColor: theme.colors.background,
         }]}
       >
+
         <Text>Exercises</Text>
         <View style={{ backgroundColor: theme.colors.background }}>
           <FlatList
