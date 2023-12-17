@@ -3,14 +3,14 @@ export type Equipment =
   | "dumbbells"
   | "machine"
   | "cable"
-  | "resistanceband"
+  | "resistance band"
   | "trapbar"
-  | "smithmachine"
+  | "smith machine"
   | "sled"
   | "yoke"
-  | "farmershandles"
+  | "farmers handles"
   | "sandbag"
-  | "bodyweight"
+  | "body weight"
   | "misc";
 
 export type Force = "push" | "pull" | "push and pull";
@@ -21,27 +21,27 @@ export type Muscle =
   | "biceps"
   | "pronators"
   | "supinators"
-  | "forearmflexors"
-  | "forearmextensors"
+  | "forearm flexors"
+  | "forearm extensors"
   | "brachioradialis"
   | "quadriceps"
   | "hamstrings"
   | "calves"
   | "adductors"
   | "abductors"
-  | "glutealmuscles"
+  | "gluteal muscles"
   | "trapezius"
-  | "erectorspinae"
-  | "latissimusdorsi"
-  | "upperchest"
-  | "lowerchest"
-  | "pectoralisminor"
-  | "anteriordeltoid"
-  | "lateraldeltoid"
-  | "posteriordeltoid"
+  | "erector spinae"
+  | "latissimus dorsi"
+  | "upper chest"
+  | "lower chest"
+  | "pectoralis minor"
+  | "anterior deltoid"
+  | "lateral deltoid"
+  | "posterior deltoid"
   | "obliques"
-  | "transverseabdominis"
-  | "rectusabdominis";
+  | "transverse abdominis"
+  | "rectus abdominis";
 
 export type MajorMuscleGroup =
   | "back"
@@ -61,7 +61,7 @@ export type Tag =
 export interface IExercise {
   id: string;
   name: string;
-  instrcutions: string;
+  instructions: string;
   equipment: Equipment;
   force: Force;
   type: ExerciseType;

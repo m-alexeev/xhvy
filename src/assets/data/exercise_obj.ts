@@ -1,4 +1,6 @@
-export const DEFAULT_EXERCISES = [
+import { IExercise } from "../../types/exercises";
+
+export const DEFAULT_EXERCISES: Array<IExercise> = [
   {
     "name": "conventional deadlift",
     "primaryMuscleGroups": [
