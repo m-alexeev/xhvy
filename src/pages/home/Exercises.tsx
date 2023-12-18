@@ -33,48 +33,41 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={[styles.container, {
-          backgroundColor: theme.colors.background,
-        }]}
-      >
-        <Text>Exercises</Text>
-        <View style={[styles.listContainer, { backgroundColor: theme.colors.background }]}>
-          <FlatList
-            data={exercises}
-            windowSize={5}
-            initialNumToRender={20}
-            renderItem={({ item, index }) => (
-              <ExerciseListItem
-                onPress={() =>
-                  navigation.navigate("Details", {
-                    exercise_id: item.id,
-                  })}
-                handleDelete={handleDelete}
-                handleEdit={handleEdit}
-                exercise={item}
-                divider={index != exercises.length - 1}
-              />
-
-            )}
-            keyExtractor={(item) => item.id.toString()}
+    <View
+      style={[styles.container, {
+        backgroundColor: theme.colors.background,
+      }]}
+    >
+      <FlatList
+        data={exercises}
+        windowSize={5}
+        initialNumToRender={20}
+        renderItem={({ item, index }) => (
+          <ExerciseListItem
+            onPress={() =>
+              navigation.navigate("Details", {
+                exercise_id: item.id,
+              })}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+            exercise={item}
+            divider={index != exercises.length - 1}
           />
-        </View>
-      </View>
 
-    </SafeAreaView>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 0,
     paddingHorizontal: 10,
     flex: 1,
   },
-  listContainer: {
-    flex: 1,
-  }
 });
 
 export default ExercisesScreen;
