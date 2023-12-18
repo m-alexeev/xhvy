@@ -28,19 +28,7 @@ const HomeStackComponent: FC = ({ }) => {
           )
         }
       }} />
-      <HomeStack.Screen name="Exercises" component={ExerciseStackRouter} options={{
-        headerShown: true, header: (props) => {
-          return (
-            <Surface elevation={4} style={{ flex: 1 }}>
-              <Appbar.Header mode="small">
-                <Appbar.Content title="Exercises" />
-                <Appbar.Action icon="magnify" onPress={() => console.log('search')} />
-                <Appbar.Action icon="dots-vertical" onPress={() => console.log('options')} />
-              </Appbar.Header>
-            </Surface>
-          )
-        }
-      }} />
+      <HomeStack.Screen name="Exercises" component={ExerciseStackRouter} />
       <HomeStack.Screen name="Profile" component={ProfileScreen} />
     </HomeStack.Navigator>
   )

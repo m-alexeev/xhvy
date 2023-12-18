@@ -1,13 +1,12 @@
-import { Button, Text, useTheme } from "react-native-paper";
-import { FC, useState } from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import {  useTheme } from "react-native-paper";
+import { FC,  } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ExerciseListItem from "../../components/exercises/exerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ExerciseStackParamList } from "../../types/navigation";
-import { IExercise } from "../../types/exercises";
 import { ExerciseStore } from "../../zustand/exerciseStore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import ExerciseSearch from "../../components/exercises/exerciseSearch";
 
 type ExercisesScreenProp = NativeStackScreenProps<
   ExerciseStackParamList,
@@ -38,6 +37,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
         backgroundColor: theme.colors.background,
       }]}
     >
+      <ExerciseSearch/>
       <FlatList
         data={exercises}
         windowSize={5}
@@ -58,16 +58,16 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 0,
     paddingHorizontal: 10,
     flex: 1,
+    flexDirection: 'column',
   },
+
 });
 
 export default ExercisesScreen;
