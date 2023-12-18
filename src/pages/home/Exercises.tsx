@@ -1,12 +1,13 @@
 import { Button, Text, useTheme } from "react-native-paper";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FlatList, Image, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ExerciseListItem from "../../components/exercises/exerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ExerciseStackParamList } from "../../types/navigation";
 import { IExercise } from "../../types/exercises";
-import { EXERCISE_IMAGES } from "../../utils/exercises";
+import { ExerciseStore } from "../../zustand/exerciseStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type ExercisesScreenProp = NativeStackScreenProps<
   ExerciseStackParamList,
@@ -19,9 +20,7 @@ interface IExercisePageProps {
 
 const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const theme = useTheme();
-  const exerciseList = [] as Array<IExercise>;
-
-
+  const exercises = ExerciseStore((state) => (state.exercises));
 
   const handleDelete = (id: number) => {
     console.log(id);
@@ -34,33 +33,36 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View
         style={[styles.container, {
           backgroundColor: theme.colors.background,
         }]}
       >
-
         <Text>Exercises</Text>
-        <View style={{ backgroundColor: theme.colors.background }}>
+        <View style={[styles.listContainer, { backgroundColor: theme.colors.background }]}>
           <FlatList
-            data={exerciseList}
-            renderItem={({ item }) => (
+            data={exercises}
+            windowSize={5}
+            initialNumToRender={20}
+            renderItem={({ item, index }) => (
               <ExerciseListItem
                 onPress={() =>
                   navigation.navigate("Details", {
-                    exercise_id: item.id.toString(),
+                    exercise_id: item.id,
                   })}
                 handleDelete={handleDelete}
                 handleEdit={handleEdit}
                 exercise={item}
+                divider={index != exercises.length - 1}
               />
+
             )}
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
-        <Button style={{ marginTop: 10 }}>Create Exercises</Button>
       </View>
+
     </SafeAreaView>
   );
 };
@@ -68,7 +70,11 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+    flex: 1,
   },
+  listContainer: {
+    flex: 1,
+  }
 });
 
 export default ExercisesScreen;
