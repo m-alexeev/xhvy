@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { Icon, IconButton, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import CustomTextInput from "../core/TextInput";
+import { useNavigation } from "@react-navigation/native";
+import { ExerciseStackParamList } from "../../types/navigation";
 
 const ExerciseSearch: FC = () => {
   const [isFocused, setFocused] = useState(false);

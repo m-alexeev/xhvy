@@ -4,7 +4,6 @@ import { FC, useEffect, useState } from "react";
 import HomeStackComponent from "./HomeStack";
 import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
-import { useTheme } from "react-native-paper";
 import auth from "@react-native-firebase/auth";
 import { useThemeSwitch } from "../contexts/ThemeContext";
 

@@ -7,14 +7,9 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import FormInput from "../../components/core/FormInput";
 
-type LoginFormInputs = {
-  email: string;
-  password: string;
-};
 
 const Login = () => {
   const { control, handleSubmit } = useForm();
-
   const [loading, setLoading] = useState(false);
 
   GoogleSignin.configure({

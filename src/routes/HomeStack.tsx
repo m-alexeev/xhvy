@@ -3,17 +3,16 @@ import ProfileScreen from "../pages/home/Profile";
 import WorkoutsScreen from "../pages/home/Workouts";
 import { MainBottomTabParamList } from "../types/navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FC, useState } from "react";
+import { FC} from "react";
 import ExerciseStackRouter from "./ExerciseStack";
-import { Appbar, Divider, Surface } from "react-native-paper";
-import { Searchbar } from "react-native-paper";
+import { Appbar, Surface } from "react-native-paper";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 const HomeStackComponent: FC = ({ }) => {
 
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Profile" >
+    <HomeStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Exercises" >
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="Workouts" component={WorkoutsScreen} options={{
         headerShown: true,
