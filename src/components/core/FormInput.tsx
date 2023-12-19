@@ -9,16 +9,18 @@ import { StyleSheet, View } from "react-native";
 import { TextInput, TextInputProps, Text, useTheme} from "react-native-paper";
 
 interface IFormInput extends TextInputProps {
+  defaultValue?: string;
   name: string;
-  control: Control<FieldValues>;
-  rules: RegisterOptions<FieldValues>;
+  control: Control<any>;
+  rules?: RegisterOptions<FieldValues>;
 }
 
-const FormInput: FC<IFormInput> = ({ name, control, rules, ...props }) => {
+const FormInput: FC<IFormInput> = ({ name, control, rules,defaultValue, ...props }) => {
   const theme = useTheme();
 
   return (
     <Controller
+      defaultValue={defaultValue || ""}
       control={control}
       name={name}
       rules={rules}

@@ -5,6 +5,7 @@ import {
   FieldValues,
   RegisterOptions,
 } from "react-hook-form";
+import { ViewProps } from "react-native";
 import { View, Text } from "react-native";
 import { useTheme } from "react-native-paper";
 import DropDown from "react-native-paper-dropdown";
@@ -14,23 +15,25 @@ type DropdownOption = {
   value: string;
 };
 
-interface DropdownProps {
+interface DropdownProps extends ViewProps{
   label: string;
   name: string;
   options: DropdownOption[];
   control: Control<FieldValues>;
   rules?: RegisterOptions<FieldValues>;
   multiSelect?: boolean;
+  defaultValue?: string;
 }
 
 const FormDropdown: FC<DropdownProps> = (
-  { name, control, options, multiSelect, label, rules },
+  { name, control, options, multiSelect, label, rules, defaultValue, ...props },
 ) => {
   const [visible, setVisible] = useState(false);
   const theme = useTheme()
     
   return (
     <Controller
+      defaultValue={defaultValue || ""}
       control={control}
       name={name}
       rules={rules}
@@ -38,9 +41,10 @@ const FormDropdown: FC<DropdownProps> = (
         field: { value, onChange },
         fieldState: { error },
       }) => (
-          <View>
+          <View {...props}>
         <DropDown
           label={label}
+          mode="outlined"
           visible={visible}
           value={value}
           showDropDown={() => setVisible(true)}
