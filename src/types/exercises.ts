@@ -11,10 +11,10 @@ export type Tag = typeof tags[number];
 export interface IExercise {
   id: string;
   name: string;
-  instructions: string;
-  equipment: Equipment;
-  force: Force;
-  type: ExerciseType;
+  instructions?: string;
+  equipment?: Equipment;
+  force?: Force;
+  type?: ExerciseType;
   tags: Array<Tag>;
   primaryMuscles:Array<Muscle>;
   primaryMuscleGroups:Array<MajorMuscleGroup>;
