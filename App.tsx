@@ -4,28 +4,29 @@ import { OptionsProvider } from "./src/contexts/OptionsContext";
 import { PaperProvider } from "react-native-paper";
 import { CombinedDarkTheme, CombinedDefaultTheme } from "./src/themes/base";
 import { ThemeProvider, useThemeSwitch } from "./src/contexts/ThemeContext";
-
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const AppWrapper = () => {
-  const {isThemeDark} = useThemeSwitch(); 
+  const { isThemeDark } = useThemeSwitch();
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer theme={theme}>
-        <OptionsProvider>
-          <RootStackComponent />
-        </OptionsProvider>
-      </NavigationContainer>
-    </PaperProvider>
+    <GestureHandlerRootView style={{flex:1}}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer theme={theme}>
+          <OptionsProvider>
+            <RootStackComponent />
+          </OptionsProvider>
+        </NavigationContainer>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
-}
-
+};
 
 export default function App() {
   return (
     <ThemeProvider>
-      <AppWrapper/>
+      <AppWrapper />
     </ThemeProvider>
   );
 }

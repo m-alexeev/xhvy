@@ -25,9 +25,8 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const { search } = useFilter();
   const exercises = ExerciseStore((state) => (state.exercises));
-  
-  const toggleModal = () => setShowModal(!showModal);
 
+  const toggleModal = () => setShowModal(!showModal);
 
   //TODO: useMemo probably
   const filteredExercises = exercises.filter((
@@ -51,15 +50,13 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
               navigation.navigate("Details", {
                 exercise_id: item.id,
               })}
-            handleDelete={handleDelete}
-            handleEdit={handleEdit}
             exercise={item}
           />
         )}
         ItemSeparatorComponent={() => <Divider />}
         keyExtractor={(item) => item.id.toString()}
       />
-      <SwipableModal visible={showModal} toggleModal={toggleModal}/>
+      <SwipableModal visible={showModal} toggleModal={toggleModal} />
     </View>
   );
 };
