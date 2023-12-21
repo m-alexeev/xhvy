@@ -13,11 +13,6 @@ const ExerciseSearch: FC<ExerciseSearchProps> = ({onShowFilter}) => {
   const [isFocused, setFocused] = useState(false);
   const theme = useTheme();
 
-
-  useEffect(() => {
-    console.log(search);
-  }, [search]);
-
   return (
     <View style={styles.container}>
       <CustomTextInput

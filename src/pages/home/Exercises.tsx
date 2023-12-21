@@ -1,11 +1,11 @@
-import { Text, useTheme } from "react-native-paper";
+import { Divider, Text, useTheme } from "react-native-paper";
 import { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
-import ExerciseListItem from "../../components/exercises/exerciseItem";
+import ExerciseListItem from "../../components/exercises/ExerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { ExerciseStackParamList } from "../../types/navigation";
 import { ExerciseStore } from "../../zustand/exerciseStore";
-import ExerciseSearch from "../../components/exercises/exerciseSearch";
+import ExerciseSearch from "../../components/exercises/ExerciseSearch";
 import Modal from "react-native-modal";
 import { useFilter } from "../../zustand/filterStore";
 
@@ -18,10 +18,11 @@ interface IExercisePageProps {
   navigation: ExercisesScreenProp["navigation"];
 }
 
+// TODO: Refactor component, Single responsibility principle
+// This page should only be responsible for rendering the list of items
 const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const theme = useTheme();
   const exercises = ExerciseStore((state) => (state.exercises));
-  const [filteredExercises, setFilteredExercises] = useState(exercises);
   const [showModal, setShowModal] = useState(false);
   const { search } = useFilter();
 
@@ -39,18 +40,10 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
     //TODO: navigate to edit page / make a popup
   };
 
-  // useMemo
-  useEffect(() => {
-    if (search.length === 0) {
-      setFilteredExercises(exercises);
-    } else {
-      setFilteredExercises(() =>
-        exercises.filter((
-          exercise,
-        ) => (exercise.name.toLowerCase().includes(search.toLowerCase())))
-      );
-    }
-  }, [search]);
+  //TODO: useMemo probably
+  const filteredExercises = exercises.filter((
+    exercise,
+  ) => (exercise.name.toLowerCase().includes(search.trim().toLowerCase())));
 
   return (
     <View
@@ -63,7 +56,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
         data={filteredExercises || []}
         windowSize={5}
         initialNumToRender={20}
-        renderItem={({ item, index }) => (
+        renderItem={({ item }) => (
           <ExerciseListItem
             onPress={() =>
               navigation.navigate("Details", {
@@ -72,11 +65,12 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
             handleDelete={handleDelete}
             handleEdit={handleEdit}
             exercise={item}
-            divider={index != exercises.length - 1}
           />
         )}
+        ItemSeparatorComponent={() => <Divider />}
         keyExtractor={(item) => item.id.toString()}
       />
+      {/*Create a modal component out of this */}
       <Modal
         isVisible={showModal}
         onDismiss={toggleModal}
