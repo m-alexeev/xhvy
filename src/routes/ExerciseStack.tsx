@@ -5,11 +5,12 @@ import ExerciseDetailsTabRoutes from "./ExerciseDetailsTab";
 import { Appbar, Surface } from "react-native-paper";
 import ExerciseCreate from "../pages/exercises/Create";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import Header from "../components/core/Header";
 
 const ExercisedStack = createNativeStackNavigator<ExerciseStackParamList>();
 
 const ExerciseStackRouter = () => {
-  const navigation = useNavigation<NavigationProp<ExerciseStackParamList>>();  
+  const navigation = useNavigation<NavigationProp<ExerciseStackParamList>>();
 
   return (
     <ExercisedStack.Navigator>
@@ -17,23 +18,24 @@ const ExerciseStackRouter = () => {
         name="View"
         component={ExercisesScreen}
         options={{
-          headerShown: true, header: (props) => {
+          headerShown: true,
+          header: (props) => {
             return (
-              <Surface elevation={2}>
-                <Appbar.Header mode="small">
-                  <Appbar.Content title="Exercises" />
-                  <Appbar.Action icon="plus" onPress={() => navigation.navigate("Create")} />
-                </Appbar.Header>
-              </Surface>
-            )
-          }
-        }} 
+              <Header title="Exercises">
+                <Appbar.Action
+                  icon="plus"
+                  onPress={() => navigation.navigate("Create")}
+                />
+              </Header>
+            );
+          },
+        }}
       />
       <ExercisedStack.Screen
         name="Details"
         component={ExerciseDetailsTabRoutes}
       />
-      <ExercisedStack.Screen name="Create" component={ExerciseCreate}/>
+      <ExercisedStack.Screen name="Create" component={ExerciseCreate} />
     </ExercisedStack.Navigator>
   );
 };
