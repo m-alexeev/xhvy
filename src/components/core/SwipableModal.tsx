@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Modal from "react-native-modal";
 import { useTheme } from "react-native-paper";
@@ -6,9 +6,10 @@ import { useTheme } from "react-native-paper";
 interface SwipableModalProps {
   visible: boolean;
   toggleModal: () => void;
+  children: ReactNode;
 }
 
-const SwipableModal: FC<SwipableModalProps> = ({ visible, toggleModal }) => {
+const SwipableModal: FC<SwipableModalProps> = ({ visible, toggleModal, children }) => {
   const theme = useTheme();
 
   return (
@@ -36,6 +37,7 @@ const SwipableModal: FC<SwipableModalProps> = ({ visible, toggleModal }) => {
         >
         </View>
         <View style={styles.modalContent}>
+          {children}
         </View>
       </View>
     </Modal>

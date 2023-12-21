@@ -6,10 +6,18 @@ import UserDetails from "../../components/profile/UserDetails";
 import OptionsConfigurator from "../../components/profile/Options";
 import { useThemeSwitch } from "../../contexts/ThemeContext";
 import auth from "@react-native-firebase/auth";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { MainBottomTabParamList, RootStackParamList } from "../../types/navigation";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 
-const ProfileScreen: FC = ({}) => {
+type ProfileScreenProps =CompositeScreenProps<
+  BottomTabScreenProps<MainBottomTabParamList, "Profile">,
+  NativeStackScreenProps<RootStackParamList>
+> 
 
+const ProfileScreen: FC<ProfileScreenProps> = () => {
 
   const {toggleTheme} = useThemeSwitch();
   return (

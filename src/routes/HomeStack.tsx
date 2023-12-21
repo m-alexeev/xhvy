@@ -10,7 +10,6 @@ import { Appbar, Surface } from "react-native-paper";
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 const HomeStackComponent: FC = ({ }) => {
-
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Exercises" >
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -27,7 +26,7 @@ const HomeStackComponent: FC = ({ }) => {
           )
         }
       }} />
-      <HomeStack.Screen name="Exercises" component={ExerciseStackRouter} />
+      <HomeStack.Screen name="Exercises" component={ExerciseStackRouter}/>
       <HomeStack.Screen name="Profile" component={ProfileScreen} />
     </HomeStack.Navigator>
   )

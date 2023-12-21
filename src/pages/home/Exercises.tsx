@@ -3,15 +3,21 @@ import { FC, useEffect, useState } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import ExerciseListItem from "../../components/exercises/ExerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ExerciseStackParamList } from "../../types/navigation";
+import {
+  ExerciseStackParamList,
+  RootStackParamList,
+} from "../../types/navigation";
 import { ExerciseStore } from "../../zustand/exerciseStore";
 import ExerciseSearch from "../../components/exercises/ExerciseSearch";
 import { useFilter } from "../../zustand/filterStore";
 import SwipableModal from "../../components/core/SwipableModal";
+import SwipableExerciseListItem from "../../components/exercises/SwipableExerciseItem";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 
-type ExercisesScreenProp = NativeStackScreenProps<
-  ExerciseStackParamList,
-  "View"
+type ExercisesScreenProp = CompositeScreenProps<
+  BottomTabScreenProps<ExerciseStackParamList, "View">,
+  NativeStackScreenProps<RootStackParamList>
 >;
 
 interface IExercisePageProps {
@@ -44,19 +50,32 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
         data={filteredExercises}
         windowSize={5}
         initialNumToRender={20}
-        renderItem={({ item }) => (
-          <ExerciseListItem
-            onPress={() =>
-              navigation.navigate("Details", {
-                exercise_id: item.id,
-              })}
-            exercise={item}
-          />
-        )}
+        renderItem={({ item }) => {
+          if (item.modifiable) {
+            return (
+              <SwipableExerciseListItem
+                onPress={() =>
+                  navigation.navigate("Details", { exercise_id: item.id })}
+                exercise={item}
+              />
+            );
+          }
+          return (
+            <ExerciseListItem
+              onPress={() =>
+                navigation.navigate("Details", {
+                  exercise_id: item.id,
+                })}
+              exercise={item}
+            />
+          );
+        }}
         ItemSeparatorComponent={() => <Divider />}
         keyExtractor={(item) => item.id.toString()}
       />
-      <SwipableModal visible={showModal} toggleModal={toggleModal} />
+      <SwipableModal visible={showModal} toggleModal={toggleModal}>
+        <Text>Filters</Text>
+      </SwipableModal>
     </View>
   );
 };
