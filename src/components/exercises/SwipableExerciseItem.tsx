@@ -9,6 +9,7 @@ import { IExercise } from "../../types/exercises";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
 import ExerciseItem from "./ExerciseItem"
+import { ExerciseStore } from "../../zustand/exerciseStore";
 
 interface IExerciseListItem {
   exercise: IExercise;
@@ -19,8 +20,10 @@ const SwipableExerciseListItem: FC<IExerciseListItem> = (
   { exercise, onPress},
 ) => {
   const theme = useTheme();
+  const {deleteExercise} = ExerciseStore();
 
-  const handleDelete = (id: string) => {console.log(id)};
+  //TODO: delete popup warning
+  const handleDelete = (id: string) => {deleteExercise(id)};
   const handleEdit = (id: string) => {console.log(id)} 
 
   const renderRightAction = (

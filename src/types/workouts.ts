@@ -1,6 +1,6 @@
 import { IExercise } from "./exercises";
 
-type SetType = "Working" | "Warmup" | "Drop" | "Failure";
+type SetType = "R" | "W" | "D" | "F";
 
 interface IWorkoutSet {
   type: SetType;
@@ -15,8 +15,13 @@ interface IWorkoutExercise {
 }
 
 interface IWorkout {
+  id: string;
+  name: string;
   exercises: Array<IWorkoutExercise>;
+  note?: string;
   template?: boolean;
+  started_at: Date;
+  completed_at: Date;
 }
 
 export { IWorkout, IWorkoutExercise, IWorkoutSet, SetType };

@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
 import ExerciseStackRouter from "./ExerciseStack";
 import { Appbar, Icon, Surface } from "react-native-paper";
+import WorkoutStackRouter from "./WorkoutStack";
+import Templates from "../pages/home/Templates";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
@@ -21,24 +23,15 @@ const HomeStackComponent: FC = ({}) => {
         options={{ tabBarIcon: (props) => <Icon {...props} source="home" /> }}
       />
       <HomeStack.Screen
-        name="Workouts"
-        component={WorkoutsScreen}
+        name="Templates"
+        component={Templates}
+        options={{ tabBarIcon: (props) => <Icon {...props} source="folder" /> }}
+      />
+      <HomeStack.Screen
+        name="Workout"
+        component={WorkoutStackRouter}
         options={{
           tabBarIcon: (props) => <Icon {...props} source="plus" />,
-          headerShown: true,
-          header: () => {
-            return (
-              <Surface elevation={4} style={{ flex: 1 }}>
-                <Appbar.Header mode="small">
-                  <Appbar.Content title="Workouts" />
-                  <Appbar.Action
-                    icon="dots-vertical"
-                    onPress={() => console.log("options")}
-                  />
-                </Appbar.Header>
-              </Surface>
-            );
-          },
         }}
       />
       <HomeStack.Screen
