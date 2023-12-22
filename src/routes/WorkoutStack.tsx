@@ -2,7 +2,6 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WorkoutStackParamList } from "../types/navigation";
-import WorkoutsScreen from "../pages/home/Workouts";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Appbar } from "react-native-paper";
 import Header from "../components/core/Header";
