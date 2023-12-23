@@ -14,10 +14,12 @@ import { ExerciseStore } from "../../zustand/exerciseStore";
 interface IExerciseListItem {
   exercise: IExercise;
   onPress: (event: GestureResponderEvent) => void;
+  swipable: boolean,
+
 }
 
-const SwipableExerciseListItem: FC<IExerciseListItem> = (
-  { exercise, onPress},
+const ExerciseListItem: FC<IExerciseListItem> = (
+  { exercise, onPress, swipable},
 ) => {
   const theme = useTheme();
   const {deleteExercise} = ExerciseStore();
@@ -85,14 +87,17 @@ const SwipableExerciseListItem: FC<IExerciseListItem> = (
       )}
     </View>
   );
-
-  return (
-    <Swipeable
-      renderRightActions={rightActions}
-    >
-      <ExerciseItem exercise={exercise} onPress={onPress}/>
-    </Swipeable>
-  );
+  
+  if (swipable){
+    return (
+      <Swipeable
+        renderRightActions={rightActions}
+      >
+        <ExerciseItem exercise={exercise} onPress={onPress}/>
+      </Swipeable>
+    );
+  }
+  return <ExerciseItem exercise={exercise} onPress={onPress}/>
 };
 
 const styles = StyleSheet.create({
@@ -109,4 +114,4 @@ const styles = StyleSheet.create({
   itemContainer: { paddingHorizontal: 5, paddingVertical: 10 },
 });
 
-export default SwipableExerciseListItem;
+export default ExerciseListItem;
