@@ -1,6 +1,6 @@
 import { SectionList, StyleSheet, View } from "react-native";
 import React from "react";
-import { Text, useTheme } from "react-native-paper";
+import { Button, Divider, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WorkoutCard from "./WorkoutCard";
 import { IWorkout, SetType } from "../../types/workouts";
@@ -202,6 +202,12 @@ const WorkoutView = () => {
         }]}
       >
         <Text variant="titleLarge">Past Workouts</Text>
+        <View style={styles.newWorkoutContainer}>
+          <Button style={styles.workoutButton}  mode="contained">
+            Start Empty Workout
+          </Button>
+          <Divider bold/>
+        </View>
         <SectionList
           sections={createSectionList(sampleWorkout, "started_at", DateMapper)}
           keyExtractor={(item) => item.id}
@@ -218,5 +224,12 @@ export default WorkoutView;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 10,
+  },
+  newWorkoutContainer: {
+    marginVertical: 5,
+  },
+  workoutButton: {
+    marginBottom: 5,
+    borderRadius: 10,
   },
 });
