@@ -1,10 +1,12 @@
 import { SectionList, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Divider, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WorkoutCard from "./WorkoutCard";
 import { IWorkout, SetType } from "../../types/workouts";
 import { createSectionList, DateMapper } from "../../utils/helpers";
+import { useWorkout } from "../../zustand/workoutStore";
+import StartWorkout from "./StartWorkout";
 
 const currentDate = new Date();
 currentDate.setHours(currentDate.getHours() + 1);
@@ -193,6 +195,12 @@ const sampleWorkout: IWorkout[] = [{
 createSectionList(sampleWorkout, "started_at", DateMapper);
 
 const WorkoutView = () => {
+  const { activeWorkout } = useWorkout();
+
+  useEffect(() => {
+    console.log(JSON.stringify(activeWorkout, null, 2));
+  }, [activeWorkout]);
+
   const theme = useTheme();
   return (
     <SafeAreaView>
@@ -203,10 +211,8 @@ const WorkoutView = () => {
       >
         <Text variant="titleLarge">Past Workouts</Text>
         <View style={styles.newWorkoutContainer}>
-          <Button style={styles.workoutButton}  mode="contained">
-            Start Empty Workout
-          </Button>
-          <Divider bold/>
+          <StartWorkout/>
+          <Divider bold />
         </View>
         <SectionList
           sections={createSectionList(sampleWorkout, "started_at", DateMapper)}

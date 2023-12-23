@@ -1,4 +1,4 @@
-import { NavigatorScreenParams } from "@react-navigation/native";
+import { NavigationProp, NavigatorScreenParams } from "@react-navigation/native";
 
 export type RootStackParamList = {
   HomeStack: undefined;
@@ -24,6 +24,7 @@ export type WorkoutStackParamList = {
   New: undefined;
   Edit: {workout_id: string};
 };
+export type WorkoutStackNavigationProp = NavigationProp<WorkoutStackParamList>;
 
 export type ExerciseStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
@@ -38,3 +39,6 @@ export type ExerciseDetailsTabParamList = {
   Charts: undefined;
   Records: undefined;
 };
+
+//TODO: Create a template type for composite screen props 
+
