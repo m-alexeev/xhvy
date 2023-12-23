@@ -1,6 +1,5 @@
 import HomeScreen from "../pages/home/Home";
 import ProfileScreen from "../pages/home/Profile";
-import WorkoutsScreen from "../pages/home/Workouts";
 import { MainBottomTabParamList } from "../types/navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
@@ -15,7 +14,7 @@ const HomeStackComponent: FC = ({}) => {
   return (
     <HomeStack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Exercises"
+      initialRouteName="Workout"
     >
       <HomeStack.Screen
         name="Home"
