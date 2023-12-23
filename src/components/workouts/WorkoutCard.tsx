@@ -26,7 +26,7 @@ const WorkoutExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
   return (
     <View>
       {exercises.map((exercise) => (
-        <WorkoutExerciseItem {...exercise}></WorkoutExerciseItem>
+        <WorkoutExerciseItem key={exercise.exercise.id} {...exercise}></WorkoutExerciseItem>
       ))}
     </View>
   );
