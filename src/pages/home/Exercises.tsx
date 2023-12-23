@@ -1,6 +1,6 @@
 import { Divider, Text, useTheme } from "react-native-paper";
 import { FC, useEffect, useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, SectionList, StyleSheet, View } from "react-native";
 import ExerciseListItem from "../../components/exercises/ExerciseItem";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
@@ -14,6 +14,7 @@ import SwipableModal from "../../components/core/SwipableModal";
 import SwipableExerciseListItem from "../../components/exercises/SwipableExerciseItem";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { createSectionList, FirstLetterMapper } from "../../utils/helpers";
 
 type ExercisesScreenProp = CompositeScreenProps<
   BottomTabScreenProps<ExerciseStackParamList, "View">,
@@ -46,10 +47,13 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
       }]}
     >
       <ExerciseSearch onShowFilter={toggleModal} />
-      <FlatList
-        data={filteredExercises}
-        windowSize={5}
-        initialNumToRender={20}
+      <SectionList
+        sections={createSectionList(
+          filteredExercises,
+          "name",
+          FirstLetterMapper,
+        )}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           if (item.modifiable) {
             return (
@@ -70,8 +74,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
             />
           );
         }}
-        ItemSeparatorComponent={() => <Divider />}
-        keyExtractor={(item) => item.id.toString()}
+        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
       />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
         <Text>Filters</Text>
@@ -88,4 +91,31 @@ const styles = StyleSheet.create({
   },
 });
 
+// <FlatList
+//   data={filteredExercises}
+//   windowSize={5}
+//   initialNumToRender={20}
+//   renderItem={({ item }) => {
+//     if (item.modifiable) {
+//       return (
+//         <SwipableExerciseListItem
+//           onPress={() =>
+//             navigation.navigate("Details", { exercise_id: item.id })}
+//           exercise={item}
+//         />
+//       );
+//     }
+//     return (
+//       <ExerciseListItem
+//         onPress={() =>
+//           navigation.navigate("Details", {
+//             exercise_id: item.id,
+//           })}
+//         exercise={item}
+//       />
+//     );
+//   }}
+//   ItemSeparatorComponent={() => <Divider />}
+//   keyExtractor={(item) => item.id.toString()}
+// />
 export default ExercisesScreen;
