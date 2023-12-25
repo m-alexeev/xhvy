@@ -6,6 +6,8 @@ import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
 import { useThemeSwitch } from "../contexts/ThemeContext";
+import { TestComp } from "./WorkoutStack";
+import WorkoutCreate from "../pages/workout/WorkoutCreate";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,9 +35,24 @@ const RootStackComponent: FC = ({}) => {
       <RootStack.Navigator
         screenOptions={{ headerShown: false }}
       >
-        {user
-          ? <RootStack.Screen name="HomeStack" component={HomeStackComponent} />
-          : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+        <RootStack.Group>
+          {user
+            ? (
+              <RootStack.Screen
+                name="HomeStack"
+                component={HomeStackComponent}
+              />
+            )
+            : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+        </RootStack.Group>
+        <RootStack.Group
+          screenOptions={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        >
+          <RootStack.Screen name="Modal" component={WorkoutCreate} />
+        </RootStack.Group>
       </RootStack.Navigator>
     </>
   );

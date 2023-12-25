@@ -22,6 +22,7 @@ interface IWorkout {
   template?: boolean;
   started_at: Date;
   completed_at?: Date;
+  duration: string;
 }
 
 export { IWorkout, IWorkoutExercise, IWorkoutSet, SetType };

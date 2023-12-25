@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon, IconButton, useTheme, Text } from "react-native-paper";
+import { Icon, IconButton, Text, useTheme } from "react-native-paper";
 import CustomTextInput from "../core/TextInput";
 import { useFilter } from "../../zustand/filterStore";
 
-interface ExerciseSearchProps{
+interface ExerciseSearchProps {
   onShowFilter: () => void;
 }
 
-const ExerciseSearch: FC<ExerciseSearchProps> = ({onShowFilter}) => {
+const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
   const { search, updateSearch } = useFilter();
   const [isFocused, setFocused] = useState(false);
   const theme = useTheme();
@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
   },
   filters: {},
   modal: {
-    justifyContent: 'flex-end',
-    margin: 0
-  }
+    justifyContent: "flex-end",
+    margin: 0,
+  },
 });
 
 export default ExerciseSearch;

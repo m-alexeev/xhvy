@@ -12,10 +12,10 @@ const StartWorkout: FC = () => {
   const handlePress = () => {
     // Start empty workout
     startWorkout();
-    navigation.navigate("New");
+    navigation.navigate("Modal");
   };
 
-  if (activeWorkout) {
+  if (!activeWorkout) {
     return;
   }
 

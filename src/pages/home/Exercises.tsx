@@ -14,6 +14,8 @@ import ExerciseListItem from "../../components/exercises/SwipableExerciseItem";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { createSectionList, FirstLetterMapper } from "../../utils/helpers";
+import { SafeAreaView } from "react-native-safe-area-context";
+import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
 
 type ExercisesScreenProp = CompositeScreenProps<
   BottomTabScreenProps<ExerciseStackParamList, "View">,
@@ -26,6 +28,7 @@ interface IExercisePageProps {
 
 // TODO: Refactor component, Single responsibility principle
 // This page should only be responsible for rendering the list of items
+// Move the filtering out
 const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   const theme = useTheme();
   const [showModal, setShowModal] = useState(false);
@@ -40,29 +43,32 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   ) => (exercise.name.toLowerCase().includes(search.trim().toLowerCase())));
 
   return (
-    <View
-      style={[styles.container, {
-        backgroundColor: theme.colors.background,
-      }]}
-    >
+    <View style={{ flex: 1 }}>
       <ExerciseSearch onShowFilter={toggleModal} />
-      <SectionList
-        sections={createSectionList(
-          filteredExercises,
-          "name",
-          FirstLetterMapper,
-        )}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ExerciseListItem
-            onPress={() =>
-              navigation.navigate("Details", { exercise_id: item.id })}
-            exercise={item}
-            swipable={!!item.modifiable}
-          />
-        )}
-        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
-      />
+      <View
+        style={[styles.container, {
+          backgroundColor: theme.colors.background,
+        }]}
+      >
+        <SectionList
+          sections={createSectionList(
+            filteredExercises,
+            "name",
+            FirstLetterMapper,
+          )}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <ExerciseListItem
+              onPress={() =>
+                navigation.navigate("Details", { exercise_id: item.id })}
+              exercise={item}
+              swipable={!!item.modifiable}
+            />
+          )}
+          renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+        />
+      </View>
+      <ActiveWorkoutPopup />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
         <Text>Filters</Text>
       </SwipableModal>

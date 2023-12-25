@@ -3,7 +3,10 @@ import { NavigationProp, NavigatorScreenParams } from "@react-navigation/native"
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
+  Modal: undefined;
 };
+
+export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
 
 export type AuthStackParamList = {
   Login: undefined;

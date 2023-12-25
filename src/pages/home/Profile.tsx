@@ -10,6 +10,7 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { MainBottomTabParamList, RootStackParamList } from "../../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
 
 
 type ProfileScreenProps =CompositeScreenProps<
@@ -21,7 +22,7 @@ const ProfileScreen: FC<ProfileScreenProps> = () => {
 
   const {toggleTheme} = useThemeSwitch();
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1}}>
       <View style={styles.container}>
         <UserDetails />
         <Divider />
@@ -32,13 +33,14 @@ const ProfileScreen: FC<ProfileScreenProps> = () => {
         </View>
         <Button onPress={()=> {auth().signOut()}}>Sign out</Button>
       </View>
+      <ActiveWorkoutPopup/>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-
+    flex:1,
   }
 })
 

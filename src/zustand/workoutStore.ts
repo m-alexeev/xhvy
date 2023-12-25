@@ -43,6 +43,7 @@ const useWorkout = create<WorkoutStoreType>()(
               name: "Unnamed workout",
               exercises: [],
               started_at: new Date(),
+              duration: "OO:OO:OO"
             };
           }
         })),
