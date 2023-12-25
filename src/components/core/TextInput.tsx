@@ -30,6 +30,7 @@ const CustomTextInput: FC<ITextInput> = ({
             : theme.colors.surfaceVariant,
         },
       ]}
+      
     >
       <View
         style={[styles.left, { display: left === undefined ? "none" : "flex" }]}
@@ -43,6 +44,7 @@ const CustomTextInput: FC<ITextInput> = ({
             color: theme.colors.onSurface,
           },
         ]}
+        cursorColor={theme.colors.primary}
         {...props}
       />
       <View
@@ -59,7 +61,6 @@ const CustomTextInput: FC<ITextInput> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     borderRadius: 5,
     borderWidth: 2,

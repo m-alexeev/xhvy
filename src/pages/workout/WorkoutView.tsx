@@ -198,10 +198,6 @@ createSectionList(sampleWorkout, "started_at", DateMapper);
 const WorkoutView = () => {
   const { activeWorkout } = useWorkout();
 
-  useEffect(() => {
-    console.log(JSON.stringify(activeWorkout, null, 2));
-  }, [activeWorkout]);
-
   const theme = useTheme();
   return (
     <SafeAreaView style={{ flex: 1 }}>

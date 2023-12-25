@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { IWorkout } from "../types/workouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { lazy } from "react";
 
 type WorkoutState = {
   workouts: Array<IWorkout>;
@@ -17,7 +18,10 @@ type WorkoutAction = {
   deleteWorkout: (workout_id: string) => void;
   startWorkout: (template?: IWorkout) => void;
   cancelWorkout: () => void;
-  updateName: (name: string) => void;
+  updateField: <T extends keyof IWorkout, K extends IWorkout[T]>(
+    field: T,
+    value: K,
+  ) => void;
   tickTimer: () => void;
 };
 
@@ -51,17 +55,25 @@ const useWorkout = create<WorkoutStoreType>()(
           }
         })),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      updateName: (name) =>
+      // TODO: relpace this with a count from the starttime since that would account for app closure
+      tickTimer: () =>
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
-            state.activeWorkout.name = name;
+            // Calculate how much time passed since last update
+            // This is needed since persist does not parse dates back into a date object
+            const parsedStartDate = new Date(state.activeWorkout.started_at);
+
+            state.activeWorkout.duration =
+              (new Date().getTime() -
+                parsedStartDate.getTime()) / 1000;
           }
         })),
-      tickTimer: () => set(produce((state: WorkoutStoreType) => {
-        if (state.activeWorkout){
-          state.activeWorkout.duration += 1;
-        }
-      }))
+      updateField: (field, value) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            state.activeWorkout[field] = value;
+          }
+        })),
     }),
     {
       name: "workout-storage",

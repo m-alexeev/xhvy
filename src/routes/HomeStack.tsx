@@ -13,16 +13,13 @@ const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 const HomeStackComponent: FC = ({}) => {
   const tickTimer = useWorkout((state) => state.tickTimer);
-  // Tick exercise timer 
+  // Tick exercise timer
   useEffect(() => {
     const interval = setInterval(tickTimer, 1000);
     return () => {
       clearInterval(interval);
-    }
-  }, 
-
-   []);
-
+    };
+  }, []);
 
   return (
     <>
