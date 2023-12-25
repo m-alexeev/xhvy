@@ -1,18 +1,20 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import React from "react";
+import React, { FC } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "../../zustand/workoutStore";
-import { useNavigation } from "@react-navigation/native";
 import TextInputCustom from "../../components/core/TextInput";
 import WorkoutDuration from "../../components/core/WorkoutDuration";
-import { IWorkout } from "../../types/workouts";
+import { WorkoutStackNavigationProp } from "../../types/navigation";
 
-const WorkoutCreate = () => {
+interface IWorkoutCreatePageProps {
+  navigation: WorkoutStackNavigationProp<"New">["navigation"];
+}
+
+const WorkoutCreate:FC<IWorkoutCreatePageProps> = ({navigation}) => {
   const { colors } = useTheme();
   const { activeWorkout, cancelWorkout } = useWorkout();
   const updateField = useWorkout((state) => state.updateField);
-  const navigation = useNavigation();
   let updateTimeout: any;
 
   const stopWorkout = () => {
@@ -26,6 +28,7 @@ const WorkoutCreate = () => {
   };
 
   const addExercise = () => {
+    navigation.navigate("AddExericiseModal");
   };
 
   return (
@@ -35,13 +38,13 @@ const WorkoutCreate = () => {
           <TextInput
             style={[styles.workoutTitle, { color: colors.onSurface }]}
             value={activeWorkout!.name}
-            onChangeText={(text) => updateField("name", text)}
+            onChangeText={(text) => () => updateField("name", text)}
           />
           <WorkoutDuration style={{ marginVertical: 5 }} />
           <TextInputCustom
             placeholder="Workout Note"
             value={activeWorkout?.note}
-            onChangeText={(text) => updateField("note", text)}
+            onChangeText={(text) => () => updateField("note", text)}
           />
         </View>
         <Button

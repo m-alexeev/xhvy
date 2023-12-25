@@ -6,8 +6,8 @@ import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
 import { useThemeSwitch } from "../contexts/ThemeContext";
-import { TestComp } from "./WorkoutStack";
 import WorkoutCreate from "../pages/workout/WorkoutCreate";
+import AddExericse from "../pages/workout/AddExericse";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -52,6 +52,7 @@ const RootStackComponent: FC = ({}) => {
           }}
         >
           <RootStack.Screen name="Modal" component={WorkoutCreate} />
+          <RootStack.Screen name="AddExericiseModal" component={AddExericse}/>
         </RootStack.Group>
       </RootStack.Navigator>
     </>

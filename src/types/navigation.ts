@@ -9,7 +9,8 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
-  Modal: undefined;
+  WorkoutModal: undefined;
+  AddExericiseModal: undefined;
 };
 
 export type RootStackNavigationProp = NavigationProp<RootStackParamList>;
@@ -30,7 +31,6 @@ export type MainBottomTabParamList = {
 export type WorkoutStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
   New: undefined;
-  AddExericise: undefined;
   Edit: { workout_id: string };
 };
 

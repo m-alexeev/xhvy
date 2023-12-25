@@ -12,7 +12,7 @@ const StartWorkout: FC = () => {
   const handlePress = () => {
     // Start empty workout
     startWorkout();
-    navigation.navigate("Modal");
+    navigation.navigate("WorkoutModal");
   };
 
   const restartWorkout = () => {

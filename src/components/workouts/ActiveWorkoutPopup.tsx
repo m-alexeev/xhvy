@@ -4,8 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../../types/navigation";
-import Animated, { SlideInDown, SlideInUp, SlideOutDown } from "react-native-reanimated";
-import { formatTime } from "../../utils/helpers";
+import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import WorkoutDuration from "../core/WorkoutDuration";
 
 const ActiveWorkoutPopup: FC = () => {
