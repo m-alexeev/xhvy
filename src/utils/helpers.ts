@@ -42,6 +42,10 @@ export const createSectionList = <T, K extends keyof T>(
   return sectionList;
 };
 
+export const formatTime = (time: number): string => {
+  return new Date(time * 1000).toISOString().slice(11,19);
+}
+
 export const calculateDuration = (start: Date, end: Date): string => {
   const difference = (end.getTime() - start.getTime()) / 1000;
   const hours = Math.floor(difference / 3600);

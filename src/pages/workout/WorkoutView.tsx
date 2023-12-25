@@ -210,11 +210,11 @@ const WorkoutView = () => {
           backgroundColor: theme.colors.background,
         }]}
       >
-        <Text variant="titleLarge">Past Workouts</Text>
         <View style={styles.newWorkoutContainer}>
+          <Text variant="bodySmall" style={{color: theme.colors.outline}}>Quick Links</Text>
           <StartWorkout />
-          <Divider bold />
         </View>
+        <Text variant="bodySmall" style={{color: theme.colors.outline}}>History</Text>
         <SectionList
           sections={createSectionList(sampleWorkout, "started_at", DateMapper)}
           keyExtractor={(item) => item.id}

@@ -16,6 +16,9 @@ type WorkoutAction = {
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
   deleteWorkout: (workout_id: string) => void;
   startWorkout: (template?: IWorkout) => void;
+  cancelWorkout: () => void;
+  updateName: (name: string) => void;
+  tickTimer: () => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
@@ -43,10 +46,22 @@ const useWorkout = create<WorkoutStoreType>()(
               name: "Unnamed workout",
               exercises: [],
               started_at: new Date(),
-              duration: "OO:OO:OO"
+              duration: 0,
             };
           }
         })),
+      cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
+      updateName: (name) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            state.activeWorkout.name = name;
+          }
+        })),
+      tickTimer: () => set(produce((state: WorkoutStoreType) => {
+        if (state.activeWorkout){
+          state.activeWorkout.duration += 1;
+        }
+      }))
     }),
     {
       name: "workout-storage",

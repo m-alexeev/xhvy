@@ -2,15 +2,28 @@ import HomeScreen from "../pages/home/Home";
 import ProfileScreen from "../pages/home/Profile";
 import { MainBottomTabParamList } from "../types/navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import ExerciseStackRouter from "./ExerciseStack";
 import { Icon } from "react-native-paper";
 import WorkoutStackRouter from "./WorkoutStack";
 import Templates from "../pages/home/Templates";
+import { useWorkout } from "../zustand/workoutStore";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 const HomeStackComponent: FC = ({}) => {
+  const tickTimer = useWorkout((state) => state.tickTimer);
+  // Tick exercise timer 
+  useEffect(() => {
+    const interval = setInterval(tickTimer, 1000);
+    return () => {
+      clearInterval(interval);
+    }
+  }, 
+
+   []);
+
+
   return (
     <>
       <HomeStack.Navigator

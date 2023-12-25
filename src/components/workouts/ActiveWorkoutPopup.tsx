@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useWorkout } from "../../zustand/workoutStore";
 import { StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../../types/navigation";
+import Animated, { SlideInDown, SlideInUp, SlideOutDown } from "react-native-reanimated";
+import { formatTime } from "../../utils/helpers";
 
 const ActiveWorkoutPopup: FC = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -15,15 +17,19 @@ const ActiveWorkoutPopup: FC = () => {
   }
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: colors.secondaryContainer }]}
+    <Animated.View
+      entering={SlideInDown}
+      exiting={SlideOutDown}
+      style={[styles.container, {
+        backgroundColor: colors.secondaryContainer,
+      }]}
     >
       <View style={styles.header}>
         <Text variant="titleLarge">{activeWorkout!.name}</Text>
-        <Text variant="bodyMedium">{activeWorkout!.duration}</Text>
+        <Text variant="bodyMedium">{formatTime(activeWorkout!.duration)}</Text>
       </View>
       <Button onPress={() => navigation.navigate("Modal")}>Resume</Button>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -37,7 +43,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
   },
   header: {
-    display: "flex", 
+    display: "flex",
     flexDirection: "column",
     alignItems: "center",
   },
