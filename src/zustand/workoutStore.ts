@@ -4,7 +4,6 @@ import { createJSONStorage, persist } from "zustand/middleware";
 import { IWorkout } from "../types/workouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
-import { lazy } from "react";
 
 type WorkoutState = {
   workouts: Array<IWorkout>;
@@ -26,6 +25,9 @@ type WorkoutAction = {
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
+
+//TODO: Think about manually saving and writing to storage as currently it will do so on every state update 
+//which is really inefficient
 
 const useWorkout = create<WorkoutStoreType>()(
   persist(
@@ -55,7 +57,6 @@ const useWorkout = create<WorkoutStoreType>()(
           }
         })),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      // TODO: relpace this with a count from the starttime since that would account for app closure
       tickTimer: () =>
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {

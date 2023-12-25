@@ -10,7 +10,6 @@ interface ExerciseSearchProps {
 
 const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
   const { search, updateSearch } = useFilter();
-  const [isFocused, setFocused] = useState(false);
   const theme = useTheme();
 
   return (
@@ -18,12 +17,9 @@ const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
       <CustomTextInput
         selectionColor={theme.colors.primary}
         value={search}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
         onChangeText={updateSearch}
         placeholder="Search"
         placeholderTextColor={theme.colors.onSurfaceVariant}
-        isFocused={isFocused}
         right={<Icon size={24} source="magnify" />}
       />
       <IconButton mode="contained" icon="menu" onPress={onShowFilter} />

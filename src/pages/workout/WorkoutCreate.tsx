@@ -24,15 +24,16 @@ const WorkoutCreate = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View>
+        <View style={styles.header}>
           <TextInput
             style={[styles.workoutTitle, { color: colors.onSurface }]}
             value={activeWorkout!.name}
             onChangeText={(text) => updateField("name", text)}
           />
-          <Text>{formatTime(activeWorkout!.duration)}</Text>
+          <Text style={{marginVertical: 5}}>{formatTime(activeWorkout!.duration)}</Text>
           <TextInputCustom
-            isFocused
+            placeholder="Workout Note"
+            isFocused={false}
             value={activeWorkout?.note}
             onChangeText={(text) => updateField("note", text)}
           />
@@ -61,6 +62,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     margin: 10,
+  },
+  header: {
+    marginBottom: 10,
   },
   workoutTitle: {
     fontSize: 24,
