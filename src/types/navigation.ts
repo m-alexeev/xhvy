@@ -1,4 +1,10 @@
-import { NavigationProp, NavigatorScreenParams } from "@react-navigation/native";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import {
+  CompositeScreenProps,
+  NavigationProp,
+  NavigatorScreenParams,
+} from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
   HomeStack: undefined;
@@ -13,7 +19,6 @@ export type AuthStackParamList = {
   Register: undefined;
 };
 
-
 export type MainBottomTabParamList = {
   Home: undefined;
   Templates: undefined;
@@ -25,16 +30,28 @@ export type MainBottomTabParamList = {
 export type WorkoutStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
   New: undefined;
-  Edit: {workout_id: string};
+  AddExericise: undefined;
+  Edit: { workout_id: string };
 };
-export type WorkoutStackNavigationProp = NavigationProp<WorkoutStackParamList>;
+
+export type WorkoutStackNavigationProp<T extends keyof WorkoutStackParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<WorkoutStackParamList, T>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
 
 export type ExerciseStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
   Details: { exercise_id: string };
   Create: undefined;
-  Edit: {exercise_id: string};
+  Edit: { exercise_id: string };
 };
+
+export type ExerciseStackScreenProps<T extends keyof ExerciseStackParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<ExerciseStackParamList, T>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
 
 export type ExerciseDetailsTabParamList = {
   About: undefined;
@@ -43,5 +60,4 @@ export type ExerciseDetailsTabParamList = {
   Records: undefined;
 };
 
-//TODO: Create a template type for composite screen props 
-
+//TODO: Create a template type for composite screen props

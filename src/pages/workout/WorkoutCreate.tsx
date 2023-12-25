@@ -1,21 +1,28 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Text, useTheme } from "react-native-paper";
+import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "../../zustand/workoutStore";
 import { useNavigation } from "@react-navigation/native";
-import { formatTime } from "../../utils/helpers";
 import TextInputCustom from "../../components/core/TextInput";
+import WorkoutDuration from "../../components/core/WorkoutDuration";
+import { IWorkout } from "../../types/workouts";
 
 const WorkoutCreate = () => {
   const { colors } = useTheme();
   const { activeWorkout, cancelWorkout } = useWorkout();
   const updateField = useWorkout((state) => state.updateField);
   const navigation = useNavigation();
+  let updateTimeout: any;
 
   const stopWorkout = () => {
     cancelWorkout();
     navigation.goBack();
+  };
+
+  const updateFieldWithTimeout = (callback: typeof updateField) => {
+    clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(callback, 1000);
   };
 
   const addExercise = () => {
@@ -30,10 +37,9 @@ const WorkoutCreate = () => {
             value={activeWorkout!.name}
             onChangeText={(text) => updateField("name", text)}
           />
-          <Text style={{marginVertical: 5}}>{formatTime(activeWorkout!.duration)}</Text>
+          <WorkoutDuration style={{ marginVertical: 5 }} />
           <TextInputCustom
             placeholder="Workout Note"
-            isFocused={false}
             value={activeWorkout?.note}
             onChangeText={(text) => updateField("note", text)}
           />

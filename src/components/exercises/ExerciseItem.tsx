@@ -1,5 +1,4 @@
 import {
-  GestureResponderEvent,
   StyleSheet,
   TouchableHighlight,
   View,
@@ -11,7 +10,7 @@ import { Text, useTheme } from "react-native-paper";
 
 interface ExerciseItemProps {
   exercise: IExercise;
-  onPress: (event: GestureResponderEvent) => void;
+  onPress: (exercise_id: string) => void;
 }
 
 const ExerciseItem: FC<ExerciseItemProps> = ({ exercise, onPress }) => {
@@ -20,7 +19,7 @@ const ExerciseItem: FC<ExerciseItemProps> = ({ exercise, onPress }) => {
     <View style={styles.container}>
       <TouchableHighlight
         style={[styles.itemContainer, {}]}
-        onPress={onPress}
+        onPress={() => onPress(exercise.id)}
         underlayColor={theme.colors.secondaryContainer}
       >
         <View>

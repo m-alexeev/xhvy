@@ -21,7 +21,6 @@ type WorkoutAction = {
     field: T,
     value: K,
   ) => void;
-  tickTimer: () => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
@@ -52,23 +51,10 @@ const useWorkout = create<WorkoutStoreType>()(
               name: "Unnamed workout",
               exercises: [],
               started_at: new Date(),
-              duration: 0,
             };
           }
         })),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      tickTimer: () =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            // Calculate how much time passed since last update
-            // This is needed since persist does not parse dates back into a date object
-            const parsedStartDate = new Date(state.activeWorkout.started_at);
-
-            state.activeWorkout.duration =
-              (new Date().getTime() -
-                parsedStartDate.getTime()) / 1000;
-          }
-        })),
       updateField: (field, value) =>
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {

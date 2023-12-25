@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "../../types/navigation";
 import Animated, { SlideInDown, SlideInUp, SlideOutDown } from "react-native-reanimated";
 import { formatTime } from "../../utils/helpers";
+import WorkoutDuration from "../core/WorkoutDuration";
 
 const ActiveWorkoutPopup: FC = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
@@ -26,7 +27,7 @@ const ActiveWorkoutPopup: FC = () => {
     >
       <View style={styles.header}>
         <Text variant="titleLarge">{activeWorkout!.name}</Text>
-        <Text variant="bodyMedium">{formatTime(activeWorkout!.duration)}</Text>
+        <WorkoutDuration variant="bodyMedium"/>
       </View>
       <Button onPress={() => navigation.navigate("Modal")}>Resume</Button>
     </Animated.View>
