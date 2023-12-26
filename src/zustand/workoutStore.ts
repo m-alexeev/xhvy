@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { IWorkout, IWorkoutExercise } from "../types/workouts";
+import { IWorkout, IWorkoutExercise, IWorkoutSet } from "../types/workouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { IExercise } from "../types/exercises";
@@ -24,6 +24,8 @@ type WorkoutAction = {
     value: K,
   ) => void;
   addExercises: (exercises: IExercise[]) => void;
+  // removeExercise: (exercise_id: string) => void;
+  addSet: (exercise_id: string) => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
@@ -68,13 +70,21 @@ const useWorkout = create<WorkoutStoreType>()(
         set(produce((state: WorkoutStoreType) => {
           const workoutExercises: IWorkoutExercise[] = exercises.map((e) => ({
             exercise: e,
-            sets: [{ type: "R", weight: 0, reps: 0 }],
+            sets: [{ type: "R", weight: 0, reps: 0, completed: false }],
           }));
           if (state.activeWorkout) {
             state.activeWorkout.exercises = merge(
               state.activeWorkout.exercises,
               workoutExercises,
             );
+          }
+        })),
+      addSet: (exercise_id: string) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            state.activeWorkout.exercises.find((e) =>
+              e.exercise.id === exercise_id
+            )?.sets.push({ type: "R", weight: 0, reps: 0, completed: false });
           }
         })),
     }),

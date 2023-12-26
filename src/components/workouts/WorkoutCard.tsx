@@ -25,7 +25,8 @@ const WorkoutExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
   return (
     <View>
       {exercises.map((exercise) => (
-        <WorkoutExerciseItem key={exercise.exercise.id} {...exercise}></WorkoutExerciseItem>
+        <WorkoutExerciseItem key={exercise.exercise.id} {...exercise}>
+        </WorkoutExerciseItem>
       ))}
     </View>
   );
@@ -43,7 +44,7 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
       <View style={styles.headerContainer}>
         <Text variant="titleMedium">{workout.name}</Text>
         <View style={styles.durationStyle}>
-          <Text style={{marginEnd: 5}}>
+          <Text style={{ marginEnd: 5 }}>
             {calculateDuration(workout.started_at, workout.completed_at!)}
           </Text>
           <Icon size={16} source="clock" />
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   exerciseContainer: {},
   itemContainer: {
-    marginLeft: 15
+    marginLeft: 15,
   },
 });
 
