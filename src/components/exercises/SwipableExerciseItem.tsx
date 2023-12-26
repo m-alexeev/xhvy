@@ -1,32 +1,31 @@
 import { FC } from "react";
-import {
-  GestureResponderEvent,
-  StyleSheet,
-  View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { RectButton, Swipeable } from "react-native-gesture-handler";
 import { IExercise } from "../../types/exercises";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
-import ExerciseItem from "./ExerciseItem"
+import ExerciseItem from "./ExerciseItem";
 import { ExerciseStore } from "../../zustand/exerciseStore";
 
 interface IExerciseListItem {
   exercise: IExercise;
-  onPress: (event: GestureResponderEvent) => void;
-  swipable: boolean,
-
+  onPress: (exercise_id: string) => void;
+  swipable: boolean;
 }
 
 const ExerciseListItem: FC<IExerciseListItem> = (
-  { exercise, onPress, swipable},
+  { exercise, onPress, swipable },
 ) => {
   const theme = useTheme();
-  const {deleteExercise} = ExerciseStore();
+  const { deleteExercise } = ExerciseStore();
 
   //TODO: delete popup warning
-  const handleDelete = (id: string) => {deleteExercise(id)};
-  const handleEdit = (id: string) => {console.log(id)} 
+  const handleDelete = (id: string) => {
+    deleteExercise(id);
+  };
+  const handleEdit = (id: string) => {
+    console.log(id);
+  };
 
   const renderRightAction = (
     icon: React.ReactNode,
@@ -54,10 +53,10 @@ const ExerciseListItem: FC<IExerciseListItem> = (
             backgroundColor: backgroundColor,
             opacity: 0.7,
           }]}
-          onPress={()=>handlePress(exercise.id)}
+          onPress={() => handlePress(exercise.id)}
         >
           <Text
-            style={[styles.swipableText, {color: textColor}]}
+            style={[styles.swipableText, { color: textColor }]}
           >
             {icon}
           </Text>
@@ -72,32 +71,40 @@ const ExerciseListItem: FC<IExerciseListItem> = (
   ) => (
     <View style={{ width: 128, flexDirection: "row" }}>
       {renderRightAction(
-        <Icon color={theme.colors.onSecondaryContainer} size={24} source="pencil" />,
+        <Icon
+          color={theme.colors.onSecondaryContainer}
+          size={24}
+          source="pencil"
+        />,
         theme.colors.secondaryContainer,
         128,
         progress,
-        handleEdit
+        handleEdit,
       )}
       {renderRightAction(
-        <Icon color={theme.colors.onErrorContainer} size={24} source="trash-can" />,
+        <Icon
+          color={theme.colors.onErrorContainer}
+          size={24}
+          source="trash-can"
+        />,
         theme.colors.errorContainer,
         64,
         progress,
-        handleDelete
+        handleDelete,
       )}
     </View>
   );
-  
-  if (swipable){
+
+  if (swipable) {
     return (
       <Swipeable
         renderRightActions={rightActions}
       >
-        <ExerciseItem exercise={exercise} onPress={onPress}/>
+        <ExerciseItem exercise={exercise} onPress={onPress} />
       </Swipeable>
     );
   }
-  return <ExerciseItem exercise={exercise} onPress={onPress}/>
+  return <ExerciseItem exercise={exercise} onPress={onPress} />;
 };
 
 const styles = StyleSheet.create({

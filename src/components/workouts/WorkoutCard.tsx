@@ -3,7 +3,6 @@ import { IWorkout, IWorkoutExercise } from "../../types/workouts";
 import { StyleSheet, View } from "react-native";
 import { Card, Icon, Text, useTheme } from "react-native-paper";
 import { calculateDuration } from "../../utils/helpers";
-import { IExercise } from "../../types/exercises";
 
 interface WorkoutProps {
   workout: IWorkout;
@@ -45,7 +44,7 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
         <Text variant="titleMedium">{workout.name}</Text>
         <View style={styles.durationStyle}>
           <Text style={{marginEnd: 5}}>
-            {calculateDuration(workout.started_at, workout.completed_at)}
+            {calculateDuration(workout.started_at, workout.completed_at!)}
           </Text>
           <Icon size={16} source="clock" />
         </View>

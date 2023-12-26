@@ -2,7 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
-import { RootStackNavigationProp, WorkoutStackNavigationProp } from "../../types/navigation";
+import {
+  RootStackNavigationProp,
+} from "../../types/navigation";
 import { useWorkout } from "../../zustand/workoutStore";
 
 const StartWorkout: FC = () => {
@@ -16,8 +18,8 @@ const StartWorkout: FC = () => {
   };
 
   const restartWorkout = () => {
-    //TODO: Check if workout is active 
-  }
+    //TODO: Check if workout is active
+  };
 
   return (
     <Button style={styles.button} onPress={handlePress}>

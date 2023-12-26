@@ -1,9 +1,11 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { IWorkout } from "../types/workouts";
+import { IWorkout, IWorkoutExercise } from "../types/workouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
+import { IExercise } from "../types/exercises";
+import { merge } from "../utils/helpers";
 
 type WorkoutState = {
   workouts: Array<IWorkout>;
@@ -21,11 +23,12 @@ type WorkoutAction = {
     field: T,
     value: K,
   ) => void;
+  addExercises: (exercises: IExercise[]) => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
 
-//TODO: Think about manually saving and writing to storage as currently it will do so on every state update 
+//TODO: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
 
 const useWorkout = create<WorkoutStoreType>()(
@@ -59,6 +62,19 @@ const useWorkout = create<WorkoutStoreType>()(
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             state.activeWorkout[field] = value;
+          }
+        })),
+      addExercises: (exercises) =>
+        set(produce((state: WorkoutStoreType) => {
+          const workoutExercises: IWorkoutExercise[] = exercises.map((e) => ({
+            exercise: e,
+            sets: [],
+          }));
+          if (state.activeWorkout) {
+            state.activeWorkout.exercises = merge(
+              state.activeWorkout.exercises,
+              workoutExercises,
+            );
           }
         })),
     }),

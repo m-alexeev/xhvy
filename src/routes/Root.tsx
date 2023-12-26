@@ -8,10 +8,15 @@ import auth from "@react-native-firebase/auth";
 import { useThemeSwitch } from "../contexts/ThemeContext";
 import WorkoutCreate from "../pages/workout/WorkoutCreate";
 import AddExericse from "../pages/workout/AddExericse";
+import Header from "../components/core/Header";
+import { Appbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import App from "../../App";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
+  const navigation = useNavigation();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -49,10 +54,40 @@ const RootStackComponent: FC = ({}) => {
           screenOptions={{
             presentation: "modal",
             animation: "slide_from_bottom",
+            headerShown: true,
           }}
         >
-          <RootStack.Screen name="Modal" component={WorkoutCreate} />
-          <RootStack.Screen name="AddExericiseModal" component={AddExericse}/>
+          <RootStack.Screen
+            name="WorkoutModal"
+            component={WorkoutCreate}
+            options={{
+              header: () => (
+                <Header>
+                  <Appbar.Action
+                    icon={"chevron-down"}
+                    size={24}
+                    onPress={() => navigation.goBack()}
+                  >
+                  </Appbar.Action>
+                </Header>
+              ),
+            }}
+          />
+          <RootStack.Screen
+            name="AddExericiseModal"
+            component={AddExericse}
+            options={{
+              header: () => (
+                <Header
+                  title="Add Exercise"
+                  backButton={
+                    <Appbar.BackAction onPress={() => navigation.goBack()} />
+                  }
+                >
+                </Header>
+              ),
+            }}
+          />
         </RootStack.Group>
       </RootStack.Navigator>
     </>

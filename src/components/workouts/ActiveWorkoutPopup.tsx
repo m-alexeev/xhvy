@@ -26,9 +26,11 @@ const ActiveWorkoutPopup: FC = () => {
     >
       <View style={styles.header}>
         <Text variant="titleLarge">{activeWorkout!.name}</Text>
-        <WorkoutDuration variant="bodyMedium"/>
+        <WorkoutDuration variant="bodyMedium" />
       </View>
-      <Button onPress={() => navigation.navigate("Modal")}>Resume</Button>
+      <Button onPress={() => navigation.navigate("WorkoutModal")}>
+        Resume
+      </Button>
     </Animated.View>
   );
 };

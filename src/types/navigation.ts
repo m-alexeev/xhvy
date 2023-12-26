@@ -60,4 +60,5 @@ export type ExerciseDetailsTabParamList = {
   Records: undefined;
 };
 
+export type ExerciseDetailsTabProps = NavigationProp<ExerciseStackParamList>;
 //TODO: Create a template type for composite screen props
