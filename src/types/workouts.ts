@@ -7,6 +7,7 @@ interface IWorkoutSet {
   reps: number;
   weight: number;
   bodyweight?: boolean;
+  previous?: number,
 }
 
 interface IWorkoutExercise {

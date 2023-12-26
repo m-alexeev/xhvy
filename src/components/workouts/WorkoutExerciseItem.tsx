@@ -1,16 +1,39 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import { useTheme , Text} from 'react-native-paper'
+import { StyleSheet, View } from "react-native";
+import React, { FC } from "react";
+import { Button, Text, useTheme } from "react-native-paper";
+import { IWorkoutExercise } from "../../types/workouts";
+import { camelCase } from "../../utils/stringParsers";
+import WorkoutSetTable from "./WorkoutSetTable";
 
-const WorkoutExerciseItem = () => {
-  const {colors} = useTheme();
-  return (
-    <View>
-      <Text>WorkoutExerciseItem</Text>
-    </View>
-  )
+interface WorkoutExerciseItemProps {
+  workoutExercise: IWorkoutExercise;
 }
 
-export default WorkoutExerciseItem
+const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
+  { workoutExercise },
+) => {
+  const { colors } = useTheme();
+  const { exercise, sets } = workoutExercise;
+  return (
+    <View
+      style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
+    >
+      <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
+      <Text>Sets</Text>
+      <View>
+        <WorkoutSetTable sets={sets}/>
+        <Button mode="text">Add Set</Button>
+      </View>
+    </View>
+  );
+};
 
-const styles = StyleSheet.create({})
+export default WorkoutExerciseItem;
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 10,
+    marginBottom: 10,
+    padding: 5,
+  },
+});

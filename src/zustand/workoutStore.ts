@@ -68,7 +68,7 @@ const useWorkout = create<WorkoutStoreType>()(
         set(produce((state: WorkoutStoreType) => {
           const workoutExercises: IWorkoutExercise[] = exercises.map((e) => ({
             exercise: e,
-            sets: [],
+            sets: [{ type: "R", weight: 0, reps: 0 }],
           }));
           if (state.activeWorkout) {
             state.activeWorkout.exercises = merge(
