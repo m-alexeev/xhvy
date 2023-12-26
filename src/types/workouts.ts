@@ -7,6 +7,7 @@ interface IWorkoutSet {
   reps: number;
   weight: number;
   bodyweight?: boolean;
+  previous?: number,
 }
 
 interface IWorkoutExercise {
@@ -21,7 +22,7 @@ interface IWorkout {
   note?: string;
   template?: boolean;
   started_at: Date;
-  completed_at: Date;
+  completed_at?: Date;
 }
 
 export { IWorkout, IWorkoutExercise, IWorkoutSet, SetType };

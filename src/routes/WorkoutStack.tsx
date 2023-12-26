@@ -1,16 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
 import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { WorkoutStackParamList } from "../types/navigation";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Appbar } from "react-native-paper";
 import Header from "../components/core/Header";
-import WorkoutView from "../components/workouts/WorkoutView";
+import WorkoutView from "../pages/workout/WorkoutView";
 
 const WorkoutStack = createNativeStackNavigator<WorkoutStackParamList>();
 
 const WorkoutStackRouter: FC = () => {
-  const navigation = useNavigation<NavigationProp<WorkoutStackParamList>>();
   return (
     <WorkoutStack.Navigator>
       <WorkoutStack.Screen
@@ -30,11 +27,8 @@ const WorkoutStackRouter: FC = () => {
           },
         }}
       />
-    
     </WorkoutStack.Navigator>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default WorkoutStackRouter;

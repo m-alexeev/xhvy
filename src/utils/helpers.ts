@@ -1,30 +1,32 @@
+import { IWorkoutExercise } from "../types/workouts";
+
 interface FieldMapper<T> {
-  (field: T): string
+  (field: T): string;
 }
 
 export const DateMapper: FieldMapper<Date> = (field) => {
-  return field.toLocaleString("default", {month: "long"});
-}
+  return field.toLocaleString("default", { month: "long" });
+};
 
 export const FirstLetterMapper: FieldMapper<string> = (field) => {
   return field.charAt(0).toLocaleUpperCase();
-}
+};
 
 export const createSectionList = <T, K extends keyof T>(
   data: Array<T>,
   sectionField: K,
   mapping: FieldMapper<T[K]>,
 ): Array<{ title: string; data: Array<T> }> => {
-  type SectionDictType = Record<string, Array<T>>
-  type SectionListType = Array<{title: string, data: Array<T>}>;
+  type SectionDictType = Record<string, Array<T>>;
+  type SectionListType = Array<{ title: string; data: Array<T> }>;
   // Create list of sections
-  const sectionDict: SectionDictType= data.reduce(
+  const sectionDict: SectionDictType = data.reduce(
     (accum: SectionDictType, curr: T) => {
       const field = curr[sectionField];
-      const mappedField = mapping(field);  
-      if (!accum[mappedField]){
+      const mappedField = mapping(field);
+      if (!accum[mappedField]) {
         accum[mappedField] = [curr];
-      }else{
+      } else {
         accum[mappedField].push(curr);
       }
       return accum;
@@ -32,14 +34,18 @@ export const createSectionList = <T, K extends keyof T>(
     {},
   );
 
-  const sectionList: SectionListType= Object.keys(sectionDict).map((key) => {
+  const sectionList: SectionListType = Object.keys(sectionDict).map((key) => {
     return {
       title: key,
-      data: sectionDict[key]
-    }
-  }); 
+      data: sectionDict[key],
+    };
+  });
 
   return sectionList;
+};
+
+export const formatTime = (time: number): string => {
+  return new Date(time * 1000).toISOString().slice(11, 19);
 };
 
 export const calculateDuration = (start: Date, end: Date): string => {
@@ -49,4 +55,15 @@ export const calculateDuration = (start: Date, end: Date): string => {
   //TODO: decide if seconds are needed
   const seconds = Math.floor(difference % 60);
   return `${hours}:${minutes.toLocaleString().padStart(2, "0")}`;
+};
+
+export const merge = (a: IWorkoutExercise[], b: IWorkoutExercise[]) => {
+  const merged = [...a];
+  b.forEach((el) => {
+    const dup = a.some((a) => a.exercise.id === el.exercise.id);
+    if (!dup) {
+      merged.push(el);
+    }
+  });
+  return merged;
 };

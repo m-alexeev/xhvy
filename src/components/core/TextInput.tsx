@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { StyleSheet, TextInputProps, View, TextInput } from "react-native";
 import { useTheme } from "react-native-paper";
 
@@ -7,29 +7,29 @@ interface ITextInput extends TextInputProps {
   right?: React.JSX.Element;
   onLeftPressed?: () => void;
   onRightPressed?: () => void;
-  isFocused: boolean;
 }
 
 const CustomTextInput: FC<ITextInput> = ({
   left,
   right,
   onLeftPressed,
-  onRightPressed,
-  isFocused,
   ...props
 }) => {
   const theme = useTheme();
+  const [focused, setFocused] = useState(false);
+
 
   return (
     <View
       style={[
         styles.container,
         {
-          borderColor: isFocused
+          borderColor: focused 
             ? theme.colors.primary
             : theme.colors.surfaceVariant,
         },
       ]}
+      
     >
       <View
         style={[styles.left, { display: left === undefined ? "none" : "flex" }]}
@@ -37,13 +37,17 @@ const CustomTextInput: FC<ITextInput> = ({
         {left}
       </View>
       <TextInput
+        onFocus={() => {setFocused(true)}}
+        onBlur={() => {setFocused(false)}}
         style={[
           styles.searchbar,
           {
             color: theme.colors.onSurface,
           },
         ]}
+        cursorColor={theme.colors.primary}
         {...props}
+        placeholderTextColor={theme.colors.outline}
       />
       <View
         style={[

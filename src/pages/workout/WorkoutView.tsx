@@ -1,10 +1,13 @@
 import { SectionList, StyleSheet, View } from "react-native";
-import React from "react";
-import { Text, useTheme } from "react-native-paper";
+import React, { useEffect } from "react";
+import { Divider, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import WorkoutCard from "./WorkoutCard";
 import { IWorkout, SetType } from "../../types/workouts";
 import { createSectionList, DateMapper } from "../../utils/helpers";
+import { useWorkout } from "../../zustand/workoutStore";
+import WorkoutCard from "../../components/workouts/WorkoutCard";
+import StartWorkout from "../../components/workouts/StartWorkout";
+import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
 
 const currentDate = new Date();
 currentDate.setHours(currentDate.getHours() + 1);
@@ -193,15 +196,21 @@ const sampleWorkout: IWorkout[] = [{
 createSectionList(sampleWorkout, "started_at", DateMapper);
 
 const WorkoutView = () => {
+  const { activeWorkout } = useWorkout();
+
   const theme = useTheme();
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View
         style={[styles.container, {
           backgroundColor: theme.colors.background,
         }]}
       >
-        <Text variant="titleLarge">Past Workouts</Text>
+        <View style={styles.newWorkoutContainer}>
+          <Text variant="bodySmall" style={{color: theme.colors.outline}}>Quick Links</Text>
+          <StartWorkout />
+        </View>
+        <Text variant="bodySmall" style={{color: theme.colors.outline}}>History</Text>
         <SectionList
           sections={createSectionList(sampleWorkout, "started_at", DateMapper)}
           keyExtractor={(item) => item.id}
@@ -209,6 +218,7 @@ const WorkoutView = () => {
           renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
         />
       </View>
+      <ActiveWorkoutPopup />
     </SafeAreaView>
   );
 };
@@ -217,6 +227,14 @@ export default WorkoutView;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingHorizontal: 10,
+  },
+  newWorkoutContainer: {
+    marginVertical: 5,
+  },
+  workoutButton: {
+    marginBottom: 5,
+    borderRadius: 10,
   },
 });

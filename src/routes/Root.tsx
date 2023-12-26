@@ -6,10 +6,17 @@ import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
 import { useThemeSwitch } from "../contexts/ThemeContext";
+import WorkoutCreate from "../pages/workout/WorkoutCreate";
+import AddExericse from "../pages/workout/AddExericse";
+import Header from "../components/core/Header";
+import { Appbar } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import App from "../../App";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
+  const navigation = useNavigation();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -33,9 +40,55 @@ const RootStackComponent: FC = ({}) => {
       <RootStack.Navigator
         screenOptions={{ headerShown: false }}
       >
-        {user
-          ? <RootStack.Screen name="HomeStack" component={HomeStackComponent} />
-          : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+        <RootStack.Group>
+          {user
+            ? (
+              <RootStack.Screen
+                name="HomeStack"
+                component={HomeStackComponent}
+              />
+            )
+            : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+        </RootStack.Group>
+        <RootStack.Group
+          screenOptions={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+            headerShown: true,
+          }}
+        >
+          <RootStack.Screen
+            name="WorkoutModal"
+            component={WorkoutCreate}
+            options={{
+              header: () => (
+                <Header>
+                  <Appbar.Action
+                    icon={"chevron-down"}
+                    size={24}
+                    onPress={() => navigation.goBack()}
+                  >
+                  </Appbar.Action>
+                </Header>
+              ),
+            }}
+          />
+          <RootStack.Screen
+            name="AddExericiseModal"
+            component={AddExericse}
+            options={{
+              header: () => (
+                <Header
+                  title="Add Exercise"
+                  backButton={
+                    <Appbar.BackAction onPress={() => navigation.goBack()} />
+                  }
+                >
+                </Header>
+              ),
+            }}
+          />
+        </RootStack.Group>
       </RootStack.Navigator>
     </>
   );
