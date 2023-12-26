@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
 import { IWorkoutSet } from "../../types/workouts";
+import { Text } from "react-native-paper";
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
