@@ -2,6 +2,7 @@ import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
 import React, { FC } from "react";
 import { IWorkoutSet } from "../../types/workouts";
 import { IconButton, Text, useTheme } from "react-native-paper";
+import Animated, { FadeIn, FadingTransition, SlideInDown } from "react-native-reanimated";
 
 
 interface SetInputFieldProps extends TextInputProps {
@@ -36,7 +37,7 @@ interface WorkoutSetProps {
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
   return (
-    <View style={styles.tableRow}>
+    <Animated.View style={styles.tableRow} entering={FadeIn}>
       <Text style={[styles.tableColumn, styles.setCol]}>
         {set.type === "R" ? setNum : set.type}
       </Text>
@@ -56,14 +57,13 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
         icon={"check-bold"}
       >
       </IconButton>
-    </View>
+    </Animated.View>
   );
 };
 
 export default WorkoutSet;
 
 const styles = StyleSheet.create({
-  container: {},
   tableRow: {
     flexDirection: "row",
     gap: 7,

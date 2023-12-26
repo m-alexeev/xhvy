@@ -4,6 +4,8 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { IWorkoutExercise } from "../../types/workouts";
 import { camelCase } from "../../utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
+import CustomTextInput from "../core/TextInput";
+import { useWorkout } from "../../zustand/workoutStore";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: IWorkoutExercise;
@@ -12,6 +14,7 @@ interface WorkoutExerciseItemProps {
 const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
   { workoutExercise },
 ) => {
+  const {addSet} = useWorkout();
   const { colors } = useTheme();
   const { exercise, sets } = workoutExercise;
   return (
@@ -19,10 +22,9 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
       style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
     >
       <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
-      <Text>Sets</Text>
       <View>
-        <WorkoutSetTable sets={sets}/>
-        <Button mode="text">Add Set</Button>
+        <WorkoutSetTable sets={sets} />
+        <Button mode="text" onPress={() => addSet(exercise.id)}>Add Set</Button>
       </View>
     </View>
   );
@@ -34,6 +36,8 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     marginBottom: 10,
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    gap: 10,
   },
 });
