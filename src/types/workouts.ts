@@ -6,6 +6,7 @@ interface IWorkoutSet {
   type: SetType;
   reps: number;
   weight: number;
+  completed: boolean;
   bodyweight?: boolean;
   previous?: number,
 }

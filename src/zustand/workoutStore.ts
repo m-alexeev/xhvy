@@ -24,6 +24,8 @@ type WorkoutAction = {
     value: K,
   ) => void;
   addExercises: (exercises: IExercise[]) => void;
+  // removeExercise: (exercise_id: string) => void;
+  // addSet: (exercise_id: string) => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
@@ -68,7 +70,7 @@ const useWorkout = create<WorkoutStoreType>()(
         set(produce((state: WorkoutStoreType) => {
           const workoutExercises: IWorkoutExercise[] = exercises.map((e) => ({
             exercise: e,
-            sets: [{ type: "R", weight: 0, reps: 0 }],
+            sets: [{ type: "R", weight: 0, reps: 0, completed: false }],
           }));
           if (state.activeWorkout) {
             state.activeWorkout.exercises = merge(
