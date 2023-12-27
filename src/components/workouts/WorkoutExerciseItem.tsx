@@ -23,7 +23,7 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
     >
       <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
       <View>
-        <WorkoutSetTable sets={sets} />
+        <WorkoutSetTable sets={sets} exerciseId={workoutExercise.exercise.id}/>
         <Animated.View>
           <Button mode="text" onPress={() => addSet(exercise.id)}>
             Add Set

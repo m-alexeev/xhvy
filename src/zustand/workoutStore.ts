@@ -26,6 +26,7 @@ type WorkoutAction = {
   addExercises: (exercises: IExercise[]) => void;
   // removeExercise: (exercise_id: string) => void;
   addSet: (exercise_id: string) => void;
+  removeSet: (exerciseId: string, setIndex: number) => void;
 };
 
 type WorkoutStoreType = WorkoutState & WorkoutAction;
@@ -85,6 +86,19 @@ const useWorkout = create<WorkoutStoreType>()(
             state.activeWorkout.exercises.find((e) =>
               e.exercise.id === exercise_id
             )?.sets.push({ type: "R", weight: 0, reps: 0, completed: false });
+          }
+        })),
+      removeSet: (exerciseId: string, setIndex: number) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            const sets = state.activeWorkout.exercises.find((e) =>
+              e.exercise.id === exerciseId
+            )?.sets.filter(
+              (_, index) => index !== setIndex,
+            );
+            state.activeWorkout.exercises.find((e) =>
+              e.exercise.id === exerciseId
+            )!.sets = sets as IWorkoutSet[];
           }
         })),
     }),

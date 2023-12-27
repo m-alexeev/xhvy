@@ -6,31 +6,39 @@ import WorkoutSet from "./WorkoutSet";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
+  exerciseId: string
 }
-const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets }) => {
+
+const WorkoutSetTableHeader: FC = () => {
+  return (
+    <View style={[styles.tableRow, styles.headerRow]}>
+      <Text style={[styles.tableColumn, styles.setCol]}>
+        Set
+      </Text>
+      <Text style={[styles.tableColumn, styles.prevCol]}>
+        Previous
+      </Text>
+      <Text style={[styles.tableColumn, styles.weightCol]}>
+        Weight
+      </Text>
+      <Text style={[styles.tableColumn, styles.repCol]}>
+        Reps
+      </Text>
+      <View style={[styles.tableColumn, styles.completeCol]}>
+      </View>
+    </View>
+  );
+};
+
+const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
   const { colors } = useTheme();
 
   return (
     <View style={styles.container}>
-      <View style={[styles.tableRow, styles.headerRow]}>
-        <Text style={[styles.tableColumn, styles.setCol]}>
-          Set
-        </Text>
-        <Text style={[styles.tableColumn, styles.prevCol]}>
-          Previous
-        </Text>
-        <Text style={[styles.tableColumn, styles.weightCol]}>
-          Weight
-        </Text>
-        <Text style={[styles.tableColumn, styles.repCol]}>
-          Reps
-        </Text>
-        <View style={[styles.tableColumn, styles.completeCol]}>
-        </View>
-      </View>
       <View>
+        <WorkoutSetTableHeader/>
         {sets.map((set, index) => (
-          <WorkoutSet key={index} setNum={index + 1} set={set}></WorkoutSet>
+          <WorkoutSet key={index} setNum={index + 1} set={set} exerciseId={exerciseId}></WorkoutSet>
         ))}
       </View>
     </View>
