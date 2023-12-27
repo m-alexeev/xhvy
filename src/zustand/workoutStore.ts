@@ -1,37 +1,17 @@
 import { create } from "zustand";
 import { produce } from "immer";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { IWorkout, IWorkoutExercise, IWorkoutSet } from "../types/workouts";
+import {
+  IWorkout,
+  IWorkoutExercise,
+  IWorkoutSet,
+  WorkoutExercises,
+} from "../types/workouts";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
-import { IExercise } from "../types/exercises";
-import { merge } from "../utils/helpers";
+import { WorkoutStoreType } from "../types/store";
 
-type WorkoutState = {
-  workouts: Array<IWorkout>;
-  activeWorkout?: IWorkout;
-  pending_workout_updates: Array<IWorkout>;
-};
-
-type WorkoutAction = {
-  createWorkout: (workout: IWorkout) => void;
-  // updateWorkout: (workout_id: string, workout: IWorkout) => void;
-  deleteWorkout: (workout_id: string) => void;
-  startWorkout: (template?: IWorkout) => void;
-  cancelWorkout: () => void;
-  updateField: <T extends keyof IWorkout, K extends IWorkout[T]>(
-    field: T,
-    value: K,
-  ) => void;
-  addExercises: (exercises: IExercise[]) => void;
-  // removeExercise: (exercise_id: string) => void;
-  addSet: (exercise_id: string) => void;
-  removeSet: (exerciseId: string, setIndex: number) => void;
-};
-
-type WorkoutStoreType = WorkoutState & WorkoutAction;
-
-//TODO: Think about manually saving and writing to storage as currently it will do so on every state update
+//NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
 
 const useWorkout = create<WorkoutStoreType>()(
@@ -55,7 +35,7 @@ const useWorkout = create<WorkoutStoreType>()(
             state.activeWorkout = {
               id: uuid.v4().toString(),
               name: "Unnamed workout",
-              exercises: [],
+              exercises: {},
               started_at: new Date(),
             };
           }
@@ -67,39 +47,49 @@ const useWorkout = create<WorkoutStoreType>()(
             state.activeWorkout[field] = value;
           }
         })),
-      addExercises: (exercises) =>
+      addExercises: (newExercises) =>
         set(produce((state: WorkoutStoreType) => {
-          const workoutExercises: IWorkoutExercise[] = exercises.map((e) => ({
-            exercise: e,
-            sets: [{ type: "R", weight: 0, reps: 0, completed: false }],
-          }));
-          if (state.activeWorkout) {
-            state.activeWorkout.exercises = merge(
-              state.activeWorkout.exercises,
-              workoutExercises,
-            );
-          }
+          // Create a WorkoutExercise object
+          const workoutExercises: WorkoutExercises = newExercises.reduce(
+            (a, e) => {
+              const sets: IWorkoutSet[] = [{
+                id: uuid.v4().toString(),
+                type: "R",
+                weight: 0,
+                reps: 0,
+                completed: false,
+              }];
+              const workoutExercise: IWorkoutExercise = { ...e, sets };
+              return { ...a, [workoutExercise.id]: workoutExercise };
+            },
+            {},
+          );
+          // Merge existing exercises and new exercises prioritizing existing exercises
+          // in case of overlap
+          Object.keys(workoutExercises).forEach((key) => {
+            if (!state.activeWorkout!.exercises[key]) {
+              state.activeWorkout!.exercises[key] = workoutExercises[key];
+            }
+          });
         })),
       addSet: (exercise_id: string) =>
+        //TODO: Add set from history
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
-            state.activeWorkout.exercises.find((e) =>
-              e.exercise.id === exercise_id
-            )?.sets.push({ type: "R", weight: 0, reps: 0, completed: false });
+            state.activeWorkout.exercises[exercise_id].sets.push({
+              id: uuid.v4.toString(),
+              type: "R",
+              weight: 0,
+              reps: 0,
+              completed: false,
+            });
           }
         })),
       removeSet: (exerciseId: string, setIndex: number) =>
-        //FIX: Refactor this garbage 
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
-            const sets = state.activeWorkout.exercises.find((e) =>
-              e.exercise.id === exerciseId
-            )?.sets.filter(
-              (_, index) => index !== setIndex,
-            );
-            state.activeWorkout.exercises.find((e) =>
-              e.exercise.id === exerciseId
-            )!.sets = sets as IWorkoutSet[];
+            // Remove set by index from array
+            state.activeWorkout.exercises[exerciseId].sets.splice(setIndex, 1);
           }
         })),
     }),
