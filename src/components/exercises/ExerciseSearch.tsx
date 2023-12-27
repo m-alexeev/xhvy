@@ -11,10 +11,10 @@ interface ExerciseSearchProps {
 const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
   const { search, updateSearch } = useFilter();
   const theme = useTheme();
-
   return (
     <View style={styles.container}>
       <CustomTextInput
+        containerStyle={{height: 48}}
         selectionColor={theme.colors.primary}
         value={search}
         onChangeText={updateSearch}
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   searchbar: {
-    flex: 1,
     marginRight: 20,
     borderRadius: 5,
     borderWidth: 2,

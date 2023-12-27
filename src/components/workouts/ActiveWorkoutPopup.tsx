@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useWorkout } from "../../zustand/workoutStore";
 import { StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";

@@ -1,60 +1,49 @@
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
-import React, { FC } from "react";
+import { StyleSheet } from "react-native";
+import React, { FC, useState } from "react";
 import { IWorkoutSet } from "../../types/workouts";
-import { IconButton, Text, useTheme } from "react-native-paper";
-import Animated, { FadeIn, FadingTransition, SlideInDown } from "react-native-reanimated";
-
-
-interface SetInputFieldProps extends TextInputProps {
-}
-const SetInputField: FC<SetInputFieldProps> = ({ ...props }) => {
-  const { colors } = useTheme();
-  return (
-    <TextInput
-      cursorColor={colors.primary}
-      placeholder="0"
-      placeholderTextColor={colors.onSurfaceVariant}
-      style={[props.style, inputStyles.field, {
-        backgroundColor: colors.backdrop,
-        color: colors.onBackground,
-      }]}
-      keyboardType="numeric"
-    >
-    </TextInput>
-  );
-};
-
-const inputStyles = StyleSheet.create({
-  field: {
-    borderRadius: 5,
-  },
-});
+import { MD3Theme, Text, useTheme } from "react-native-paper";
+import Animated, { FadeIn } from "react-native-reanimated";
+import CustomTextInput from "../core/TextInput";
+import IconButton from "../core/IconButton";
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
-  setNum: number
+  setNum: number;
 }
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
+  const theme = useTheme();
+  const [completed, setComplete] = useState<boolean>(set.completed);
+
   return (
-    <Animated.View style={styles.tableRow} entering={FadeIn}>
-      <Text style={[styles.tableColumn, styles.setCol]}>
+    <Animated.View style={[styles(theme).tableRow, completed && styles(theme).completedStyle]} entering={FadeIn}>
+      <Text style={[styles(theme).tableColumn, styles(theme).setCol]}>
         {set.type === "R" ? setNum : set.type}
       </Text>
-      <Text style={[styles.tableColumn, styles.prevCol]}>
+      <Text style={[styles(theme).tableColumn, styles(theme).prevCol]}>
         {set.previous ? set.previous : "-"}
       </Text>
-      <SetInputField style={[styles.tableColumn, styles.weightCol]}>
-        {set.weight}
-      </SetInputField>
-      <SetInputField style={[styles.tableColumn, styles.repCol]}>
-        {set.reps}
-      </SetInputField>
+      <CustomTextInput
+        containerStyle={[styles(theme).tableColumn, styles(theme).weightCol]}
+        style={{ textAlign: "center" }}
+        placeholder="0"
+        inputMode="numeric"
+      >
+      </CustomTextInput>
+      <CustomTextInput
+        containerStyle={[styles(theme).tableColumn, styles(theme).repCol]}
+        style={{ textAlign: "center" }}
+        placeholder="0"
+        inputMode="numeric"
+      >
+      </CustomTextInput>
       <IconButton
-        style={[styles.tableColumn, styles.completeCol]}
-        onPress={console.log}
-        size={16}
+        style={[styles(theme).tableColumn, styles(theme).completeCol, {height:28}]}
+        onPress={() => setComplete(!completed)}
+        size={20}
+        color={theme.colors.onSurfaceVariant}
         icon={"check-bold"}
+        selected={completed}
       >
       </IconButton>
     </Animated.View>
@@ -63,12 +52,13 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
 
 export default WorkoutSet;
 
-const styles = StyleSheet.create({
+const styles = (props: MD3Theme) => StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     gap: 7,
     height: 30,
     alignItems: "center",
+    marginBottom: 2,
   },
   tableColumn: {
     alignItems: "center",
@@ -86,13 +76,19 @@ const styles = StyleSheet.create({
     width: 80,
   },
   weightCol: {
-    width: 40,
+    flex: 0,
+    width: 45,
   },
   repCol: {
-    width: 40,
+    flex: 0,
+    width: 45,
   },
   completeCol: {
-    width: 20,
-    margin: 0,
+    width: 10,
   },
+  completedStyle: {
+    backgroundColor: props.colors.primaryContainer,
+    borderRadius: 5,
+    
+  }
 });
