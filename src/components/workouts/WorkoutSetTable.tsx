@@ -25,8 +25,8 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets }) => {
         <Text style={[styles.tableColumn, styles.repCol]}>
           Reps
         </Text>
-        <Text style={[styles.tableColumn, styles.completeCol]}>
-        </Text>
+        <View style={[styles.tableColumn, styles.completeCol]}>
+        </View>
       </View>
       <View>
         {sets.map((set, index) => (

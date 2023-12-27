@@ -13,10 +13,10 @@ import { Icon, MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
 interface IconButtonProps {
   selected?: boolean;
   disabled?: boolean;
-  style: StyleProp<ViewStyle>;
-  onPress: ((event: GestureResponderEvent) => void) & (() => void);
+  style?: StyleProp<ViewStyle>;
+  onPress?: ((event: GestureResponderEvent) => void) & (() => void);
   icon: IconSource;
-  size: number;
+  size?: number;
   rippleColor?: ColorValue;
   color?: ColorValue;
   containerColor?: ColorValue;

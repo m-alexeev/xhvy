@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import { IWorkoutExercise } from "../../types/workouts";
 import { useTheme } from "react-native-paper";
 import WorkoutExerciseItem from "./WorkoutExerciseItem";
-import { ScrollView } from "react-native-gesture-handler";
 
 interface WorkoutListProps {
   exercises: IWorkoutExercise[];
@@ -12,11 +11,11 @@ interface WorkoutListProps {
 const WorkoutList: FC<WorkoutListProps> = ({ exercises }) => {
   const { colors } = useTheme();
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {exercises.map((e) => (
         <WorkoutExerciseItem key={e.exercise.id} workoutExercise={e} />
       ))}
-    </ScrollView>
+    </View>
   );
 };
 

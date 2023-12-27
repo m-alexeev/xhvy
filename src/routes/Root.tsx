@@ -11,7 +11,6 @@ import AddExericse from "../pages/workout/AddExericse";
 import Header from "../components/core/Header";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import App from "../../App";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -60,18 +59,7 @@ const RootStackComponent: FC = ({}) => {
           <RootStack.Screen
             name="WorkoutModal"
             component={WorkoutCreate}
-            options={{
-              header: () => (
-                <Header>
-                  <Appbar.Action
-                    icon={"chevron-down"}
-                    size={24}
-                    onPress={() => navigation.goBack()}
-                  >
-                  </Appbar.Action>
-                </Header>
-              ),
-            }}
+            options={{ headerShown: false }}
           />
           <RootStack.Screen
             name="AddExericiseModal"
