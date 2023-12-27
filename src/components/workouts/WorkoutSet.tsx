@@ -1,9 +1,9 @@
-import { StyleSheet, TextInput, TextInputProps, View } from "react-native";
+import { StyleSheet, TextInput, TextInputProps } from "react-native";
 import React, { FC } from "react";
 import { IWorkoutSet } from "../../types/workouts";
 import { IconButton, Text, useTheme } from "react-native-paper";
-import Animated, { FadeIn, FadingTransition, SlideInDown } from "react-native-reanimated";
-
+import Animated, { FadeIn } from "react-native-reanimated";
+import CustomTextInput from "../core/TextInput";
 
 interface SetInputFieldProps extends TextInputProps {
 }
@@ -32,7 +32,7 @@ const inputStyles = StyleSheet.create({
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
-  setNum: number
+  setNum: number;
 }
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
@@ -47,9 +47,13 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
       <SetInputField style={[styles.tableColumn, styles.weightCol]}>
         {set.weight}
       </SetInputField>
-      <SetInputField style={[styles.tableColumn, styles.repCol]}>
+      <CustomTextInput
+        containerStyle={[styles.tableColumn, styles.repCol]}
+        style={{ textAlign: "center" }}
+        inputMode="numeric"
+      >
         {set.reps}
-      </SetInputField>
+      </CustomTextInput>
       <IconButton
         style={[styles.tableColumn, styles.completeCol]}
         onPress={console.log}
@@ -75,6 +79,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     flexGrow: 1,
+    padding: 0,
   },
   headerRow: {
     opacity: 0.6,
@@ -89,6 +94,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   repCol: {
+    flex: 0,
     width: 40,
   },
   completeCol: {

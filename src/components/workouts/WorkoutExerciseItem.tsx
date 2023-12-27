@@ -4,7 +4,6 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { IWorkoutExercise } from "../../types/workouts";
 import { camelCase } from "../../utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
-import CustomTextInput from "../core/TextInput";
 import { useWorkout } from "../../zustand/workoutStore";
 
 interface WorkoutExerciseItemProps {
