@@ -89,6 +89,7 @@ const useWorkout = create<WorkoutStoreType>()(
           }
         })),
       removeSet: (exerciseId: string, setIndex: number) =>
+        //FIX: Refactor this garbage 
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             const sets = state.activeWorkout.exercises.find((e) =>

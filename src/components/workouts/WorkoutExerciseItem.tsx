@@ -17,6 +17,7 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
   const { addSet } = useWorkout();
   const { colors } = useTheme();
   const { exercise, sets } = workoutExercise;
+  //FIX: Refactor the Workout table component to remove the nested props 
   return (
     <View
       style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
