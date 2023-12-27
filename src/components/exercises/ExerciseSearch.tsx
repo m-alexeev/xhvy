@@ -11,10 +11,10 @@ interface ExerciseSearchProps {
 const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
   const { search, updateSearch } = useFilter();
   const theme = useTheme();
-
   return (
     <View style={styles.container}>
       <CustomTextInput
+        containerStyle={{height: 48}}
         selectionColor={theme.colors.primary}
         value={search}
         onChangeText={updateSearch}

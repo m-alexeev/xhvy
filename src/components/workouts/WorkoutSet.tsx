@@ -1,34 +1,10 @@
-import { StyleSheet, TextInput, TextInputProps } from "react-native";
-import React, { FC } from "react";
+import { StyleSheet } from "react-native";
+import React, { FC, useState } from "react";
 import { IWorkoutSet } from "../../types/workouts";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "../core/TextInput";
-
-interface SetInputFieldProps extends TextInputProps {
-}
-const SetInputField: FC<SetInputFieldProps> = ({ ...props }) => {
-  const { colors } = useTheme();
-  return (
-    <TextInput
-      cursorColor={colors.primary}
-      placeholder="0"
-      placeholderTextColor={colors.onSurfaceVariant}
-      style={[props.style, inputStyles.field, {
-        backgroundColor: colors.backdrop,
-        color: colors.onBackground,
-      }]}
-      keyboardType="numeric"
-    >
-    </TextInput>
-  );
-};
-
-const inputStyles = StyleSheet.create({
-  field: {
-    borderRadius: 5,
-  },
-});
+import IconButton from "../core/IconButton";
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
@@ -36,6 +12,9 @@ interface WorkoutSetProps {
 }
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
+  const {colors} = useTheme();
+  const [completed, setComplete] = useState<boolean>(set.completed);
+
   return (
     <Animated.View style={styles.tableRow} entering={FadeIn}>
       <Text style={[styles.tableColumn, styles.setCol]}>
@@ -44,20 +23,25 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
       <Text style={[styles.tableColumn, styles.prevCol]}>
         {set.previous ? set.previous : "-"}
       </Text>
-      <SetInputField style={[styles.tableColumn, styles.weightCol]}>
-        {set.weight}
-      </SetInputField>
+      <CustomTextInput
+        containerStyle={[styles.tableColumn, styles.weightCol]}
+        style={{ textAlign: "center" }}
+        placeholder="0"
+        inputMode="numeric"
+      >
+      </CustomTextInput>
       <CustomTextInput
         containerStyle={[styles.tableColumn, styles.repCol]}
         style={{ textAlign: "center" }}
+        placeholder="0"
         inputMode="numeric"
       >
-        {set.reps}
       </CustomTextInput>
       <IconButton
-        style={[styles.tableColumn, styles.completeCol]}
+        style={[styles.tableColumn, styles.completeCol, {height:28}]}
         onPress={console.log}
-        size={16}
+        size={20}
+        color={colors.onSurfaceVariant}
         icon={"check-bold"}
       >
       </IconButton>
@@ -79,7 +63,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     flexGrow: 1,
-    padding: 0,
   },
   headerRow: {
     opacity: 0.6,
@@ -91,6 +74,7 @@ const styles = StyleSheet.create({
     width: 80,
   },
   weightCol: {
+    flex: 0,
     width: 40,
   },
   repCol: {
@@ -99,6 +83,5 @@ const styles = StyleSheet.create({
   },
   completeCol: {
     width: 20,
-    margin: 0,
   },
 });

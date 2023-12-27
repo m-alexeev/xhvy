@@ -37,10 +37,10 @@ const CustomTextInput: FC<ITextInput> = ({
           </View>
         )}
         <TextInput
-          cursorColor={theme.colors.primary}
-          placeholderTextColor={theme.colors.onSurfaceVariant}
           {...props}
           style={[styles(theme).searchbar, props.style]}
+          placeholderTextColor={theme.colors.onSurfaceVariant}
+          cursorColor={theme.colors.primary}
         />
         {right && (
           <View style={styles(theme).right}>
@@ -55,14 +55,17 @@ const CustomTextInput: FC<ITextInput> = ({
 const styles = (theme: MD3Theme) =>
   StyleSheet.create({
     container: {
-      flex:1,
+      flex: 1,
       backgroundColor: theme.colors.backdrop,
       borderRadius: 5,
+      alignItems: "center",
+      justifyContent: "center"
     },
     searchbar: {
       flex: 1,
       alignSelf: "stretch",
       color: theme.colors.onBackground,
+      paddingHorizontal: 10,
     },
     left: {
       marginLeft: 10,
