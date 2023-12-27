@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     width: 80,
   },
   weightCol: {
-    width: 40,
+    width: 45,
   },
   repCol: {
-    width: 40,
+    width: 45,
   },
   completeCol: {
-    width: 20,
+    width: 10,
     margin: 0,
   },
 });

@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import React, { FC, useState } from "react";
 import { IWorkoutSet } from "../../types/workouts";
-import { Text, useTheme } from "react-native-paper";
+import { MD3Theme, Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "../core/TextInput";
 import IconButton from "../core/IconButton";
@@ -12,37 +12,38 @@ interface WorkoutSetProps {
 }
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
-  const {colors} = useTheme();
+  const theme = useTheme();
   const [completed, setComplete] = useState<boolean>(set.completed);
 
   return (
-    <Animated.View style={styles.tableRow} entering={FadeIn}>
-      <Text style={[styles.tableColumn, styles.setCol]}>
+    <Animated.View style={[styles(theme).tableRow, completed && styles(theme).completedStyle]} entering={FadeIn}>
+      <Text style={[styles(theme).tableColumn, styles(theme).setCol]}>
         {set.type === "R" ? setNum : set.type}
       </Text>
-      <Text style={[styles.tableColumn, styles.prevCol]}>
+      <Text style={[styles(theme).tableColumn, styles(theme).prevCol]}>
         {set.previous ? set.previous : "-"}
       </Text>
       <CustomTextInput
-        containerStyle={[styles.tableColumn, styles.weightCol]}
+        containerStyle={[styles(theme).tableColumn, styles(theme).weightCol]}
         style={{ textAlign: "center" }}
         placeholder="0"
         inputMode="numeric"
       >
       </CustomTextInput>
       <CustomTextInput
-        containerStyle={[styles.tableColumn, styles.repCol]}
+        containerStyle={[styles(theme).tableColumn, styles(theme).repCol]}
         style={{ textAlign: "center" }}
         placeholder="0"
         inputMode="numeric"
       >
       </CustomTextInput>
       <IconButton
-        style={[styles.tableColumn, styles.completeCol, {height:28}]}
-        onPress={console.log}
+        style={[styles(theme).tableColumn, styles(theme).completeCol, {height:28}]}
+        onPress={() => setComplete(!completed)}
         size={20}
-        color={colors.onSurfaceVariant}
+        color={theme.colors.onSurfaceVariant}
         icon={"check-bold"}
+        selected={completed}
       >
       </IconButton>
     </Animated.View>
@@ -51,12 +52,13 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum }) => {
 
 export default WorkoutSet;
 
-const styles = StyleSheet.create({
+const styles = (props: MD3Theme) => StyleSheet.create({
   tableRow: {
     flexDirection: "row",
     gap: 7,
     height: 30,
     alignItems: "center",
+    marginBottom: 2,
   },
   tableColumn: {
     alignItems: "center",
@@ -75,13 +77,18 @@ const styles = StyleSheet.create({
   },
   weightCol: {
     flex: 0,
-    width: 40,
+    width: 45,
   },
   repCol: {
     flex: 0,
-    width: 40,
+    width: 45,
   },
   completeCol: {
-    width: 20,
+    width: 10,
   },
+  completedStyle: {
+    backgroundColor: props.colors.primaryContainer,
+    borderRadius: 5,
+    
+  }
 });

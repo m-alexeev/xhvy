@@ -48,7 +48,7 @@ const IconButton: FC<IconButtonProps> = ({
   const iconColor = disabled
     ? theme.colors.onSurfaceDisabled
     : color
-    ? selected ? theme.colors.onPrimary 
+    ? selected ? theme.colors.primary
     : color
     : theme.colors.onSurface;
 
