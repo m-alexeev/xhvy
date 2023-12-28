@@ -38,7 +38,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
       <View>
         <WorkoutSetTableHeader/>
         {sets.map((set, index) => (
-          <WorkoutSet key={index} setNum={index + 1} set={set} exerciseId={exerciseId}></WorkoutSet>
+          <WorkoutSet key={set.id} setNum={index + 1} set={set} exerciseId={exerciseId}></WorkoutSet>
         ))}
       </View>
     </View>

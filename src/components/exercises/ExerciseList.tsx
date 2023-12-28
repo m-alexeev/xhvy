@@ -8,6 +8,7 @@ import ExerciseItem from "./ExerciseItem";
 import { useNavigation } from "@react-navigation/native";
 import { ExerciseDetailsTabProps } from "../../types/navigation";
 import { useWorkout } from "../../zustand/workoutStore";
+import { IExercise } from "../../types/exercises";
 
 interface ExerciseListProps {
   onPress?: (exercise_id: string) => void;
@@ -15,7 +16,6 @@ interface ExerciseListProps {
 }
 
 const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
-  const theme = useTheme();
   const { search } = useFilter();
 
   const navigation = useNavigation<ExerciseDetailsTabProps>();

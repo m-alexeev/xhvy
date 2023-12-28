@@ -16,17 +16,18 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
 ) => {
   const { addSet } = useWorkout();
   const { colors } = useTheme();
-  const { exercise, sets } = workoutExercise;
-  //FIX: Refactor the Workout table component to remove the nested props 
+  const {name, id, sets } = workoutExercise;
+  //FIX: Refactor the Workout table component to remove the nested props
+  //
   return (
     <View
       style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
     >
-      <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
       <View>
-        <WorkoutSetTable sets={sets} exerciseId={workoutExercise.exercise.id}/>
+        <Text variant="titleMedium">{camelCase(name)}</Text>
+        <WorkoutSetTable sets={sets} exerciseId={id} />
         <Animated.View>
-          <Button mode="text" onPress={() => addSet(exercise.id)}>
+          <Button mode="text" onPress={() => addSet(id)}>
             Add Set
           </Button>
         </Animated.View>

@@ -1,8 +1,8 @@
 import { Animated as RNAnimated, StyleSheet, View } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC, useRef, useState } from "react";
 import { IWorkoutSet } from "../../types/workouts";
 import { Icon, MD3Theme, Text, useTheme } from "react-native-paper";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import CustomTextInput from "../core/TextInput";
 import IconButton from "../core/IconButton";
 import { Swipeable } from "react-native-gesture-handler";
@@ -26,8 +26,8 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
     dragX: RNAnimated.AnimatedInterpolation<number>,
   ) => {
     const trans = dragX.interpolate({
-      inputRange: [0, 50, 75, 100],
-      outputRange: [0, 0, 0, 1],
+      inputRange: [0, 100],
+      outputRange: [0,1],
       extrapolate: "clamp",
     });
     return (
@@ -39,18 +39,23 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
             transform: [{ translateX: trans }],
           }]}
         >
-          <Icon size={16} color={theme.colors.errorContainer} source={"delete"}>
+          <Icon size={24} color={theme.colors.errorContainer} source={"delete"}>
           </Icon>
         </AnimatedView>
       </View>
     );
   };
 
+  const closeSwipable = () => {
+    removeSet(exerciseId, setNum - 1);
+  };
+
   return (
     <Swipeable
       renderRightActions={renderDelete}
-      rightThreshold={20}
-      onSwipeableOpen={() => removeSet(exerciseId,setNum - 1)}
+      rightThreshold={30}
+      friction={2}
+      onSwipeableOpen={closeSwipable}
     >
       <Animated.View
         style={[
@@ -104,7 +109,6 @@ const styles = (props: MD3Theme) =>
       gap: 7,
       height: 30,
       alignItems: "center",
-      marginBottom: 2,
       backgroundColor: props.colors.surfaceVariant,
     },
     tableColumn: {
@@ -138,9 +142,10 @@ const styles = (props: MD3Theme) =>
       justifyContent: "center",
     },
     deleteView: {
-      backgroundColor: props.colors.error,
-      alignItems: "flex-end",
+      flex: 1,
       justifyContent: "center",
-      height: 28,
+      backgroundColor: props.colors.error,
+      borderRadius: 3,
+      alignItems: "flex-end",
     },
   });

@@ -77,7 +77,7 @@ const useWorkout = create<WorkoutStoreType>()(
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             state.activeWorkout.exercises[exercise_id].sets.push({
-              id: uuid.v4.toString(),
+              id: uuid.v4().toString(),
               type: "R",
               weight: 0,
               reps: 0,
