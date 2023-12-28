@@ -5,7 +5,7 @@ import { useWorkout } from "../../zustand/workoutStore";
 import TextInputCustom from "../../components/core/TextInput";
 import WorkoutDuration from "../../components/core/WorkoutDuration";
 import { WorkoutStackNavigationProp } from "../../types/navigation";
-import WorkoutList from "../../components/workouts/WorkoutList";
+import WorkoutList from "../../components/workouts/workoutExercise/WorkoutList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";

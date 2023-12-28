@@ -1,9 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC, useEffect } from "react";
-import { IWorkoutSet } from "../../types/workouts";
+import { IWorkoutSet } from "../../../types/workouts";
 import { Text, useTheme } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
-import { useWorkout } from "../../zustand/workoutStore";
+import { useWorkout } from "../../../zustand/workoutStore";
+import { tableStyles } from "./styles";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
@@ -12,20 +13,20 @@ interface WorkoutSetTableProps {
 
 const WorkoutSetTableHeader: FC = () => {
   return (
-    <View style={[styles.tableRow, styles.headerRow]}>
-      <Text style={[styles.tableColumn, styles.setCol]}>
+    <View style={tableStyles({}).headerRow}>
+      <Text style={tableStyles({ width: 0.6 }).headerColumn}>
         Set
       </Text>
-      <Text style={[styles.tableColumn, styles.prevCol]}>
+      <Text style={tableStyles({}).headerColumn}>
         Previous
       </Text>
-      <Text style={[styles.tableColumn, styles.weightCol]}>
+      <Text style={tableStyles({}).headerColumn}>
         Weight
       </Text>
-      <Text style={[styles.tableColumn, styles.repCol]}>
+      <Text style={tableStyles({}).headerColumn}>
         Reps
       </Text>
-      <View style={[styles.tableColumn, styles.completeCol]}>
+      <View style={tableStyles({ width: 0.6 }).headerColumn}>
       </View>
     </View>
   );
@@ -33,7 +34,7 @@ const WorkoutSetTableHeader: FC = () => {
 
 const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
   const { colors } = useTheme();
-  
+
   const { removeExercise } = useWorkout();
   useEffect(() => {
     if (sets.length == 0) {
@@ -42,19 +43,17 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
   }, [sets]);
 
   return (
-    <View style={styles.container}>
-      <View>
-        <WorkoutSetTableHeader />
-        {sets.map((set, index) => (
-          <WorkoutSet
-            key={set.id}
-            setNum={index + 1}
-            set={set}
-            exerciseId={exerciseId}
-          >
-          </WorkoutSet>
-        ))}
-      </View>
+    <View style={tableStyles({}).container}>
+      <WorkoutSetTableHeader />
+      {sets.map((set, index) => (
+        <WorkoutSet
+          key={set.id}
+          setNum={index + 1}
+          set={set}
+          exerciseId={exerciseId}
+        >
+        </WorkoutSet>
+      ))}
     </View>
   );
 };
@@ -63,20 +62,27 @@ export default WorkoutSetTable;
 
 const styles = StyleSheet.create({
   container: {},
-  tableRow: {
+  headerRow: {
     flexDirection: "row",
-    gap: 7,
-    height: 30,
-    alignItems: "center",
+    justifyContent: "space-between",
+    opacity: 0.6,
   },
-  tableColumn: {
+  headerColumn: {
     alignItems: "center",
     justifyContent: "center",
     textAlign: "center",
     flexGrow: 1,
   },
-  headerRow: {
-    opacity: 0.6,
+  tableRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 7,
+    height: 30,
+    alignItems: "center",
+  },
+  tableCol: {
+    textAlign: "center",
+    flex: 1,
   },
   setCol: {
     width: 20,

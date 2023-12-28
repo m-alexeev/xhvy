@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
-import { IWorkoutExercise } from "../../types/workouts";
-import { camelCase } from "../../utils/stringParsers";
+import { IWorkoutExercise } from "../../../types/workouts";
+import { camelCase } from "../../../utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
-import { useWorkout } from "../../zustand/workoutStore";
+import { useWorkout } from "../../../zustand/workoutStore";
 import Animated from "react-native-reanimated";
 
 interface WorkoutExerciseItemProps {
