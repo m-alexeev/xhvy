@@ -16,16 +16,17 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
 ) => {
   const { addSet } = useWorkout();
   const { colors } = useTheme();
-  const { exercise, sets } = workoutExercise;
+  const { name, id, sets } = workoutExercise;
+
   return (
     <View
       style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
     >
-      <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
       <View>
-        <WorkoutSetTable sets={sets} />
+        <Text variant="titleMedium">{camelCase(name)}</Text>
+        <WorkoutSetTable sets={sets} exerciseId={id} />
         <Animated.View>
-          <Button mode="text" onPress={() => addSet(exercise.id)}>
+          <Button mode="text" onPress={() => addSet(id)}>
             Add Set
           </Button>
         </Animated.View>

@@ -1,29 +1,30 @@
 import { IExercise } from "./exercises";
 
-type SetType = "R" | "W" | "D" | "F";
+export type SetType = "R" | "W" | "D" | "F";
 
 interface IWorkoutSet {
+  id: string;
   type: SetType;
   reps: number;
   weight: number;
   completed: boolean;
   bodyweight?: boolean;
-  previous?: number,
+  previous?: number;
 }
 
-interface IWorkoutExercise {
-  exercise: IExercise;
-  sets: Array<IWorkoutSet>;
+export type WorkoutExercises = { [id: IExercise["id"]]: IWorkoutExercise };
+interface IWorkoutExercise extends IExercise {
+  sets: IWorkoutSet[];
 }
 
 interface IWorkout {
   id: string;
   name: string;
-  exercises: Array<IWorkoutExercise>;
+  exercises: WorkoutExercises;
   note?: string;
   template?: boolean;
   started_at: Date;
   completed_at?: Date;
 }
 
-export { IWorkout, IWorkoutExercise, IWorkoutSet, SetType };
+export { IWorkout, IWorkoutExercise, IWorkoutSet};

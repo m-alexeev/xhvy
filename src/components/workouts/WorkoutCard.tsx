@@ -1,7 +1,11 @@
 import { FC } from "react";
-import { IWorkout, IWorkoutExercise } from "../../types/workouts";
+import {
+  IWorkout,
+  IWorkoutExercise,
+  WorkoutExercises,
+} from "../../types/workouts";
 import { StyleSheet, View } from "react-native";
-import { Card, Icon, Text, useTheme } from "react-native-paper";
+import { Icon, Text, useTheme } from "react-native-paper";
 import { calculateDuration } from "../../utils/helpers";
 
 interface WorkoutProps {
@@ -12,20 +16,20 @@ const WorkoutExerciseItem: FC<IWorkoutExercise> = (props) => {
   return (
     <View style={styles.itemContainer}>
       <Text>
-        {props.exercise.name} x {props.sets.length}
+        {props.name} x {props.sets.length}
       </Text>
     </View>
   );
 };
 
 interface WorkoutExercisesProps {
-  exercises: IWorkoutExercise[];
+  exercises: WorkoutExercises;
 }
-const WorkoutExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
+const WorkoutCardExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
   return (
     <View>
-      {exercises.map((exercise) => (
-        <WorkoutExerciseItem key={exercise.exercise.id} {...exercise}>
+      {Object.keys(exercises).map((id) => (
+        <WorkoutExerciseItem key={id} {...exercises[id]}>
         </WorkoutExerciseItem>
       ))}
     </View>
@@ -52,7 +56,7 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
       </View>
       <View style={styles.exerciseContainer}>
         <Text variant="titleSmall">Exercises</Text>
-        <WorkoutExercises exercises={workout.exercises} />
+        <WorkoutCardExercises exercises={workout.exercises} />
       </View>
     </View>
   );
