@@ -1,22 +1,29 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
-import { IWorkoutExercise } from "../../../types/workouts";
-import { camelCase } from "../../../utils/stringParsers";
+import { IWorkoutExercise } from "@app/types/workouts";
+import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
-import { useWorkout } from "../../../zustand/workoutStore";
-import Animated from "react-native-reanimated";
+import { useWorkout } from "@app/zustand/workoutStore";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: IWorkoutExercise;
 }
 
-const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
+// Card for workout exercises
+const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = (
   { workoutExercise },
 ) => {
-  const { addSet } = useWorkout();
+  const addSet = useWorkout((state) => state.addSet);
+  const removeExercise = useWorkout((state) => state.removeExercise);
   const { colors } = useTheme();
   const { name, id, sets } = workoutExercise;
+
+  useEffect(() => {
+    if (sets.length == 0) {
+      removeExercise(id);
+    }
+  }, [sets]);
 
   return (
     <View
@@ -24,18 +31,18 @@ const WorkoutExerciseItem: FC<WorkoutExerciseItemProps> = (
     >
       <View>
         <Text variant="titleMedium">{camelCase(name)}</Text>
+        {/*Render exercise table*/}
         <WorkoutSetTable sets={sets} exerciseId={id} />
-        <Animated.View>
-          <Button mode="text" onPress={() => addSet(id)}>
-            Add Set
-          </Button>
-        </Animated.View>
+        {/*Add sets to the table*/}
+        <Button mode="text" onPress={() => addSet(id)}>
+          Add Set
+        </Button>
       </View>
     </View>
   );
 };
 
-export default WorkoutExerciseItem;
+export default WorkoutExerciseCard;
 
 const styles = StyleSheet.create({
   container: {

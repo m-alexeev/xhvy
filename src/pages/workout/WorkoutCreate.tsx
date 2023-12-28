@@ -5,7 +5,7 @@ import { useWorkout } from "../../zustand/workoutStore";
 import TextInputCustom from "../../components/core/TextInput";
 import WorkoutDuration from "../../components/core/WorkoutDuration";
 import { WorkoutStackNavigationProp } from "../../types/navigation";
-import WorkoutList from "../../components/workouts/workoutExercise/WorkoutList";
+import WorkoutExerciseCardList from "../../components/workouts/workoutExercise/WorkoutExerciseCardList";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
@@ -25,6 +25,8 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
     navigation.goBack();
   };
 
+  //NOTE: This can be used but we must keep an internal state for this component
+  // only call the updator
   const updateFieldWithTimeout = (callback: typeof updateField) => {
     // TODO: maybe implement this in future
     clearTimeout(updateTimeout);
@@ -63,7 +65,7 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           </View>
         </View>
         <ScrollView>
-          <WorkoutList exercises={activeWorkout!.exercises} />
+          <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
           <Button
             onPress={addExercise}
             mode="text"

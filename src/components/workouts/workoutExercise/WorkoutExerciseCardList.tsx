@@ -1,25 +1,23 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
-import { WorkoutExercises } from "../../../types/workouts";
-import { useTheme } from "react-native-paper";
-import WorkoutExerciseItem from "./WorkoutExerciseItem";
+import WorkoutExerciseCard from "./WorkoutExerciseCard";
+import { WorkoutExercises } from "@app/types/workouts";
 
 interface WorkoutListProps {
   exercises: WorkoutExercises;
 }
 
-const WorkoutList: FC<WorkoutListProps> = ({ exercises }) => {
-  const { colors } = useTheme();
+const WorkoutExerciseCardList: FC<WorkoutListProps> = ({ exercises }) => {
   return (
     <View style={styles.container}>
       {Object.entries(exercises).map(([key, exercise]) => (
-        <WorkoutExerciseItem key={key} workoutExercise={exercise} />
+        <WorkoutExerciseCard key={key} workoutExercise={exercise} />
       ))}
     </View>
   );
 };
 
-export default WorkoutList;
+export default WorkoutExerciseCardList;
 
 const styles = StyleSheet.create({
   container: { flex: 1 },

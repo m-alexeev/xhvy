@@ -1,12 +1,12 @@
-import { Animated as RNAnimated, StyleSheet, View } from "react-native";
+import { Animated as RNAnimated, View } from "react-native";
 import React, { FC, useState } from "react";
-import { IWorkoutSet } from "../../../types/workouts";
-import { Icon, MD3Theme, Text, useTheme } from "react-native-paper";
+import { Icon, Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
-import CustomTextInput from "../../core/TextInput";
-import IconButton from "../../core/IconButton";
+import CustomTextInput from "@app/components/core/TextInput";
+import IconButton from "@app/components/core/IconButton";
+import { IWorkoutSet } from "@app/types/workouts";
 import { Swipeable } from "react-native-gesture-handler";
-import { useWorkout } from "../../../zustand/workoutStore";
+import { useWorkout } from "@app/zustand/workoutStore";
 import { tableStyles } from "./styles";
 
 interface WorkoutSetProps {
@@ -22,6 +22,7 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
   const { removeSet } = useWorkout();
   const [completed, setComplete] = useState<boolean>(set.completed);
 
+  // TODO: create custom swipeable component with panGesture and Reanimated
   const renderDelete = (
     _progress: RNAnimated.AnimatedInterpolation<number>,
     dragX: RNAnimated.AnimatedInterpolation<number>,
@@ -52,7 +53,7 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
   };
 
   return (
-    <View style={{ marginBottom:3}}>
+    <View style={{ marginBottom: 3 }}>
       <Swipeable
         renderRightActions={renderDelete}
         rightThreshold={30}
