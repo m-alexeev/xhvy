@@ -18,7 +18,7 @@ export type WorkoutAction = {
     value: K,
   ) => void;
   addExercises: (exercises: IExercise[]) => void;
-  // removeExercise: (exercise_id: string) => void;
+  removeExercise: (exercise_id: string) => void;
   addSet: (exercise_id: string) => void;
   removeSet: (exerciseId: string, setIndex: number) => void;
 };

@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
-import { IWorkoutExercise, WorkoutExercises } from "../../types/workouts";
+import { WorkoutExercises } from "../../types/workouts";
 import { useTheme } from "react-native-paper";
 import WorkoutExerciseItem from "./WorkoutExerciseItem";
 

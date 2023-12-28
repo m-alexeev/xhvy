@@ -1,7 +1,6 @@
 import { IExercise } from "./exercises";
 
 export type SetType = "R" | "W" | "D" | "F";
-export type WorkoutExercises = { [id: IExercise["id"]]: IWorkoutExercise };
 
 interface IWorkoutSet {
   id: string;
@@ -13,6 +12,7 @@ interface IWorkoutSet {
   previous?: number;
 }
 
+export type WorkoutExercises = { [id: IExercise["id"]]: IWorkoutExercise };
 interface IWorkoutExercise extends IExercise {
   sets: IWorkoutSet[];
 }

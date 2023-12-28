@@ -72,6 +72,12 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           });
         })),
+      removeExercise: (exerciseId) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            delete state.activeWorkout.exercises[exerciseId];
+          }
+        })),
       addSet: (exercise_id: string) =>
         //TODO: Add set from history
         set(produce((state: WorkoutStoreType) => {
@@ -91,6 +97,9 @@ const useWorkout = create<WorkoutStoreType>()(
             // Remove set by index from array
             state.activeWorkout.exercises[exerciseId].sets.splice(setIndex, 1);
           }
+          // if (state.activeWorkout?.exercises[exerciseId].sets.length == 0) {
+          //   state.removeExercise(exerciseId);
+          // }
         })),
     }),
     {

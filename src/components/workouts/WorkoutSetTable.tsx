@@ -1,12 +1,13 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { IWorkoutSet } from "../../types/workouts";
 import { Text, useTheme } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
+import { useWorkout } from "../../zustand/workoutStore";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
-  exerciseId: string
+  exerciseId: string;
 }
 
 const WorkoutSetTableHeader: FC = () => {
@@ -32,13 +33,26 @@ const WorkoutSetTableHeader: FC = () => {
 
 const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
   const { colors } = useTheme();
+  
+  const { removeExercise } = useWorkout();
+  useEffect(() => {
+    if (sets.length == 0) {
+      removeExercise(exerciseId);
+    }
+  }, [sets]);
 
   return (
     <View style={styles.container}>
       <View>
-        <WorkoutSetTableHeader/>
+        <WorkoutSetTableHeader />
         {sets.map((set, index) => (
-          <WorkoutSet key={set.id} setNum={index + 1} set={set} exerciseId={exerciseId}></WorkoutSet>
+          <WorkoutSet
+            key={set.id}
+            setNum={index + 1}
+            set={set}
+            exerciseId={exerciseId}
+          >
+          </WorkoutSet>
         ))}
       </View>
     </View>

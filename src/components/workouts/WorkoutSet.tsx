@@ -18,7 +18,7 @@ const AnimatedView = RNAnimated.createAnimatedComponent(View);
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
   const theme = useTheme();
-  const { removeSet } = useWorkout();
+  const { removeSet} = useWorkout();
   const [completed, setComplete] = useState<boolean>(set.completed);
 
   const renderDelete = (
