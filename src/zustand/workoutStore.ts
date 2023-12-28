@@ -41,7 +41,7 @@ const useWorkout = create<WorkoutStoreType>()(
           }
         })),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      updateField: (field, value) =>
+      updateExercise: (field, value) =>
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             state.activeWorkout[field] = value;
@@ -97,9 +97,13 @@ const useWorkout = create<WorkoutStoreType>()(
             // Remove set by index from array
             state.activeWorkout.exercises[exerciseId].sets.splice(setIndex, 1);
           }
-          // if (state.activeWorkout?.exercises[exerciseId].sets.length == 0) {
-          //   state.removeExercise(exerciseId);
-          // }
+        })),
+      updateSet: (exerciseId: string, index: number, field, value) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            state.activeWorkout.exercises[exerciseId].sets[index][field] =
+              value;
+          }
         })),
     }),
     {

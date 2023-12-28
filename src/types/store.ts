@@ -1,5 +1,5 @@
 import { IExercise } from "./exercises";
-import { IWorkout } from "./workouts";
+import { IWorkout, IWorkoutSet } from "./workouts";
 
 export type WorkoutState = {
   workouts: Array<IWorkout>;
@@ -13,7 +13,7 @@ export type WorkoutAction = {
   deleteWorkout: (workout_id: string) => void;
   startWorkout: (template?: IWorkout) => void;
   cancelWorkout: () => void;
-  updateField: <T extends keyof IWorkout, K extends IWorkout[T]>(
+  updateExercise: <T extends keyof IWorkout, K extends IWorkout[T]>(
     field: T,
     value: K,
   ) => void;
@@ -21,6 +21,12 @@ export type WorkoutAction = {
   removeExercise: (exercise_id: string) => void;
   addSet: (exercise_id: string) => void;
   removeSet: (exerciseId: string, setIndex: number) => void;
+  updateSet: <T extends keyof IWorkoutSet, K extends IWorkoutSet[T]>(
+    exerciseId: string,
+    index: number,
+    field: T,
+    value: K,
+  ) => void;
 };
 
 export type WorkoutStoreType = WorkoutState & WorkoutAction;

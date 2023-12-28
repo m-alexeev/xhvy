@@ -1,23 +1,24 @@
-import { Animated as RNAnimated, View } from "react-native";
 import React, { FC, useState } from "react";
-import { Icon, Text, useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "@app/components/core/TextInput";
 import IconButton from "@app/components/core/IconButton";
 import { IWorkoutSet } from "@app/types/workouts";
-import { Swipeable } from "react-native-gesture-handler";
-import { useWorkout } from "@app/zustand/workoutStore";
 import { tableStyles } from "./styles";
+import { useWorkout } from "@app/zustand/workoutStore";
+import { formatNumberField } from "@app/utils/stringParsers";
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
   setNum: number;
-  exerciseId: string;
+  updateField: <T extends keyof IWorkoutSet, K extends IWorkoutSet[T]>(
+    field: T,
+    value: K,
+  ) => void;
 }
 
-const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
+const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
   const theme = useTheme();
-  const { removeSet } = useWorkout();
   const [completed, setComplete] = useState<boolean>(set.completed);
 
   return (
@@ -38,14 +39,20 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
         containerStyle={tableStyles({}).tableCol}
         style={{ textAlign: "center" }}
         placeholder="0"
+        placeholderTextColor={theme.colors.outline}
         inputMode="numeric"
+        onChangeText={(e) => updateField("weight", Number(e))}
+        value={formatNumberField(set.weight)}
       >
       </CustomTextInput>
       <CustomTextInput
         containerStyle={tableStyles({}).tableCol}
         style={{ textAlign: "center" }}
         placeholder="0"
+        placeholderTextColor={theme.colors.outline}
         inputMode="numeric"
+        onChangeText={(e) => updateField("reps", Number(e))}
+        value={formatNumberField(set.reps)}
       >
       </CustomTextInput>
       <IconButton

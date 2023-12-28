@@ -17,7 +17,7 @@ interface IWorkoutCreatePageProps {
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const { colors } = useTheme();
   const { activeWorkout, cancelWorkout } = useWorkout();
-  const updateField = useWorkout((state) => state.updateField);
+  const updateField = useWorkout((state) => state.updateExercise);
   let updateTimeout: any;
 
   const stopWorkout = () => {

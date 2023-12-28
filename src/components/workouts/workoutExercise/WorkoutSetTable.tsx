@@ -14,6 +14,7 @@ interface WorkoutSetTableProps {
 
 const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
   const removeSet = useWorkout((state) => state.removeSet);
+  const updateSet = useWorkout((state) => state.updateSet);
 
   const closeSwipable = (index: number) => {
     removeSet(exerciseId, index);
@@ -43,12 +44,10 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
           key={set.id}
         >
           <WorkoutSet
-            key={set.id}
             setNum={index + 1}
             set={set}
-            exerciseId={exerciseId}
-          >
-          </WorkoutSet>
+            updateField={(k, v) => updateSet(exerciseId, index, k, v)}
+          />
         </SwipableWorkoutSetWrapper>
       ))}
     </View>
