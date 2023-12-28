@@ -1,11 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "@app/components/core/TextInput";
 import IconButton from "@app/components/core/IconButton";
 import { IWorkoutSet } from "@app/types/workouts";
 import { tableStyles } from "./styles";
-import { useWorkout } from "@app/zustand/workoutStore";
 import { formatNumberField } from "@app/utils/stringParsers";
 
 interface WorkoutSetProps {
@@ -19,13 +18,12 @@ interface WorkoutSetProps {
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
   const theme = useTheme();
-  const [completed, setComplete] = useState<boolean>(set.completed);
 
   return (
     <Animated.View
       style={[
         tableStyles({ theme: theme }).tableRow,
-        completed && tableStyles({ theme: theme }).completedStyle,
+        set.completed && tableStyles({ theme: theme }).completedStyle,
       ]}
       entering={FadeIn}
     >
@@ -59,11 +57,11 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
         style={[tableStyles({ width: 0.6 }).tableCol, {
           height: 28,
         }]}
-        onPress={() => setComplete(!completed)}
+        onPress={() => updateField("completed", !set.completed)}
         size={20}
         color={theme.colors.onSurfaceVariant}
         icon={"check-bold"}
-        selected={completed}
+        selected={set.completed}
       >
       </IconButton>
     </Animated.View>
