@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { useWorkout } from "../../zustand/workoutStore";
+import { useWorkout } from "@app/zustand/workoutStore";
 import { StyleSheet, View } from "react-native";
 import { Button, Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "../../types/navigation";
+import { RootStackNavigationProp } from "@app/types/navigation";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
 import WorkoutDuration from "../core/WorkoutDuration";
 
