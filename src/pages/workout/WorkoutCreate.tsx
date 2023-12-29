@@ -35,7 +35,6 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   //NOTE: This can be used but we must keep an internal state for this component
   // only call the updator
   const updateFieldWithTimeout = (callback: typeof updateField) => {
-    // TODO: maybe implement this in future
     clearTimeout(updateTimeout);
     updateTimeout = setTimeout(callback, 1000);
   };
