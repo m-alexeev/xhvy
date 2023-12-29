@@ -13,25 +13,10 @@ const currentDate = new Date();
 currentDate.setHours(currentDate.getHours() + 1);
 currentDate.setMinutes(currentDate.getMinutes() + 15);
 currentDate.setSeconds(currentDate.getSeconds() + 32);
-// Define your exercises, sets, and workout
-const sampleWorkout: IWorkout[] = [{
-  id: "1",
-  name: "Full Body Workout",
-  exercises: {
-    "key1": {
-      id: "key1",
-      name: "Pushups",
-      sets: [],
-    }
-  },
-  started_at: new Date(),
-  completed_at: currentDate
-}];
 
-createSectionList(sampleWorkout, "started_at", DateMapper);
 
 const WorkoutView = () => {
-  const { activeWorkout } = useWorkout();
+  const { workouts} = useWorkout();
 
   const theme = useTheme();
   return (
@@ -47,7 +32,7 @@ const WorkoutView = () => {
         </View>
         <Text variant="bodySmall" style={{color: theme.colors.outline}}>History</Text>
         <SectionList
-          sections={createSectionList(sampleWorkout, "started_at", DateMapper)}
+          sections={createSectionList(workouts, "started_at", DateMapper)}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <WorkoutCard workout={item} />}
           renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}

@@ -19,6 +19,7 @@ export type WorkoutAction = {
   ) => void;
   addExercises: (exercises: IExercise[]) => void;
   removeExercise: (exercise_id: string) => void;
+  saveWorkout: () => void;
   addSet: (exercise_id: string) => void;
   removeSet: (exerciseId: string, setIndex: number) => void;
   updateSet: <T extends keyof IWorkoutSet, K extends IWorkoutSet[T]>(

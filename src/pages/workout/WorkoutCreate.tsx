@@ -16,9 +16,16 @@ interface IWorkoutCreatePageProps {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const { colors } = useTheme();
-  const { activeWorkout, cancelWorkout } = useWorkout();
+  const { activeWorkout, cancelWorkout, saveWorkout } = useWorkout();
   const updateField = useWorkout((state) => state.updateExercise);
   let updateTimeout: any;
+
+  //FIX: Refactor page, remove as much state related
+  // functions into separate components as possible
+  const finishWorkout = () => {
+    saveWorkout();
+    navigation.goBack();
+  };
 
   const stopWorkout = () => {
     cancelWorkout();
@@ -78,6 +85,14 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
             mode="text"
           >
             Cancel Workout
+          </Button>
+          <Button
+            style={{ backgroundColor: colors.tertiaryContainer }}
+            textColor={colors.tertiary}
+            onPress={finishWorkout}
+            mode="contained"
+          >
+            Finish Workout
           </Button>
         </ScrollView>
       </View>
