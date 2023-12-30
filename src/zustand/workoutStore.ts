@@ -9,7 +9,7 @@ import {
 } from "../types/workouts";
 import uuid from "react-native-uuid";
 import { WorkoutStoreType } from "../types/store";
-import { CustomStorage, workoutStorage } from "./customStorage";
+import { CustomStorage } from "./customStorage";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -28,6 +28,7 @@ const useWorkout = create<WorkoutStoreType>()(
         })),
       startWorkout: (template?: IWorkout) =>
         set(produce((state: WorkoutStoreType) => {
+          state.activeWorkout = undefined;
           if (template) {
             state.activeWorkout = template;
             state.activeWorkout.id = uuid.v4().toString();
