@@ -84,7 +84,8 @@ const useWorkout = create<WorkoutStoreType>()(
           if (state.activeWorkout) {
             // Save to workout array
             state.activeWorkout.completed_at = new Date();
-            state.workouts.push(state.activeWorkout);
+            // Add to start of workout array
+            state.workouts.unshift(state.activeWorkout);
             // Clear active workout
             state.activeWorkout = undefined;
           }

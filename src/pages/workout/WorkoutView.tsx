@@ -1,4 +1,4 @@
-import { SectionList, StyleSheet, View } from "react-native";
+import { ScrollView, SectionList, StyleSheet, View } from "react-native";
 import React from "react";
 import { Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,16 +15,28 @@ const WorkoutView = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
-        style={[styles.container, {
-          backgroundColor: theme.colors.background,
-        }]}
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.colors.background,
+          },
+        ]}
       >
-        <StartWorkout />
-
-        <Text variant="bodySmall" style={{ color: theme.colors.outline }}>
-          History
-        </Text>
         <SectionList
+          ListHeaderComponent={() => {
+            return (
+              <>
+                <StartWorkout />
+
+                <Text
+                  variant="bodySmall"
+                  style={{ color: theme.colors.outline }}
+                >
+                  History
+                </Text>
+              </>
+            );
+          }}
           sections={createSectionList(workouts, "started_at", DateMapper)}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <WorkoutCard workout={item} />}
@@ -61,6 +73,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    opacity: 0.5
+    opacity: 0.5,
   },
 });
