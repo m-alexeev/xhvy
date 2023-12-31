@@ -4,26 +4,38 @@ import { Button, ButtonProps } from "react-native-paper";
 import ConfirmationPopup from "./ConfirmationPopup";
 
 interface ConfirmationButtonProps extends ButtonProps {
-  buttonText: string;
   popupText?: string;
-  onCancel: () => void;
-  onConfirm: () => void;
+  onCancel?: () => void;
+  onConfirm?: () => void;
 }
 
 const ConfirmationButton: FC<ConfirmationButtonProps> = (
-  { buttonText, popupText, onCancel, onConfirm, ...props },
+  { children, popupText, onCancel, onConfirm, ...props },
 ) => {
   const [modalVisible, setModalVisible] = useState(false);
   
+  const onPopupCancel = () => {
+    setModalVisible(false);
+    if (onCancel){
+      onCancel();
+    }
+  }
+  
+  const onPopupConfirm = () => {
+    setModalVisible(false);
+    if (onConfirm){
+      onConfirm();
+    }
+  }
 
   return (
     <View>
-      <Button {...props}>{buttonText}</Button>
+      <Button {...props} onPress={() => setModalVisible(true)}>{children}</Button>
       <ConfirmationPopup
         text={popupText}
         visible={modalVisible}
-        onConfirm={onConfirm}
-        onCancel={onCancel}
+        onConfirm={onPopupConfirm}
+        onCancel={onPopupCancel}
       />
     </View>
   );

@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
 import CancelWorkoutButton from "@app/components/workouts/buttons/CancelWorkoutButton";
+import ConfirmationButton from "@app/components/core/ConfirmationButton";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -52,8 +53,7 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
             <IconButton
               onPress={() => navigation.goBack()}
               icon={"chevron-down"}
-            >
-            </IconButton>
+            ></IconButton>
             <TextInput
               style={[styles.workoutTitle, { color: colors.onSurface }]}
               value={activeWorkout!.name}
@@ -73,21 +73,21 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
         </View>
         <ScrollView>
           <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
-          <Button
-            onPress={addExercise}
-            mode="text"
-          >
+          <Button onPress={addExercise} mode="text">
             Add Exercise
           </Button>
-          <CancelWorkoutButton />
-          <Button
+          <ConfirmationButton textColor={colors.error} onConfirm={stopWorkout}>
+            Cancel
+          </ConfirmationButton>
+          <ConfirmationButton
             style={{ backgroundColor: colors.tertiaryContainer }}
+            popupText="You are about to complete this workout"
             textColor={colors.tertiary}
-            onPress={finishWorkout}
+            onConfirm={finishWorkout}
             mode="contained"
           >
             Finish Workout
-          </Button>
+          </ConfirmationButton>
         </ScrollView>
       </View>
     </SafeAreaView>
