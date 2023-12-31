@@ -70,15 +70,6 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           <ConfirmationButton textColor={colors.error} onConfirm={stopWorkout}>
             Cancel
           </ConfirmationButton>
-          <ConfirmationButton
-            style={{ backgroundColor: colors.tertiaryContainer }}
-            popupText="You are about to complete this workout"
-            textColor={colors.tertiary}
-            onConfirm={finishWorkout}
-            mode="contained"
-          >
-            Finish Workout
-          </ConfirmationButton>
         </View>
       </ScrollView>
     </View>
