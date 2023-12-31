@@ -9,6 +9,7 @@ import WorkoutExerciseCardList from "../../components/workouts/workoutExercise/W
 import { SafeAreaView } from "react-native-safe-area-context";
 import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
+import CancelWorkoutButton from "@app/components/workouts/buttons/CancelWorkoutButton";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -78,13 +79,7 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           >
             Add Exercise
           </Button>
-          <Button
-            textColor={colors.error}
-            onPress={stopWorkout}
-            mode="text"
-          >
-            Cancel Workout
-          </Button>
+          <CancelWorkoutButton />
           <Button
             style={{ backgroundColor: colors.tertiaryContainer }}
             textColor={colors.tertiary}

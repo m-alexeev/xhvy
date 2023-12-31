@@ -5,7 +5,7 @@ import Modal from "react-native-modal";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 interface ConfirmationPopupProps {
-  text: string;
+  text?: string;
   style?: StyleProp<ViewStyle>;
   onConfirm: () => void;
   onCancel: () => void;
@@ -31,19 +31,25 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = (
     >
       <View style={styles(colors).container}>
         <View style={styles().headerContainer}>
-        <Icon source={"alert-circle-outline"} size={32} color={colors.error} />
-        <Text variant="titleLarge" style={styles(colors).header}>
-          Are you sure?
-        </Text>
+          <Icon
+            source={"alert-circle-outline"}
+            size={32}
+            color={colors.error}
+          />
+          <Text variant="titleLarge" style={styles(colors).header}>
+            Are you sure?
+          </Text>
         </View>
         <Text style={styles(colors).text}>
           {text}
         </Text>
         <View style={styles().buttonContainer}>
           <Button
-            style={[styles().button, { backgroundColor: colors.error }]}
+            style={[styles().button, {
+              backgroundColor: colors.error,
+            }]}
             textColor={colors.onError}
-            mode="contained"
+            mode="text"
             onPress={onCancel}
           >
             Cancel
@@ -67,15 +73,16 @@ const styles = (colors?: MD3Colors) =>
       justifyContent: "center",
     },
     container: {
-      backgroundColor: colors?.background,
+      minWidth: 280,
+      backgroundColor: colors?.secondaryContainer,
       margin: 10,
       borderRadius: 10,
       padding: 10,
     },
     headerContainer: {
       justifyContent: "center",
-      alignItems: 'center',
-      flexDirection: 'row',
+      alignItems: "center",
+      flexDirection: "row",
     },
     header: {
       marginLeft: 5,
