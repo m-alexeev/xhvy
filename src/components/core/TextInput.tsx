@@ -37,10 +37,10 @@ const CustomTextInput: FC<ITextInput> = ({
           </View>
         )}
         <TextInput
-          {...props}
-          style={[styles(theme).searchbar, props.style]}
           placeholderTextColor={theme.colors.onSurfaceVariant}
           cursorColor={theme.colors.primary}
+          {...props}
+          style={[styles(theme).searchbar, props.style]}
         />
         {right && (
           <View style={styles(theme).right}>

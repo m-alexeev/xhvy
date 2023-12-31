@@ -5,8 +5,8 @@ export type SetType = "R" | "W" | "D" | "F";
 interface IWorkoutSet {
   id: string;
   type: SetType;
-  reps: number;
-  weight: number;
+  reps: number | undefined;
+  weight: number | undefined;
   completed: boolean;
   bodyweight?: boolean;
   previous?: number;

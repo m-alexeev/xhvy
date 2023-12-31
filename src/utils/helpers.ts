@@ -57,13 +57,3 @@ export const calculateDuration = (start: Date, end: Date): string => {
   return `${hours}:${minutes.toLocaleString().padStart(2, "0")}`;
 };
 
-export const merge = (a: IWorkoutExercise[], b: IWorkoutExercise[]) => {
-  const merged = [...a];
-  b.forEach((el) => {
-    const dup = a.some((a) => a.exercise.id === el.exercise.id);
-    if (!dup) {
-      merged.push(el);
-    }
-  });
-  return merged;
-};

@@ -5,6 +5,7 @@ import { IWorkoutExercise } from "@app/types/workouts";
 import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
 import { useWorkout } from "@app/zustand/workoutStore";
+import IconButton from "@app/components/core/IconButton";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: IWorkoutExercise;
@@ -19,6 +20,7 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = (
   const { colors } = useTheme();
   const { name, id, sets } = workoutExercise;
 
+  // Remove exercise once all sets are removed
   useEffect(() => {
     if (sets.length == 0) {
       removeExercise(id);
@@ -30,7 +32,10 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = (
       style={[styles.container, { backgroundColor: colors.surfaceVariant }]}
     >
       <View>
-        <Text variant="titleMedium">{camelCase(name)}</Text>
+        <View style={styles.titleBar}>
+          <Text variant="titleMedium">{camelCase(name)}</Text>
+          <IconButton size={20} icon="dots-vertical" onPress={console.log}/>
+        </View>
         {/*Render exercise table*/}
         <WorkoutSetTable sets={sets} exerciseId={id} />
         {/*Add sets to the table*/}
@@ -51,5 +56,12 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 10,
     gap: 10,
+  },
+  titleBar: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 5,
   },
 });

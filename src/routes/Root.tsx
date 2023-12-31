@@ -11,6 +11,8 @@ import AddExericse from "../pages/workout/AddExericse";
 import Header from "../components/core/Header";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import IconButton from "@app/components/core/IconButton";
+import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -36,18 +38,13 @@ const RootStackComponent: FC = ({}) => {
   return (
     <>
       <StatusBar animated style={isThemeDark ? "light" : "dark"} />
-      <RootStack.Navigator
-        screenOptions={{ headerShown: false }}
-      >
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Group>
-          {user
-            ? (
-              <RootStack.Screen
-                name="HomeStack"
-                component={HomeStackComponent}
-              />
-            )
-            : <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />}
+          {user ? (
+            <RootStack.Screen name="HomeStack" component={HomeStackComponent} />
+          ) : (
+            <RootStack.Screen name="AuthStack" component={AuthStackRoutes} />
+          )}
         </RootStack.Group>
         <RootStack.Group
           screenOptions={{
@@ -59,7 +56,22 @@ const RootStackComponent: FC = ({}) => {
           <RootStack.Screen
             name="WorkoutModal"
             component={WorkoutCreate}
-            options={{ headerShown: false }}
+            options={{
+              headerShown: true,
+              header: () => (
+                <Header
+                  backButton={
+                    <IconButton
+                      size={24}
+                      icon="chevron-down"
+                      onPress={() => navigation.goBack()}
+                    />
+                  }
+                >
+                  <WorkoutCompleteButton />
+                </Header>
+              ),
+            }}
           />
           <RootStack.Screen
             name="AddExericiseModal"
@@ -71,8 +83,7 @@ const RootStackComponent: FC = ({}) => {
                   backButton={
                     <Appbar.BackAction onPress={() => navigation.goBack()} />
                   }
-                >
-                </Header>
+                ></Header>
               ),
             }}
           />

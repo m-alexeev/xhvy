@@ -6,9 +6,8 @@ import TextInputCustom from "../../components/core/TextInput";
 import WorkoutDuration from "../../components/core/WorkoutDuration";
 import { WorkoutStackNavigationProp } from "../../types/navigation";
 import WorkoutExerciseCardList from "../../components/workouts/workoutExercise/WorkoutExerciseCardList";
-import { SafeAreaView } from "react-native-safe-area-context";
-import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
+import ConfirmationButton from "@app/components/core/ConfirmationButton";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -16,9 +15,16 @@ interface IWorkoutCreatePageProps {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const { colors } = useTheme();
-  const { activeWorkout, cancelWorkout } = useWorkout();
-  const updateField = useWorkout((state) => state.updateField);
+  const { activeWorkout, cancelWorkout, saveWorkout } = useWorkout();
+  const updateField = useWorkout((state) => state.updateExercise);
   let updateTimeout: any;
+
+  //FIX: Refactor page, remove as much state related
+  // functions into separate components as possible
+  const finishWorkout = () => {
+    saveWorkout();
+    navigation.goBack();
+  };
 
   const stopWorkout = () => {
     cancelWorkout();
@@ -28,7 +34,6 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   //NOTE: This can be used but we must keep an internal state for this component
   // only call the updator
   const updateFieldWithTimeout = (callback: typeof updateField) => {
-    // TODO: maybe implement this in future
     clearTimeout(updateTimeout);
     updateTimeout = setTimeout(callback, 1000);
   };
@@ -38,50 +43,36 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerTitle}>
-            <IconButton
-              onPress={() => navigation.goBack()}
-              icon={"chevron-down"}
-            >
-            </IconButton>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.header}>
             <TextInput
               style={[styles.workoutTitle, { color: colors.onSurface }]}
               value={activeWorkout!.name}
               onChangeText={(text) => () => updateField("name", text)}
             />
-          </View>
-          <View>
-            <WorkoutDuration style={{ marginVertical: 5 }} />
-            <View style={{ flexDirection: "row" }}>
-              <TextInputCustom
-                placeholder="Workout Note"
-                value={activeWorkout?.note}
-                onChangeText={(text) => () => updateField("note", text)}
-              />
+            <View>
+              <WorkoutDuration style={{ marginVertical: 5 }} />
+              <View style={{ flexDirection: "row" }}>
+                <TextInputCustom
+                  placeholder="Workout Note"
+                  value={activeWorkout?.note}
+                  onChangeText={(text) => () => updateField("note", text)}
+                />
+              </View>
             </View>
           </View>
-        </View>
-        <ScrollView>
           <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
-          <Button
-            onPress={addExercise}
-            mode="text"
-          >
+          <Button onPress={addExercise} mode="text">
             Add Exercise
           </Button>
-          <Button
-            textColor={colors.error}
-            onPress={stopWorkout}
-            mode="text"
-          >
-            Cancel Workout
-          </Button>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+          <ConfirmationButton textColor={colors.error} onConfirm={stopWorkout}>
+            Cancel
+          </ConfirmationButton>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -95,12 +86,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 10,
   },
-  headerTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   workoutTitle: {
-    marginLeft: 10,
     fontSize: 24,
   },
   exerciseContainer: {},

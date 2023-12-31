@@ -4,6 +4,8 @@ import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
 import { tableStyles } from "./styles";
+import SwipableWorkoutSetWrapper from "./SwipableWorkoutSetWrapper";
+import { useWorkout } from "@app/zustand/workoutStore";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
@@ -11,6 +13,13 @@ interface WorkoutSetTableProps {
 }
 
 const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
+  const removeSet = useWorkout((state) => state.removeSet);
+  const updateSet = useWorkout((state) => state.updateSet);
+
+  const closeSwipable = (index: number) => {
+    removeSet(exerciseId, index);
+  };
+
   return (
     <View style={tableStyles({}).container}>
       <View style={tableStyles({}).headerRow}>
@@ -30,13 +39,16 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
         </View>
       </View>
       {sets.map((set, index) => (
-        <WorkoutSet
+        <SwipableWorkoutSetWrapper
+          onSwipeableOpen={() => closeSwipable(index)}
           key={set.id}
-          setNum={index + 1}
-          set={set}
-          exerciseId={exerciseId}
         >
-        </WorkoutSet>
+          <WorkoutSet
+            setNum={index + 1}
+            set={set}
+            updateField={(k, v) => updateSet(exerciseId, index, k, v)}
+          />
+        </SwipableWorkoutSetWrapper>
       ))}
     </View>
   );

@@ -1,106 +1,70 @@
-import { Animated as RNAnimated, View } from "react-native";
-import React, { FC, useState } from "react";
-import { Icon, Text, useTheme } from "react-native-paper";
+import React, { FC } from "react";
+import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "@app/components/core/TextInput";
 import IconButton from "@app/components/core/IconButton";
 import { IWorkoutSet } from "@app/types/workouts";
-import { Swipeable } from "react-native-gesture-handler";
-import { useWorkout } from "@app/zustand/workoutStore";
 import { tableStyles } from "./styles";
+import { formatNumberField } from "@app/utils/stringParsers";
 
 interface WorkoutSetProps {
   set: IWorkoutSet;
   setNum: number;
-  exerciseId: string;
+  updateField: <T extends keyof IWorkoutSet, K extends IWorkoutSet[T]>(
+    field: T,
+    value: K,
+  ) => void;
 }
 
-const AnimatedView = RNAnimated.createAnimatedComponent(View);
-
-const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, exerciseId }) => {
+const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
   const theme = useTheme();
-  const { removeSet } = useWorkout();
-  const [completed, setComplete] = useState<boolean>(set.completed);
-
-  // TODO: create custom swipeable component with panGesture and Reanimated
-  const renderDelete = (
-    _progress: RNAnimated.AnimatedInterpolation<number>,
-    dragX: RNAnimated.AnimatedInterpolation<number>,
-  ) => {
-    const trans = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: "clamp",
-    });
-    return (
-      <View
-        style={tableStyles({ theme: theme }).deleteContainer}
-      >
-        <AnimatedView
-          style={[tableStyles({ theme: theme }).deleteView, {
-            transform: [{ translateX: trans }],
-          }]}
-        >
-          <Icon size={24} color={theme.colors.errorContainer} source={"delete"}>
-          </Icon>
-        </AnimatedView>
-      </View>
-    );
-  };
-
-  const closeSwipable = () => {
-    removeSet(exerciseId, setNum - 1);
-  };
 
   return (
-    <View style={{ marginBottom: 3 }}>
-      <Swipeable
-        renderRightActions={renderDelete}
-        rightThreshold={30}
-        friction={2}
-        onSwipeableOpen={closeSwipable}
+    <Animated.View
+      style={[
+        tableStyles({ theme: theme }).tableRow,
+        set.completed && tableStyles({ theme: theme }).completedStyle,
+      ]}
+      entering={FadeIn}
+    >
+      <Text style={[tableStyles({ width: 0.6 }).tableCol]}>
+        {set.type === "R" ? setNum : set.type}
+      </Text>
+      <Text style={tableStyles({}).tableCol}>
+        {set.previous ? set.previous : "-"}
+      </Text>
+      <CustomTextInput
+        containerStyle={tableStyles({}).tableCol}
+        style={{ textAlign: "center" }}
+        placeholder="0"
+        placeholderTextColor={theme.colors.outline}
+        inputMode="numeric"
+        onChangeText={(e) => updateField("weight", Number(e))}
+        value={formatNumberField(set.weight)}
       >
-        <Animated.View
-          style={[
-            tableStyles({ theme: theme }).tableRow,
-            completed && tableStyles({ theme: theme }).completedStyle,
-          ]}
-          entering={FadeIn}
-        >
-          <Text style={[tableStyles({ width: 0.6 }).tableCol]}>
-            {set.type === "R" ? setNum : set.type}
-          </Text>
-          <Text style={tableStyles({}).tableCol}>
-            {set.previous ? set.previous : "-"}
-          </Text>
-          <CustomTextInput
-            containerStyle={tableStyles({}).tableCol}
-            style={{ textAlign: "center" }}
-            placeholder="0"
-            inputMode="numeric"
-          >
-          </CustomTextInput>
-          <CustomTextInput
-            containerStyle={tableStyles({}).tableCol}
-            style={{ textAlign: "center" }}
-            placeholder="0"
-            inputMode="numeric"
-          >
-          </CustomTextInput>
-          <IconButton
-            style={[tableStyles({ width: 0.6 }).tableCol, {
-              height: 28,
-            }]}
-            onPress={() => setComplete(!completed)}
-            size={20}
-            color={theme.colors.onSurfaceVariant}
-            icon={"check-bold"}
-            selected={completed}
-          >
-          </IconButton>
-        </Animated.View>
-      </Swipeable>
-    </View>
+      </CustomTextInput>
+      <CustomTextInput
+        containerStyle={tableStyles({}).tableCol}
+        style={{ textAlign: "center" }}
+        placeholder="0"
+        placeholderTextColor={theme.colors.outline}
+        inputMode="numeric"
+        onChangeText={(e) => updateField("reps", Number(e))}
+        value={formatNumberField(set.reps)}
+      >
+      </CustomTextInput>
+      <IconButton
+        style={[tableStyles({ width: 0.6 }).tableCol, {
+          height: 28,
+        }]}
+        onPress={() => updateField("completed", !set.completed)}
+        size={20}
+        color={theme.colors.onSurfaceVariant}
+        icon={"check-bold"}
+        selected={set.completed}
+      >
+      </IconButton>
+    </Animated.View>
   );
 };
 

@@ -1,15 +1,15 @@
 import { create } from "zustand";
 import { produce } from "immer";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 import {
   IWorkout,
   IWorkoutExercise,
   IWorkoutSet,
   WorkoutExercises,
 } from "../types/workouts";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import uuid from "react-native-uuid";
 import { WorkoutStoreType } from "../types/store";
+import { CustomStorage } from "./customStorage";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -28,6 +28,7 @@ const useWorkout = create<WorkoutStoreType>()(
         })),
       startWorkout: (template?: IWorkout) =>
         set(produce((state: WorkoutStoreType) => {
+          state.activeWorkout = undefined;
           if (template) {
             state.activeWorkout = template;
             state.activeWorkout.id = uuid.v4().toString();
@@ -41,7 +42,7 @@ const useWorkout = create<WorkoutStoreType>()(
           }
         })),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      updateField: (field, value) =>
+      updateExercise: (field, value) =>
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             state.activeWorkout[field] = value;
@@ -78,8 +79,18 @@ const useWorkout = create<WorkoutStoreType>()(
             delete state.activeWorkout.exercises[exerciseId];
           }
         })),
+      saveWorkout: () =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            // Save to workout array
+            state.activeWorkout.completed_at = new Date();
+            // Add to start of workout array
+            state.workouts.unshift(state.activeWorkout);
+            // Clear active workout
+            state.activeWorkout = undefined;
+          }
+        })),
       addSet: (exercise_id: string) =>
-        //TODO: Add set from history
         set(produce((state: WorkoutStoreType) => {
           if (state.activeWorkout) {
             state.activeWorkout.exercises[exercise_id].sets.push({
@@ -97,14 +108,18 @@ const useWorkout = create<WorkoutStoreType>()(
             // Remove set by index from array
             state.activeWorkout.exercises[exerciseId].sets.splice(setIndex, 1);
           }
-          // if (state.activeWorkout?.exercises[exerciseId].sets.length == 0) {
-          //   state.removeExercise(exerciseId);
-          // }
+        })),
+      updateSet: (exerciseId: string, index: number, field, value) =>
+        set(produce((state: WorkoutStoreType) => {
+          if (state.activeWorkout) {
+            state.activeWorkout.exercises[exerciseId].sets[index][field] =
+              value;
+          }
         })),
     }),
     {
       name: "workout-storage",
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: CustomStorage<WorkoutStoreType>(),
     },
   ),
 );
