@@ -6,10 +6,7 @@ import TextInputCustom from "../../components/core/TextInput";
 import WorkoutDuration from "../../components/core/WorkoutDuration";
 import { WorkoutStackNavigationProp } from "../../types/navigation";
 import WorkoutExerciseCardList from "../../components/workouts/workoutExercise/WorkoutExerciseCardList";
-import { SafeAreaView } from "react-native-safe-area-context";
-import IconButton from "../../components/core/IconButton";
 import { ScrollView } from "react-native-gesture-handler";
-import CancelWorkoutButton from "@app/components/workouts/buttons/CancelWorkoutButton";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
 
 interface IWorkoutCreatePageProps {
@@ -46,32 +43,26 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerTitle}>
-            <IconButton
-              onPress={() => navigation.goBack()}
-              icon={"chevron-down"}
-            ></IconButton>
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.header}>
             <TextInput
               style={[styles.workoutTitle, { color: colors.onSurface }]}
               value={activeWorkout!.name}
               onChangeText={(text) => () => updateField("name", text)}
             />
-          </View>
-          <View>
-            <WorkoutDuration style={{ marginVertical: 5 }} />
-            <View style={{ flexDirection: "row" }}>
-              <TextInputCustom
-                placeholder="Workout Note"
-                value={activeWorkout?.note}
-                onChangeText={(text) => () => updateField("note", text)}
-              />
+            <View>
+              <WorkoutDuration style={{ marginVertical: 5 }} />
+              <View style={{ flexDirection: "row" }}>
+                <TextInputCustom
+                  placeholder="Workout Note"
+                  value={activeWorkout?.note}
+                  onChangeText={(text) => () => updateField("note", text)}
+                />
+              </View>
             </View>
           </View>
-        </View>
-        <ScrollView>
           <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
           <Button onPress={addExercise} mode="text">
             Add Exercise
@@ -88,9 +79,9 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           >
             Finish Workout
           </ConfirmationButton>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -104,12 +95,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 10,
   },
-  headerTitle: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   workoutTitle: {
-    marginLeft: 10,
     fontSize: 24,
   },
   exerciseContainer: {},
