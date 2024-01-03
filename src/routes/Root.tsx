@@ -10,9 +10,9 @@ import { RootStackParamList } from "@app/types/navigation";
 import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import AddExericse from "@app/pages/workout/AddExericse";
 import WorkoutCreate from "@app/pages/workout/WorkoutCreate";
-import { Header } from "react-native/Libraries/NewAppScreen";
 import AuthStackRoutes from "./AuthStack";
 import HomeStackComponent from "./HomeStack";
+import Header from "@app/components/core/Header";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

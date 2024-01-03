@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Appbar } from "react-native-paper";
 import WorkoutView from "@app/pages/workout/WorkoutView";
 import { WorkoutStackParamList } from "@app/types/navigation";
-import { Header } from "react-native/Libraries/NewAppScreen";
+import Header from "@app/components/core/Header";
 
 const WorkoutStack = createNativeStackNavigator<WorkoutStackParamList>();
 

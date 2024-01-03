@@ -5,7 +5,7 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import ExerciseCreate from "@app/pages/exercises/Create";
 import ExercisesScreen from "@app/pages/home/Exercises";
 import { ExerciseStackParamList } from "@app/types/navigation";
-import { Header } from "react-native/Libraries/NewAppScreen";
+import Header from "@app/components/core/Header";
 
 const ExercisedStack = createNativeStackNavigator<ExerciseStackParamList>();
 
