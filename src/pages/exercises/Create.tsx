@@ -2,9 +2,10 @@ import { FC } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import FormDropdown from "../../components/core/FormDropdown";
 import { Button } from "react-native-paper";
-import FormInput from "../../components/core/FormInput";
+import auth from "@react-native-firebase/auth";
+import { useNavigation } from "@react-navigation/native";
+import { ExerciseStore } from "@app/zustand/exerciseStore";
 import {
   equipment,
   exerciseTypes,
@@ -13,11 +14,10 @@ import {
   movements,
   muscles,
   tags,
-} from "../../utils/categories";
-import { ExerciseStore } from "../../zustand/exerciseStore";
-import { IExercise } from "../../types/exercises";
-import auth from "@react-native-firebase/auth";
-import { useNavigation } from "@react-navigation/native";
+} from "@app/utils/categories";
+import { IExercise } from "@app/types/exercises";
+import FormInput from "@app/components/core/FormInput";
+import FormDropdown from "@app/components/core/FormDropdown";
 
 const ExerciseCreate: FC = () => {
   const user = auth().currentUser!;
@@ -25,7 +25,10 @@ const ExerciseCreate: FC = () => {
   const { control, handleSubmit } = useForm();
   const createExercise = ExerciseStore((state) => state.createExercise);
 
-  const majorMusclesObj = majorMuclesGroups.map((item) => ({label: item,value: item,}));
+  const majorMusclesObj = majorMuclesGroups.map((item) => ({
+    label: item,
+    value: item,
+  }));
   const musclesObj = muscles.map((item) => ({ label: item, value: item }));
   const tagsArr = tags.map((item) => ({ label: item, value: item }));
   const forceArr = forces.map((item) => ({ label: item, value: item }));
@@ -35,14 +38,14 @@ const ExerciseCreate: FC = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const newExercise: IExercise = {
-      id: data.name, 
+      id: data.name,
       name: data.name,
       primaryMuscleGroups: data.primaryMuscleGroups,
-      modifiable: true, 
+      modifiable: true,
       user_id: user.uid,
     };
     createExercise(newExercise);
-    navigation.goBack(); 
+    navigation.goBack();
   };
 
   return (
@@ -113,9 +116,7 @@ const ExerciseCreate: FC = () => {
           options={movementArr}
         />
       </View>
-      <Button onPress={handleSubmit(onSubmit)}>
-        Submit
-      </Button>
+      <Button onPress={handleSubmit(onSubmit)}>Submit</Button>
     </SafeAreaView>
   );
 };

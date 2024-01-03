@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { RectButton, Swipeable } from "react-native-gesture-handler";
-import { IExercise } from "../../types/exercises";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
+import { IExercise } from "@app/types/exercises";
+import { ExerciseStore } from "@app/zustand/exerciseStore";
 import ExerciseItem from "./ExerciseItem";
-import { ExerciseStore } from "../../zustand/exerciseStore";
 
 interface IExerciseListItem {
   exercise: IExercise;

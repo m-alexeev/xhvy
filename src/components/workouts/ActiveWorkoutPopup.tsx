@@ -5,7 +5,7 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation";
 import Animated, { SlideInDown, SlideOutDown } from "react-native-reanimated";
-import WorkoutDuration from "../core/WorkoutDuration";
+import WorkoutDuration from "@app/components/core/WorkoutDuration";
 
 const ActiveWorkoutPopup: FC = () => {
   const navigation = useNavigation<RootStackNavigationProp>();

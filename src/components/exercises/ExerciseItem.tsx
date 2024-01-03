@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableHighlight, View } from "react-native";
 import { FC } from "react";
-import { camelCase } from "../../utils/stringParsers";
-import { IExercise } from "../../types/exercises";
 import { Text, useTheme } from "react-native-paper";
+import { IExercise } from "@app/types/exercises";
+import { camelCase } from "@app/utils/stringParsers";
 
 interface ExerciseItemProps {
   exercise: IExercise;

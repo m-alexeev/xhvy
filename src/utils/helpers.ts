@@ -1,5 +1,3 @@
-import { IWorkoutExercise } from "../types/workouts";
-
 interface FieldMapper<T> {
   (field: T): string;
 }

@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { useFilter } from "@app/zustand/filterStore";
+import { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon, IconButton, Text, useTheme } from "react-native-paper";
+import { Icon, IconButton, useTheme } from "react-native-paper";
 import CustomTextInput from "../core/TextInput";
-import { useFilter } from "../../zustand/filterStore";
 
 interface ExerciseSearchProps {
   onShowFilter: () => void;
@@ -14,7 +14,7 @@ const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
   return (
     <View style={styles.container}>
       <CustomTextInput
-        containerStyle={{height: 48}}
+        containerStyle={{ height: 48 }}
         selectionColor={theme.colors.primary}
         value={search}
         onChangeText={updateSearch}

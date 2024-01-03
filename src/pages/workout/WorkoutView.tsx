@@ -2,11 +2,11 @@ import { ScrollView, SectionList, StyleSheet, View } from "react-native";
 import React from "react";
 import { Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { createSectionList, DateMapper } from "../../utils/helpers";
-import { useWorkout } from "../../zustand/workoutStore";
-import WorkoutCard from "../../components/workouts/WorkoutCard";
-import StartWorkout from "../../components/workouts/StartWorkout";
-import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
+import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
+import { useWorkout } from "@app/zustand/workoutStore";
+import { DateMapper, createSectionList } from "@app/utils/helpers";
+import WorkoutCard from "@app/components/workouts/WorkoutCard";
+import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 
 const WorkoutView = () => {
   const workouts = useWorkout((state) => state.workouts);
@@ -26,8 +26,7 @@ const WorkoutView = () => {
           ListHeaderComponent={() => {
             return (
               <>
-                <StartWorkout />
-
+                <StartWorkoutButton />
                 <Text
                   variant="bodySmall"
                   style={{ color: theme.colors.outline }}

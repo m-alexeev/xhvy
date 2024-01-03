@@ -3,11 +3,11 @@ import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { RootStackNavigationProp } from "../../types/navigation";
-import { useWorkout } from "../../zustand/workoutStore";
-import ConfirmationButton from "../core/ConfirmationButton";
+import { RootStackNavigationProp } from "@app/types/navigation";
+import { useWorkout } from "@app/zustand/workoutStore";
+import ConfirmationButton from "@app/components/core/ConfirmationButton";
 
-const StartWorkout: FC = () => {
+const StartWorkoutButton: FC = () => {
   const theme = useTheme();
   const navigation = useNavigation<RootStackNavigationProp>();
   const activeWorkout = useWorkout((state) => state.activeWorkout);
@@ -45,7 +45,7 @@ const StartWorkout: FC = () => {
   );
 };
 
-export default StartWorkout;
+export default StartWorkoutButton;
 
 const styles = StyleSheet.create({
   container: {

@@ -6,8 +6,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { UnitsType } from "../types/general";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { UnitsType } from "@app/types/general";
 
 export type OptionsType = {
   units: UnitsType;

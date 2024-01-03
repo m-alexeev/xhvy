@@ -1,12 +1,12 @@
-import HomeScreen from "../pages/home/Home";
-import ProfileScreen from "../pages/home/Profile";
-import { MainBottomTabParamList } from "../types/navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
-import ExerciseStackRouter from "./ExerciseStack";
 import { Icon } from "react-native-paper";
 import WorkoutStackRouter from "./WorkoutStack";
-import Templates from "../pages/home/Templates";
+import HomeScreen from "@app/pages/home/Home";
+import ProfileScreen from "@app/pages/home/Profile";
+import Templates from "@app/pages/home/Templates";
+import { MainBottomTabParamList } from "@app/types/navigation";
+import ExerciseStackRouter from "./ExerciseStack";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 

@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { IExercise } from "../types/exercises";
 import { DEFAULT_EXERCISES } from "../assets/data/exercise_obj";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { IExercise } from "@app/types/exercises";
 
 type ExerciseState = {
   exercises: Array<IExercise>;

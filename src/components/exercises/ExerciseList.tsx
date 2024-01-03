@@ -1,14 +1,13 @@
 import { FC, useState } from "react";
-import { SectionList, StyleSheet, View } from "react-native";
-import { FAB, Text, useTheme } from "react-native-paper";
-import { ExerciseStore } from "../../zustand/exerciseStore";
-import { createSectionList, FirstLetterMapper } from "../../utils/helpers";
-import { useFilter } from "../../zustand/filterStore";
-import ExerciseItem from "./ExerciseItem";
+import { SectionList, StyleSheet } from "react-native";
+import { FAB, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabProps } from "../../types/navigation";
-import { useWorkout } from "../../zustand/workoutStore";
-import { IExercise } from "../../types/exercises";
+import { useFilter } from "@app/zustand/filterStore";
+import { ExerciseDetailsTabProps } from "@app/types/navigation";
+import { ExerciseStore } from "@app/zustand/exerciseStore";
+import { useWorkout } from "@app/zustand/workoutStore";
+import { FirstLetterMapper, createSectionList } from "@app/utils/helpers";
+import ExerciseItem from "./ExerciseItem";
 
 interface ExerciseListProps {
   onPress?: (exercise_id: string) => void;
@@ -22,9 +21,9 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
   const [activeExercises, setActiveExercises] = useState<string[]>([]);
   const exercises = ExerciseStore((state) => state.exercises);
   const { addExercises } = useWorkout();
-  const filteredExercises = exercises.filter((
-    exercise,
-  ) => (exercise.name.toLowerCase().includes(search.trim().toLowerCase())));
+  const filteredExercises = exercises.filter((exercise) =>
+    exercise.name.toLowerCase().includes(search.trim().toLowerCase())
+  );
 
   const handlePress = (exercise_id: string) => {
     if (select) {
@@ -50,7 +49,7 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
         sections={createSectionList(
           filteredExercises,
           "name",
-          FirstLetterMapper,
+          FirstLetterMapper
         )}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -61,14 +60,16 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
           />
         )}
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
-      >
-      </SectionList>
+      ></SectionList>
       <FAB
         icon="plus"
         variant="secondary"
-        style={[styles.fab, {
-          display: activeExercises.length > 0 ? "flex" : "none",
-        }]}
+        style={[
+          styles.fab,
+          {
+            display: activeExercises.length > 0 ? "flex" : "none",
+          },
+        ]}
         label={`Add ${activeExercises.length} Exercises`}
         onPress={handleFabPress}
       />

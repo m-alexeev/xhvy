@@ -8,7 +8,7 @@ import {
   WorkoutExercises,
 } from "../types/workouts";
 import uuid from "react-native-uuid";
-import { WorkoutStoreType } from "../types/store";
+import { WorkoutStoreType } from "@app/types/store";
 import { CustomStorage } from "./customStorage";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update

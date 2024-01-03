@@ -1,7 +1,7 @@
+import { formatTime } from "@app/utils/helpers";
+import { useWorkout } from "@app/zustand/workoutStore";
 import { FC, useEffect, useState } from "react";
 import { Text, TextProps } from "react-native-paper";
-import { formatTime } from "../../utils/helpers";
-import { useWorkout } from "../../zustand/workoutStore";
 
 interface WorkoutDurationProps extends Omit<TextProps<Text>, "children"> {}
 

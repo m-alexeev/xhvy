@@ -1,13 +1,13 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import React, { FC } from "react";
 import { Button, useTheme } from "react-native-paper";
-import { useWorkout } from "../../zustand/workoutStore";
-import TextInputCustom from "../../components/core/TextInput";
-import WorkoutDuration from "../../components/core/WorkoutDuration";
-import { WorkoutStackNavigationProp } from "../../types/navigation";
-import WorkoutExerciseCardList from "../../components/workouts/workoutExercise/WorkoutExerciseCardList";
 import { ScrollView } from "react-native-gesture-handler";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
+import { useWorkout } from "@app/zustand/workoutStore";
+import { WorkoutStackNavigationProp } from "@app/types/navigation";
+import WorkoutDuration from "@app/components/core/WorkoutDuration";
+import WorkoutExerciseCardList from "@app/components/workouts/workoutExercise/WorkoutExerciseCardList";
+import CustomTextInput from "@app/components/core/TextInput";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -55,7 +55,7 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
             <View>
               <WorkoutDuration style={{ marginVertical: 5 }} />
               <View style={{ flexDirection: "row" }}>
-                <TextInputCustom
+                <CustomTextInput
                   placeholder="Workout Note"
                   value={activeWorkout?.note}
                   onChangeText={(text) => () => updateField("note", text)}

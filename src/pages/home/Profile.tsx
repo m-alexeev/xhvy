@@ -1,47 +1,54 @@
-import { Button, Divider, Text} from "react-native-paper";
+import { Button, Divider, Text } from "react-native-paper";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import UserDetails from "../../components/profile/UserDetails";
-import OptionsConfigurator from "../../components/profile/Options";
-import { useThemeSwitch } from "../../contexts/ThemeContext";
 import auth from "@react-native-firebase/auth";
 import { CompositeScreenProps } from "@react-navigation/native";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { MainBottomTabParamList, RootStackParamList } from "../../types/navigation";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
+import {
+  MainBottomTabParamList,
+  RootStackParamList,
+} from "@app/types/navigation";
+import { useThemeSwitch } from "@app/contexts/ThemeContext";
+import UserDetails from "@app/components/profile/UserDetails";
+import OptionsConfigurator from "@app/components/profile/Options";
+import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 
-
-type ProfileScreenProps =CompositeScreenProps<
+type ProfileScreenProps = CompositeScreenProps<
   BottomTabScreenProps<MainBottomTabParamList, "Profile">,
   NativeStackScreenProps<RootStackParamList>
-> 
+>;
 
 const ProfileScreen: FC<ProfileScreenProps> = () => {
-
-  const {toggleTheme} = useThemeSwitch();
+  const { toggleTheme } = useThemeSwitch();
   return (
-    <SafeAreaView style={{flex:1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <UserDetails />
         <Divider />
         <View>
-          <Text >Options</Text>
+          <Text>Options</Text>
           <Button onPress={toggleTheme}>Toggle theme</Button>
-          <OptionsConfigurator/>
+          <OptionsConfigurator />
         </View>
-        <Button onPress={()=> {auth().signOut()}}>Sign out</Button>
+        <Button
+          onPress={() => {
+            auth().signOut();
+          }}
+        >
+          Sign out
+        </Button>
       </View>
-      <ActiveWorkoutPopup/>
+      <ActiveWorkoutPopup />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-  }
-})
+    flex: 1,
+  },
+});
 
 export default ProfileScreen;
