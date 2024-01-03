@@ -1,5 +1,5 @@
-import { Dialog, useTheme } from "react-native-paper";
-import { FC, useState } from "react";
+import { Dialog } from "react-native-paper";
+import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 interface DialogProps {

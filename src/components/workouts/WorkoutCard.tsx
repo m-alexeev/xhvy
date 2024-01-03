@@ -1,12 +1,14 @@
 import { FC } from "react";
+import { StyleSheet, View } from "react-native";
+import { Icon, Text, useTheme } from "react-native-paper";
+import { useWorkout } from "@app/zustand/workoutStore";
+import { calculateDuration } from "@app/utils/helpers";
+import IconButton from "@app/components/core/IconButton";
 import {
   IWorkout,
   IWorkoutExercise,
   WorkoutExercises,
-} from "../../types/workouts";
-import { StyleSheet, View } from "react-native";
-import { Icon, Text, useTheme } from "react-native-paper";
-import { calculateDuration } from "../../utils/helpers";
+} from "@app/types/workouts";
 
 interface WorkoutProps {
   workout: IWorkout;
@@ -29,8 +31,7 @@ const WorkoutCardExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
   return (
     <View>
       {Object.keys(exercises).map((id) => (
-        <WorkoutExerciseItem key={id} {...exercises[id]}>
-        </WorkoutExerciseItem>
+        <WorkoutExerciseItem key={id} {...exercises[id]}></WorkoutExerciseItem>
       ))}
     </View>
   );
@@ -38,12 +39,16 @@ const WorkoutCardExercises: FC<WorkoutExercisesProps> = ({ exercises }) => {
 
 const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
   const theme = useTheme();
+  const deleteWorkout = useWorkout((state) => state.deleteWorkout);
 
   return (
     <View
-      style={[styles.container, {
-        backgroundColor: theme.colors.surfaceVariant,
-      }]}
+      style={[
+        styles.container,
+        {
+          backgroundColor: theme.colors.surfaceVariant,
+        },
+      ]}
     >
       <View style={styles.headerContainer}>
         <Text variant="titleMedium">{workout.name}</Text>
@@ -52,6 +57,11 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
             {calculateDuration(workout.started_at, workout.completed_at!)}
           </Text>
           <Icon size={16} source="clock" />
+          <IconButton
+            onPress={() => deleteWorkout(workout.id)}
+            icon={"delete-outline"}
+            color={theme.colors.onErrorContainer}
+          ></IconButton>
         </View>
       </View>
       <View style={styles.exerciseContainer}>

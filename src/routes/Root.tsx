@@ -1,18 +1,18 @@
-import { RootStackParamList } from "../types/navigation";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FC, useEffect, useState } from "react";
-import HomeStackComponent from "./HomeStack";
-import AuthStackRoutes from "./AuthStack";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
-import { useThemeSwitch } from "../contexts/ThemeContext";
-import WorkoutCreate from "../pages/workout/WorkoutCreate";
-import AddExericse from "../pages/workout/AddExericse";
-import Header from "../components/core/Header";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "@app/components/core/IconButton";
 import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
+import { RootStackParamList } from "@app/types/navigation";
+import { useThemeSwitch } from "@app/contexts/ThemeContext";
+import AddExericse from "@app/pages/workout/AddExericse";
+import WorkoutCreate from "@app/pages/workout/WorkoutCreate";
+import AuthStackRoutes from "./AuthStack";
+import HomeStackComponent from "./HomeStack";
+import Header from "@app/components/core/Header";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 

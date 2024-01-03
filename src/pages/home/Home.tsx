@@ -2,7 +2,7 @@ import { Text, useTheme } from "react-native-paper";
 import { FC } from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
+import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 
 const HomeScreen: FC = ({}) => {
   const theme = useTheme();

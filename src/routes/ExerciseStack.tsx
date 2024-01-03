@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ExerciseStackParamList } from "../types/navigation";
-import ExercisesScreen from "../pages/home/Exercises";
 import ExerciseDetailsTabRoutes from "./ExerciseDetailsTab";
-import { Appbar, Surface } from "react-native-paper";
-import ExerciseCreate from "../pages/exercises/Create";
+import { Appbar } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import Header from "../components/core/Header";
+import ExerciseCreate from "@app/pages/exercises/Create";
+import ExercisesScreen from "@app/pages/home/Exercises";
+import { ExerciseStackParamList } from "@app/types/navigation";
+import Header from "@app/components/core/Header";
 
 const ExercisedStack = createNativeStackNavigator<ExerciseStackParamList>();
 

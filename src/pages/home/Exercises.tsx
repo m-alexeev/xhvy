@@ -1,11 +1,11 @@
 import { Text, useTheme } from "react-native-paper";
 import { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ExerciseStackScreenProps } from "../../types/navigation";
-import ExerciseSearch from "../../components/exercises/ExerciseSearch";
-import SwipableModal from "../../components/core/SwipableModal";
-import ActiveWorkoutPopup from "../../components/workouts/ActiveWorkoutPopup";
-import ExerciseList from "../../components/exercises/ExerciseList";
+import { ExerciseStackScreenProps } from "@app/types/navigation";
+import ExerciseSearch from "@app/components/exercises/ExerciseSearch";
+import ExerciseList from "@app/components/exercises/ExerciseList";
+import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
+import SwipableModal from "@app/components/core/SwipableModal";
 
 interface IExercisePageProps {
   navigation: ExerciseStackScreenProps<"View">["navigation"];
@@ -24,9 +24,12 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
     <View style={{ flex: 1 }}>
       <ExerciseSearch onShowFilter={toggleModal} />
       <View
-        style={[styles.container, {
-          backgroundColor: theme.colors.background,
-        }]}
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.colors.background,
+          },
+        ]}
       >
         <ExerciseList />
       </View>

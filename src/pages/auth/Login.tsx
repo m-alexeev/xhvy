@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import { Button, Text, TextInput } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import auth from "@react-native-firebase/auth";
 import { GoogleSignin } from "@react-native-google-signin/google-signin";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import FormInput from "../../components/core/FormInput";
+import FormInput from "@app/components/core/FormInput";
 
 
 const Login = () => {
