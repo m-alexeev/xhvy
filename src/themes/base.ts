@@ -1,13 +1,22 @@
-import { MD3DarkTheme, MD3LightTheme, MD3Theme, adaptNavigationTheme, configureFonts } from "react-native-paper";
-import {DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationDefaultTheme} from "@react-navigation/native";
-import { fontConfig } from "./fonts";
+import {
+  MD3DarkTheme,
+  MD3LightTheme,
+  MD3Theme,
+  adaptNavigationTheme,
+  configureFonts,
+} from "react-native-paper";
+import {
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import { fontConfigCustom } from "./fonts";
 
 const MaterialDarkTheme: MD3Theme = {
-  ...MD3DarkTheme, 
+  ...MD3DarkTheme,
   mode: "exact",
-  fonts: configureFonts({config:fontConfig}),
+  fonts: fontConfigCustom,
   roundness: 3,
-  colors:{
+  colors: {
     primary: "rgb(190, 194, 255)",
     onPrimary: "rgb(0, 1, 172)",
     primaryContainer: "rgb(0, 0, 239)",
@@ -43,16 +52,17 @@ const MaterialDarkTheme: MD3Theme = {
       level2: "rgb(40, 40, 49)",
       level3: "rgb(45, 45, 56)",
       level4: "rgb(47, 47, 58)",
-      level5: "rgb(50, 50, 62)"
+      level5: "rgb(50, 50, 62)",
     },
     surfaceDisabled: "rgba(229, 225, 230, 0.12)",
     onSurfaceDisabled: "rgba(229, 225, 230, 0.38)",
-    backdrop: "rgba(48, 48, 56, 0.4)"
+    backdrop: "rgba(48, 48, 56, 0.4)",
   },
-} 
+};
 
 const MaterialLightTheme: MD3Theme = {
-  ...MD3LightTheme, 
+  ...MD3LightTheme,
+  fonts: fontConfigCustom,
   colors: {
     primary: "rgb(52, 61, 255)",
     onPrimary: "rgb(255, 255, 255)",
@@ -89,35 +99,35 @@ const MaterialLightTheme: MD3Theme = {
       level2: "rgb(239, 236, 255)",
       level3: "rgb(233, 230, 255)",
       level4: "rgb(231, 228, 255)",
-      level5: "rgb(227, 224, 255)"
+      level5: "rgb(227, 224, 255)",
     },
     surfaceDisabled: "rgba(27, 27, 31, 0.12)",
     onSurfaceDisabled: "rgba(27, 27, 31, 0.38)",
-    backdrop: "rgba(48, 48, 56, 0.4)"
+    backdrop: "rgba(48, 48, 56, 0.4)",
   },
-}
+};
 
-const {LightTheme, DarkTheme} = adaptNavigationTheme({
+const { LightTheme, DarkTheme } = adaptNavigationTheme({
   reactNavigationLight: NavigationDefaultTheme,
   reactNavigationDark: NavigationDarkTheme,
-})
+});
 
 const CombinedDefaultTheme = {
-  ...MD3LightTheme,
+  ...MaterialLightTheme,
   ...LightTheme,
   colors: {
-    ...MD3LightTheme.colors,
-    ...LightTheme.colors
-  }
-}
+    ...MaterialLightTheme.colors,
+    ...LightTheme.colors,
+  },
+};
 
 const CombinedDarkTheme = {
-  ...MD3DarkTheme,
+  ...MaterialDarkTheme,
   ...DarkTheme,
   colors: {
-    ...MD3DarkTheme.colors,
-    ...DarkTheme.colors
-  }
-}
+    ...MaterialDarkTheme.colors,
+    ...DarkTheme.colors,
+  },
+};
 
-export {CombinedDarkTheme, CombinedDefaultTheme};
+export { CombinedDarkTheme, CombinedDefaultTheme };
