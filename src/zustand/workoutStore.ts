@@ -27,101 +27,122 @@ const useWorkout = create<WorkoutStoreType>()(
           workouts: state.workouts.filter((w) => w.id !== workout_id),
         })),
       startWorkout: (template?: IWorkout) =>
-        set(produce((state: WorkoutStoreType) => {
-          state.activeWorkout = undefined;
-          if (template) {
-            state.activeWorkout = template;
-            state.activeWorkout.id = uuid.v4().toString();
-          } else {
-            state.activeWorkout = {
-              id: uuid.v4().toString(),
-              name: "Unnamed workout",
-              exercises: {},
-              started_at: new Date(),
-            };
-          }
-        })),
+        set(
+          produce((state: WorkoutStoreType) => {
+            state.activeWorkout = undefined;
+            if (template) {
+              state.activeWorkout = template;
+              state.activeWorkout.id = uuid.v4().toString();
+            } else {
+              state.activeWorkout = {
+                id: uuid.v4().toString(),
+                name: "Unnamed workout",
+                exercises: {},
+                started_at: new Date(),
+              };
+            }
+          })
+        ),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
       updateExercise: (field, value) =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            state.activeWorkout[field] = value;
-          }
-        })),
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              state.activeWorkout[field] = value;
+            }
+          })
+        ),
       addExercises: (newExercises) =>
-        set(produce((state: WorkoutStoreType) => {
-          // Create a WorkoutExercise object
-          const workoutExercises: WorkoutExercises = newExercises.reduce(
-            (a, e) => {
-              const sets: IWorkoutSet[] = [{
+        set(
+          produce((state: WorkoutStoreType) => {
+            // Create a WorkoutExercise object
+            const workoutExercises: WorkoutExercises = newExercises.reduce(
+              (a, e) => {
+                const sets: IWorkoutSet[] = [
+                  {
+                    id: uuid.v4().toString(),
+                    type: "R",
+                    weight: 0,
+                    reps: 0,
+                    completed: false,
+                  },
+                ];
+                const workoutExercise: IWorkoutExercise = { ...e, sets };
+                return { ...a, [workoutExercise.id]: workoutExercise };
+              },
+              {}
+            );
+            // Merge existing exercises and new exercises prioritizing existing exercises
+            // in case of overlap
+            Object.keys(workoutExercises).forEach((key) => {
+              if (!state.activeWorkout!.exercises[key]) {
+                state.activeWorkout!.exercises[key] = workoutExercises[key];
+              }
+            });
+          })
+        ),
+      removeExercise: (exerciseId) =>
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              delete state.activeWorkout.exercises[exerciseId];
+            }
+          })
+        ),
+      saveWorkout: () =>
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              // Save to workout array
+              state.activeWorkout.completed_at = new Date();
+              // Add to start of workout array
+              state.workouts.unshift(state.activeWorkout);
+              // Clear active workout
+              state.activeWorkout = undefined;
+            }
+          })
+        ),
+      addSet: (exercise_id: string) =>
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              state.activeWorkout.exercises[exercise_id].sets.push({
                 id: uuid.v4().toString(),
                 type: "R",
                 weight: 0,
                 reps: 0,
                 completed: false,
-              }];
-              const workoutExercise: IWorkoutExercise = { ...e, sets };
-              return { ...a, [workoutExercise.id]: workoutExercise };
-            },
-            {},
-          );
-          // Merge existing exercises and new exercises prioritizing existing exercises
-          // in case of overlap
-          Object.keys(workoutExercises).forEach((key) => {
-            if (!state.activeWorkout!.exercises[key]) {
-              state.activeWorkout!.exercises[key] = workoutExercises[key];
+              });
             }
-          });
-        })),
-      removeExercise: (exerciseId) =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            delete state.activeWorkout.exercises[exerciseId];
-          }
-        })),
-      saveWorkout: () =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            // Save to workout array
-            state.activeWorkout.completed_at = new Date();
-            // Add to start of workout array
-            state.workouts.unshift(state.activeWorkout);
-            // Clear active workout
-            state.activeWorkout = undefined;
-          }
-        })),
-      addSet: (exercise_id: string) =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            state.activeWorkout.exercises[exercise_id].sets.push({
-              id: uuid.v4().toString(),
-              type: "R",
-              weight: 0,
-              reps: 0,
-              completed: false,
-            });
-          }
-        })),
+          })
+        ),
       removeSet: (exerciseId: string, setIndex: number) =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            // Remove set by index from array
-            state.activeWorkout.exercises[exerciseId].sets.splice(setIndex, 1);
-          }
-        })),
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              // Remove set by index from array
+              state.activeWorkout.exercises[exerciseId].sets.splice(
+                setIndex,
+                1
+              );
+            }
+          })
+        ),
       updateSet: (exerciseId: string, index: number, field, value) =>
-        set(produce((state: WorkoutStoreType) => {
-          if (state.activeWorkout) {
-            state.activeWorkout.exercises[exerciseId].sets[index][field] =
-              value;
-          }
-        })),
+        set(
+          produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              state.activeWorkout.exercises[exerciseId].sets[index][field] =
+                value;
+            }
+          })
+        ),
     }),
     {
       name: "workout-storage",
       storage: CustomStorage<WorkoutStoreType>(),
-    },
-  ),
+    }
+  )
 );
 
 export { useWorkout };

@@ -15,7 +15,7 @@ const HomeStackComponent: FC = ({}) => {
     <>
       <HomeStack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Workout"
+        initialRouteName="Home"
       >
         <HomeStack.Screen
           name="Home"
