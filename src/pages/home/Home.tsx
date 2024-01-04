@@ -12,7 +12,7 @@ const HomeScreen: FC = ({}) => {
     <SafeAreaView style={styles.container}>
       <View>
         <HomeProfile />
-        <WeeklyChart />
+        {/* <WeeklyChart /> */}
       </View>
       <ActiveWorkoutPopup />
     </SafeAreaView>

@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import Metrics from "./metrics";
+import { configureFonts } from "react-native-paper";
 
 const size = {
   font6: Metrics.screenWidth * (6 / 365),
@@ -18,14 +19,82 @@ const weight = {
   bold: "bold",
   normal: "normal",
 };
-const fontConfig = {
-  fontFamily: "Montserrat-Regular, Roboto, System, Helvetica, Arial, sans-serif",
-}
 
-const type = {
-  "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-  "Montserrat-Light": require("../../assets/fonts/Montserrat-Light.ttf"),
-  "Montserrat-Bold": require("../../assets/fonts/Montserrat-Bold.ttf"),
+const baseFont = {
+  fontFamily:
+    "System, Helvetica, Arial, sans-serif",
+} as const;
+
+const baseVariants = configureFonts({ config: baseFont });
+
+const customVariants = {
+  labelSmall: {
+    ...baseVariants.labelSmall,
+    fontFamily: "Montserrat_500Medium",
+  },
+  labelMedium: {
+    ...baseVariants.labelMedium,
+    fontFamily: "Montserrat_500Medium",
+  },
+  labelLarge: {
+    ...baseVariants.labelLarge,
+    fontFamily: "Montserrat_500Medium"
+  },
+  bodySmall: {
+    ...baseVariants.bodySmall,
+    fontFamily: "Montserrat_400Regular",
+  },
+  bodyMedium: {
+    ...baseVariants.bodyMedium,
+    fontFamily: "Montserrat_400Regular",
+  },
+  bodyLarge: {
+    ...baseVariants.bodyLarge,
+    fontFamily: "Montserrat_400Regular"
+  },
+  titleSmall: {
+    ...baseVariants.titleSmall,
+    fontFamily: "Montserrat_500Medium"
+  },
+  titleMedium: {
+    ...baseVariants.titleMedium,
+    fontFamily: "Montserrat_500Medium"
+  },
+  titleLarge: {
+    ...baseVariants.titleLarge,
+    fontFamily: "Montserrat_500Medium"
+  },
+  headlineSmall: {
+    ...baseVariants.headlineSmall,
+    fontFamily: "Montserrat_400Regular",
+  },
+  headlineMedium: {
+    ...baseVariants.headlineMedium,
+    fontFamily: "Montserrat_400Regular",
+  },
+  headlineLarge: {
+    ...baseVariants.headlineLarge,
+    fontFamily: "Montserrat_400Regular",
+  },
+  displaySmall: {
+    ...baseVariants.displaySmall,
+    fontFamily: "Montserrat_400Regular",
+  },
+  displayMedium: {
+    ...baseVariants.displayMedium,
+    fontFamily: "Montserrat_400Regular",
+  },
+  displayLarge: {
+    ...baseVariants.displayLarge,
+    fontFamily: "Montserrat_400Regular",
+  },
 };
 
-export { size, weight, type, fontConfig };
+const fontConfigCustom = configureFonts({
+  config: {
+    ...baseVariants,
+    ...customVariants,
+  },
+});
+
+export { size, weight, customVariants, fontConfigCustom };

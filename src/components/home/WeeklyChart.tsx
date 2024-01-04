@@ -28,7 +28,7 @@ const WeeklyChart = () => {
       <AreaChart
         data={sampleData}
         style={{ height: 200 }}
-        contentInset={{ top: 30, bottom: 30,left: -2, right:-2 }}
+        contentInset={{ top: 30, bottom: 30, left: -2, right: -2 }}
         curve={shape.curveNatural}
         svg={{
           stroke: "rgba(134, 65, 244, 0.8)",
@@ -47,4 +47,3 @@ const WeeklyChart = () => {
 export default WeeklyChart;
 
 const styles = StyleSheet.create({});
- 
