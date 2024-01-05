@@ -22,7 +22,7 @@ const weight = {
 
 const baseFont = {
   fontFamily:
-    "System, Helvetica, Arial, sans-serif",
+    "Montserrat_400Regular, System, Helvetica, Arial, sans-serif",
 } as const;
 
 const baseVariants = configureFonts({ config: baseFont });
