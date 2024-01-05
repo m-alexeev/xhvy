@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Appbar } from "react-native-paper";
-import WorkoutView from "@app/pages/workout/WorkoutView";
+import WorkoutHistoryList from "@app/pages/workout/WorkoutHistoryList";
 import { WorkoutStackParamList } from "@app/types/navigation";
 import Header from "@app/components/core/Header";
 
@@ -11,7 +11,7 @@ const WorkoutStackRouter: FC = () => {
   return (
     <WorkoutStack.Navigator>
       <WorkoutStack.Screen
-        component={WorkoutView}
+        component={WorkoutHistoryList}
         name="View"
         options={{
           headerShown: true,

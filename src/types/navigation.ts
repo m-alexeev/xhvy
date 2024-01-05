@@ -9,7 +9,9 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
-  WorkoutModal: undefined;
+  WorkoutCreateModal: undefined;
+  WorkoutViewModal: { workoutId: string };
+  WorkoutEditModal: { workoutId: string };
   AddExericiseModal: undefined;
 };
 
