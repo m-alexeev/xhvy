@@ -61,7 +61,6 @@ const RootStackComponent: FC = ({}) => {
             name="WorkoutCreateModal"
             component={WorkoutCreate}
             options={{
-              headerShown: true,
               header: () => (
                 <Header
                   backButton={<GoBackButton />}
@@ -75,9 +74,9 @@ const RootStackComponent: FC = ({}) => {
             name="WorkoutViewModal"
             component={ViewWorkoutModal}
             options={{
-              headerShown: true,
               header: () => (
                 <Header
+                  title="View Workout"
                   backButton={<GoBackButton />}
                 >
                   <WorkoutCompleteButton />

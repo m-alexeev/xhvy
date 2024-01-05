@@ -17,13 +17,13 @@ const StartWorkoutButton: FC = () => {
     // Start empty workout
     if (!activeWorkout) {
       startWorkout();
-      navigation.navigate("WorkoutModal");
+      navigation.navigate("WorkoutCreateModal");
     }
   };
 
   const handleModalConfirm = () => {
     startWorkout();
-    navigation.navigate("WorkoutModal");
+    navigation.navigate("WorkoutCreateModal");
   };
 
   return (

@@ -73,7 +73,7 @@ const styles = (prop: MD3Theme) =>
       borderRadius: 5,
     },
     selected: {
-      backgroundColor: prop.colors.primaryContainer,
+      backgroundColor: prop.colors.secondaryContainer,
       color: prop.colors.onPrimaryContainer,
     },
   });
