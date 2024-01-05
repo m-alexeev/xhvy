@@ -1,10 +1,12 @@
-interface FieldMapper<T> {
-  (field: T): string;
-}
+import { FieldMapper } from "@app/types/helpers";
 
 export const DateMapper: FieldMapper<Date> = (field) => {
   return field.toLocaleString("default", { month: "long" });
 };
+
+export const WeekMapper: FieldMapper<Date> = (field) => {
+  return field.toLocaleString("default", {day: "2-digit"});
+}
 
 export const FirstLetterMapper: FieldMapper<string> = (field) => {
   return field.charAt(0).toLocaleUpperCase();
@@ -42,6 +44,7 @@ export const createSectionList = <T, K extends keyof T>(
   return sectionList;
 };
 
+
 export const formatTime = (time: number): string => {
   return new Date(time * 1000).toISOString().slice(11, 19);
 };
@@ -54,4 +57,3 @@ export const calculateDuration = (start: Date, end: Date): string => {
   const seconds = Math.floor(difference % 60);
   return `${hours}:${minutes.toLocaleString().padStart(2, "0")}`;
 };
-

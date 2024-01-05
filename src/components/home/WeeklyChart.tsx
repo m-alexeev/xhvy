@@ -3,9 +3,14 @@ import React, { useEffect } from "react";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { AreaChart, Grid, LineChart, XAxis } from "react-native-svg-charts";
 import * as shape from "d3-shape";
+import { createSectionList, WeekMapper } from "@app/utils/helpers";
 
 const WeeklyChart = () => {
   const workouts = useWorkout((state) => state.workouts);
+
+  const test = createSectionList(workouts, "started_at", WeekMapper);
+
+  //TODO: filter workouts for past month, create section list, group by week, display
 
   // TODO: Get past month from today
   const filterWorkouts = () => {
@@ -21,25 +26,8 @@ const WeeklyChart = () => {
   };
   // Map by date, use section mapper?
 
-  const sampleData = [3, 4, 2, 5, 4, 5, 4];
-
   return (
     <View>
-      <AreaChart
-        data={sampleData}
-        style={{ height: 200 }}
-        contentInset={{ top: 30, bottom: 30, left: -2, right: -2 }}
-        curve={shape.curveNatural}
-        svg={{
-          stroke: "rgba(134, 65, 244, 0.8)",
-          fill: "rgba(134, 65, 244, 0.3)",
-          strokeWidth: 4,
-        }}
-      >
-        <Grid />
-      </AreaChart>
-
-      <XAxis data={sampleData}></XAxis>
     </View>
   );
 };
