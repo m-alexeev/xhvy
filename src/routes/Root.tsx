@@ -17,6 +17,7 @@ import HomeStackComponent from "./HomeStack";
 import Header from "@app/components/core/Header";
 import GoBackButton from "@app/components/core/buttons/GoBackButton";
 import ViewWorkoutModal from "@app/pages/workout/ViewWorkout";
+import WorkoutEditModal from "@app/pages/workout/WorkoutEditModal";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -84,6 +85,19 @@ const RootStackComponent: FC = ({}) => {
                 >
                 </Header>
               ),
+            }}
+          />
+          <RootStack.Screen
+            name="WorkoutEditModal"
+            component={WorkoutEditModal}
+            options={{
+              header: () => (
+                <Header
+                  title="Editing Workout"
+                  backButton={<GoBackButton size={32}/>}
+                >
+                </Header>
+              )
             }}
           />
           <RootStack.Screen

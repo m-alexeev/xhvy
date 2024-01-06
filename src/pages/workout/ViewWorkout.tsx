@@ -10,7 +10,6 @@ import { brzyckiFormula } from "@app/utils/formulas";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { camelCase } from "@app/utils/stringParsers";
 import RestartWorkoutButton from "@app/components/workouts/buttons/RestartWorkoutButton";
-import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
 import EditWorkoutButton from "@app/components/workouts/buttons/EditWorkoutButton";
 
 type ViewWorkoutNavigationProps = NativeStackScreenProps<
