@@ -63,7 +63,7 @@ const RootStackComponent: FC = ({}) => {
             options={{
               header: () => (
                 <Header
-                  backButton={<GoBackButton />}
+                  backButton={<GoBackButton size={32} />}
                 >
                   <WorkoutCompleteButton />
                 </Header>
@@ -77,9 +77,8 @@ const RootStackComponent: FC = ({}) => {
               header: () => (
                 <Header
                   title="View Workout"
-                  backButton={<GoBackButton />}
+                  backButton={<GoBackButton size={32}/>}
                 >
-                  <WorkoutCompleteButton />
                 </Header>
               ),
             }}
