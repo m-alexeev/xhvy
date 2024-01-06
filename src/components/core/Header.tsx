@@ -23,4 +23,3 @@ const Header: FC<HeaderProps> = ({ title, backButton, children }) => {
 
 export default Header;
 
-const styles = StyleSheet.create({});

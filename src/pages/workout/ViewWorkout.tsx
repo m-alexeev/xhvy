@@ -50,7 +50,7 @@ const ExerciseView = ({ exercise }: { exercise: IWorkoutExercise }) => {
                     variant="bodyMedium"
                     style={[styles(colors).col, { textAlign: "right" }]}
                   >
-                    {brzyckiFormula(set.weight, set.reps)}kg
+                    {brzyckiFormula(set.weight || 0, set.reps || 0)}kg
                   </Text>
                 )}
             </View>

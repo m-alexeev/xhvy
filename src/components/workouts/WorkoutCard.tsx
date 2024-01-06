@@ -11,6 +11,7 @@ import {
 } from "@app/types/workouts";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation";
+import { camelCase } from "@app/utils/stringParsers";
 
 interface WorkoutProps {
   workout: IWorkout;
@@ -19,8 +20,8 @@ interface WorkoutProps {
 const WorkoutExerciseItem: FC<IWorkoutExercise> = (props) => {
   return (
     <View style={styles.itemContainer}>
-      <Text>
-        {props.name} x {props.sets.length}
+      <Text variant="bodySmall">
+        {camelCase(props.name)} x {props.sets.length}
       </Text>
     </View>
   );
