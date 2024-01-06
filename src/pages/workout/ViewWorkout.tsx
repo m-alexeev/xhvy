@@ -10,6 +10,8 @@ import { brzyckiFormula } from "@app/utils/formulas";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { camelCase } from "@app/utils/stringParsers";
 import RestartWorkoutButton from "@app/components/workouts/buttons/RestartWorkoutButton";
+import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
+import EditWorkoutButton from "@app/components/workouts/buttons/EditWorkoutButton";
 
 type ViewWorkoutNavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -89,6 +91,15 @@ const ViewWorkoutModal: FC<ViewWorkoutNavigationProps> = (
     );
   };
 
+  const WorkoutFooter = () => {
+    return (
+      <View style={{gap: 5}}>
+        <EditWorkoutButton mode="elevated" workoutId={workoutId}>Edit Workout</EditWorkoutButton>
+        <RestartWorkoutButton workoutId={workoutId}>Perform again</RestartWorkoutButton>
+      </View>
+    )
+  }
+
   return (
     <View style={styles(colors).container}>
       <SectionList
@@ -100,7 +111,7 @@ const ViewWorkoutModal: FC<ViewWorkoutNavigationProps> = (
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <ExerciseView exercise={item} />}
         ListHeaderComponent={WorkoutHeader}
-        ListFooterComponent={RestartWorkoutButton}
+        ListFooterComponent={WorkoutFooter}
       >
       </SectionList>
     </View>

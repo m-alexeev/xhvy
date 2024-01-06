@@ -1,28 +1,28 @@
-import React, { Children, FC } from "react";
+import React, { FC } from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation";
 
-interface RestartWorkoutButtonProps extends ButtonProps {
+interface EditWorkoutButtonProps extends ButtonProps {
   workoutId: string;
 }
 
-const RestartWorkoutButton: FC<RestartWorkoutButtonProps> = (
+const EditWorkoutButton: FC<EditWorkoutButtonProps> = (
   { workoutId, ...props },
 ) => {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   return (
     <Button
-      style={{ borderRadius: 5 }}
+      style={{borderRadius: 5}}
       {...props}
-      mode="contained"
       onPress={() =>
-        navigation.navigate("WorkoutCreateModal", { templateId: workoutId })}
+        navigation.navigate("WorkoutEditModal", { workoutId: workoutId })}
     >
       {props.children}
     </Button>
   );
 };
 
-export default RestartWorkoutButton;
+export default EditWorkoutButton;
+

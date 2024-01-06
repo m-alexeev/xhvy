@@ -5,7 +5,10 @@ import auth from "@react-native-firebase/auth";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
-import { RootStackParamList } from "@app/types/navigation";
+import {
+  RootStackNavigationProp,
+  RootStackParamList,
+} from "@app/types/navigation";
 import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import AddExericse from "@app/pages/workout/AddExericse";
 import WorkoutCreate from "@app/pages/workout/WorkoutCreate";
@@ -18,7 +21,7 @@ import ViewWorkoutModal from "@app/pages/workout/ViewWorkout";
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RootStackNavigationProp>();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -77,7 +80,7 @@ const RootStackComponent: FC = ({}) => {
               header: () => (
                 <Header
                   title="View Workout"
-                  backButton={<GoBackButton size={32}/>}
+                  backButton={<GoBackButton size={32} />}
                 >
                 </Header>
               ),
