@@ -16,6 +16,7 @@ export type WorkoutAction = {
   updateExercise: <T extends keyof IWorkout, K extends IWorkout[T]>(
     field: T,
     value: K,
+    workoutId?: string,
   ) => void;
   addExercises: (exercises: IExercise[]) => void;
   removeExercise: (exercise_id: string) => void;
@@ -27,6 +28,7 @@ export type WorkoutAction = {
     index: number,
     field: T,
     value: K,
+    workoutId?: string,
   ) => void;
 };
 

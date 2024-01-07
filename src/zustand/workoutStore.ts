@@ -41,16 +41,25 @@ const useWorkout = create<WorkoutStoreType>()(
                 started_at: new Date(),
               };
             }
-          })
+          }),
         ),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      updateExercise: (field, value) =>
+      updateExercise: (field, value, workoutId) =>
         set(
           produce((state: WorkoutStoreType) => {
-            if (state.activeWorkout) {
+            if (workoutId) {
+              // Update created workouts
+              const workoutIndex = state.workouts.findIndex((workout) =>
+                workout.id === workoutId
+              );
+              if (workoutIndex !== -1) {
+                state.workouts[workoutIndex][field] = value;
+              }
+            } else if (state.activeWorkout) {
+              // Update currently active workout
               state.activeWorkout[field] = value;
             }
-          })
+          }),
         ),
       addExercises: (newExercises) =>
         set(
@@ -70,7 +79,7 @@ const useWorkout = create<WorkoutStoreType>()(
                 const workoutExercise: IWorkoutExercise = { ...e, sets };
                 return { ...a, [workoutExercise.id]: workoutExercise };
               },
-              {}
+              {},
             );
             // Merge existing exercises and new exercises prioritizing existing exercises
             // in case of overlap
@@ -79,7 +88,7 @@ const useWorkout = create<WorkoutStoreType>()(
                 state.activeWorkout!.exercises[key] = workoutExercises[key];
               }
             });
-          })
+          }),
         ),
       removeExercise: (exerciseId) =>
         set(
@@ -87,7 +96,7 @@ const useWorkout = create<WorkoutStoreType>()(
             if (state.activeWorkout) {
               delete state.activeWorkout.exercises[exerciseId];
             }
-          })
+          }),
         ),
       saveWorkout: () =>
         set(
@@ -100,7 +109,7 @@ const useWorkout = create<WorkoutStoreType>()(
               // Clear active workout
               state.activeWorkout = undefined;
             }
-          })
+          }),
         ),
       addSet: (exercise_id: string) =>
         set(
@@ -114,7 +123,7 @@ const useWorkout = create<WorkoutStoreType>()(
                 completed: false,
               });
             }
-          })
+          }),
         ),
       removeSet: (exerciseId: string, setIndex: number) =>
         set(
@@ -123,26 +132,35 @@ const useWorkout = create<WorkoutStoreType>()(
               // Remove set by index from array
               state.activeWorkout.exercises[exerciseId].sets.splice(
                 setIndex,
-                1
+                1,
               );
             }
-          })
+          }),
         ),
-      updateSet: (exerciseId: string, index: number, field, value) =>
+      updateSet: (exerciseId: string, index: number, field, value, workoutId) =>
         set(
           produce((state: WorkoutStoreType) => {
-            if (state.activeWorkout) {
+            if (workoutId) {
+              // Update created workout sets
+              const workoutIndex = state.workouts.findIndex((workout) =>
+                workout.id === workoutId
+              );
+              if (workoutIndex !== -1) {
+                state.workouts[workoutIndex].exercises[exerciseId]
+                  .sets[index][field] = value;
+              }
+            } else if (state.activeWorkout) {
               state.activeWorkout.exercises[exerciseId].sets[index][field] =
                 value;
             }
-          })
+          }),
         ),
     }),
     {
       name: "workout-storage",
       storage: CustomStorage<WorkoutStoreType>(),
-    }
-  )
+    },
+  ),
 );
 
 export { useWorkout };

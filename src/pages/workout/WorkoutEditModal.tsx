@@ -33,9 +33,9 @@ const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
             <Text>{workout!.started_at.toLocaleString()}</Text>
             <Text>{workout!.completed_at!.toLocaleString()}</Text>
           </View>
-          <WorkoutExerciseCardList exercises={workout!.exercises}/>
-          <Button>Save Changes</Button> 
-          <Button textColor={colors.error}>Cancel</Button> 
+          <WorkoutExerciseCardList exercises={workout!.exercises} workoutId={workoutId} />
+          <Button>Save Changes</Button>
+          <Button textColor={colors.error}>Cancel</Button>
         </View>
       </ScrollView>
     </View>

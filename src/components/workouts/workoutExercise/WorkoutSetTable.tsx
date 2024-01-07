@@ -10,9 +10,12 @@ import { useWorkout } from "@app/zustand/workoutStore";
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
   exerciseId: string;
+  workoutId?: string;
 }
 
-const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
+const WorkoutSetTable: FC<WorkoutSetTableProps> = (
+  { sets, exerciseId, workoutId },
+) => {
   const removeSet = useWorkout((state) => state.removeSet);
   const updateSet = useWorkout((state) => state.updateSet);
 
@@ -46,7 +49,8 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = ({ sets, exerciseId }) => {
           <WorkoutSet
             setNum={index + 1}
             set={set}
-            updateField={(k, v) => updateSet(exerciseId, index, k, v)}
+            updateField={(k, v) =>
+              updateSet(exerciseId, index, k, v, workoutId)}
           />
         </SwipableWorkoutSetWrapper>
       ))}
