@@ -1,23 +1,23 @@
-import { View } from "react-native";
-import React, { FC} from "react";
+import { FlatList, View } from "react-native";
+import React, { FC } from "react";
 import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
 import { tableStyles } from "./styles";
 import SwipableWorkoutSetWrapper from "./SwipableWorkoutSetWrapper";
-import { useWorkout } from "@app/zustand/workoutStore";
+import { WorkoutAction } from "@app/types/store";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
   exerciseId: string;
   workoutId?: string;
+  removeSet: WorkoutAction["removeSet"];
+  updateSet: WorkoutAction["updateSet"];
 }
 
 const WorkoutSetTable: FC<WorkoutSetTableProps> = (
-  { sets, exerciseId, workoutId },
+  { sets, exerciseId, workoutId, removeSet, updateSet },
 ) => {
-  const removeSet = useWorkout((state) => state.removeSet);
-  const updateSet = useWorkout((state) => state.updateSet);
 
   const closeSwipable = (index: number) => {
     removeSet(exerciseId, index);
@@ -41,19 +41,25 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = (
         <View style={tableStyles({ width: 0.6 }).headerColumn}>
         </View>
       </View>
-      {sets.map((set, index) => (
-        <SwipableWorkoutSetWrapper
-          onSwipeableOpen={() => closeSwipable(index)}
-          key={set.id}
-        >
-          <WorkoutSet
-            setNum={index + 1}
-            set={set}
-            updateField={(k, v) =>
-              updateSet(exerciseId, index, k, v, workoutId)}
-          />
-        </SwipableWorkoutSetWrapper>
-      ))}
+      <FlatList
+        scrollEnabled={false}
+        data={sets}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item, index }) => (
+          <SwipableWorkoutSetWrapper
+            onSwipeableOpen={() => closeSwipable(index)}
+            key={item.id}
+          >
+            <WorkoutSet
+              setNum={index + 1}
+              set={item}
+              updateField={(k, v) =>
+                updateSet(exerciseId, index, k, v, workoutId)}
+            />
+          </SwipableWorkoutSetWrapper>
+        )}
+      >
+      </FlatList>
     </View>
   );
 };
