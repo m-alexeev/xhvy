@@ -2,12 +2,12 @@ import { StyleSheet, TextInput, View } from "react-native";
 import React, { FC } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
-import ConfirmationButton from "@app/components/core/ConfirmationButton";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { WorkoutStackNavigationProp } from "@app/types/navigation";
 import WorkoutDuration from "@app/components/core/WorkoutDuration";
 import WorkoutExerciseCardList from "@app/components/workouts/workoutExercise/WorkoutExerciseCardList";
 import CustomTextInput from "@app/components/core/TextInput";
+import CancelWorkout from "@app/components/workouts/CancelWorkout";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -15,28 +15,8 @@ interface IWorkoutCreatePageProps {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const { colors } = useTheme();
-  const { activeWorkout, cancelWorkout, saveWorkout } = useWorkout();
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const updateField = useWorkout((state) => state.updateExercise);
-  let updateTimeout: any;
-
-  //FIX: Refactor page, remove as much state related
-  // functions into separate components as possible
-  const finishWorkout = () => {
-    saveWorkout();
-    navigation.goBack();
-  };
-
-  const stopWorkout = () => {
-    cancelWorkout();
-    navigation.goBack();
-  };
-
-  //NOTE: This can be used but we must keep an internal state for this component
-  // only call the updator
-  const updateFieldWithTimeout = (callback: typeof updateField) => {
-    clearTimeout(updateTimeout);
-    updateTimeout = setTimeout(callback, 1000);
-  };
 
   const addExercise = () => {
     navigation.navigate("AddExericiseModal");
@@ -52,24 +32,18 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
               value={activeWorkout!.name}
               onChangeText={(text) => () => updateField("name", text)}
             />
-            <View>
-              <WorkoutDuration style={{ marginVertical: 5 }} />
-              <View style={{ flexDirection: "row" }}>
-                <CustomTextInput
-                  placeholder="Workout Note"
-                  value={activeWorkout?.note}
-                  onChangeText={(text) => () => updateField("note", text)}
-                />
-              </View>
-            </View>
+            <WorkoutDuration style={{ marginVertical: 5 }} />
+            <CustomTextInput
+              placeholder="Workout Note"
+              value={activeWorkout?.note}
+              onChangeText={(text) => () => updateField("note", text)}
+            />
           </View>
           <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
           <Button onPress={addExercise} mode="text">
             Add Exercise
           </Button>
-          <ConfirmationButton textColor={colors.error} onConfirm={stopWorkout}>
-            Cancel
-          </ConfirmationButton>
+          <CancelWorkout />
         </View>
       </ScrollView>
     </View>

@@ -1,14 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { FC, useState } from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import ConfirmationPopup from "./ConfirmationPopup";
-import { GestureResponderEvent } from "react-native-modal";
 
 interface ConfirmationButtonProps extends ButtonProps {
   displayPopup?: boolean;
   popupText?: string;
   onCancel?: () => void;
-  onConfirm?: () => void;
+  onConfirm: () => void;
 }
 
 const ConfirmationButton: FC<ConfirmationButtonProps> = ({
@@ -35,12 +34,11 @@ const ConfirmationButton: FC<ConfirmationButtonProps> = ({
     }
   };
 
-  const handlePress = (e: GestureResponderEvent) => {
+  const handlePress = () => {
     if (displayPopup) {
       setModalVisible(true);
-    }
-    if (props.onPress) {
-      props.onPress(e);
+    } else {
+      onConfirm();
     }
   };
 

@@ -13,6 +13,7 @@ interface IWorkoutSet {
 }
 
 export type WorkoutExercises = { [id: IExercise["id"]]: IWorkoutExercise };
+
 interface IWorkoutExercise extends IExercise {
   sets: IWorkoutSet[];
 }

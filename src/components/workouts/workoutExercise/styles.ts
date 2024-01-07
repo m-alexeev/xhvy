@@ -39,7 +39,7 @@ export const tableStyles = (
       width: 10,
     },
     completedStyle: {
-      backgroundColor: theme?.colors.primaryContainer,
+      backgroundColor: theme?.colors.primary,
       borderRadius: 5,
     },
     deleteContainer: {

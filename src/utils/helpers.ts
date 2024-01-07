@@ -10,6 +10,10 @@ export const FirstLetterMapper: FieldMapper<string> = (field) => {
   return field.charAt(0).toLocaleUpperCase();
 };
 
+export const NameMapper: FieldMapper<string> = (field) => {
+  return field;
+}
+
 export const createSectionList = <T, K extends keyof T>(
   data: Array<T>,
   sectionField: K,

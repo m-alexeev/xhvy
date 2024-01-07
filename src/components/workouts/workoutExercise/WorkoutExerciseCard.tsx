@@ -9,11 +9,12 @@ import IconButton from "@app/components/core/IconButton";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: IWorkoutExercise;
+  workoutId?: string;
 }
 
 // Card for workout exercises
 const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = (
-  { workoutExercise },
+  { workoutExercise, workoutId },
 ) => {
   const addSet = useWorkout((state) => state.addSet);
   const removeExercise = useWorkout((state) => state.removeExercise);
@@ -34,10 +35,10 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = (
       <View>
         <View style={styles.titleBar}>
           <Text variant="titleMedium">{camelCase(name)}</Text>
-          <IconButton size={20} icon="dots-vertical" onPress={console.log}/>
+          <IconButton size={20} icon="dots-vertical" onPress={console.log} />
         </View>
         {/*Render exercise table*/}
-        <WorkoutSetTable sets={sets} exerciseId={id} />
+        <WorkoutSetTable sets={sets} exerciseId={id} workoutId={workoutId} />
         {/*Add sets to the table*/}
         <Button mode="text" onPress={() => addSet(id)}>
           Add Set
