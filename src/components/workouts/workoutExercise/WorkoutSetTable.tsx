@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { FC } from "react";
+import React, { FC} from "react";
 import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";

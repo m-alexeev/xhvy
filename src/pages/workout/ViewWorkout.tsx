@@ -34,7 +34,7 @@ const ExerciseView = ({ exercise }: { exercise: IWorkoutExercise }) => {
             style={[styles(colors).col, { textAlign: "right" }]}
           >
             1RM
-          </Text>
+        </Text>
         </View>
         {exercise.sets.map((set, index) => {
           return (

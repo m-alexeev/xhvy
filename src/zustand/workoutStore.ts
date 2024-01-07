@@ -17,14 +17,22 @@ import { CustomStorage } from "./customStorage";
 const useWorkout = create<WorkoutStoreType>()(
   persist(
     (set) => ({
-      workouts: [],
+      workouts: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
       createWorkout: (workout: IWorkout) =>
-        set((state) => ({ workouts: [...state.workouts, workout] })),
-      deleteWorkout: (workout_id: string) =>
-        set((state) => ({
-          workouts: state.workouts.filter((w) => w.id !== workout_id),
+        set(
+          produce((state: WorkoutStoreType) => {
+            state.workouts[workout.id] = workout;
+          }),
+        ),
+      deleteWorkout: (workoutId: string) =>
+        set(produce((state: WorkoutStoreType) => {
+          console.log(state.workouts);
+          console.log(workoutId);
+          if (state.workouts[workoutId]) {
+            delete state.workouts[workoutId];
+          }
         })),
       startWorkout: (template?: IWorkout) =>
         set(
@@ -49,11 +57,9 @@ const useWorkout = create<WorkoutStoreType>()(
           produce((state: WorkoutStoreType) => {
             if (workoutId) {
               // Update created workouts
-              const workoutIndex = state.workouts.findIndex((workout) =>
-                workout.id === workoutId
-              );
-              if (workoutIndex !== -1) {
-                state.workouts[workoutIndex][field] = value;
+              const workout = state.workouts[workoutId];
+              if (workout) {
+                state.workouts[workoutId][field] = value;
               }
             } else if (state.activeWorkout) {
               // Update currently active workout
@@ -105,7 +111,7 @@ const useWorkout = create<WorkoutStoreType>()(
               // Save to workout array
               state.activeWorkout.completed_at = new Date();
               // Add to start of workout array
-              state.workouts.unshift(state.activeWorkout);
+              state.workouts[state.activeWorkout.id] = state.activeWorkout;
               // Clear active workout
               state.activeWorkout = undefined;
             }
@@ -142,11 +148,9 @@ const useWorkout = create<WorkoutStoreType>()(
           produce((state: WorkoutStoreType) => {
             if (workoutId) {
               // Update created workout sets
-              const workoutIndex = state.workouts.findIndex((workout) =>
-                workout.id === workoutId
-              );
-              if (workoutIndex !== -1) {
-                state.workouts[workoutIndex].exercises[exerciseId]
+              const workout = state.workouts[workoutId];
+              if (workout) {
+                state.workouts[workoutId].exercises[exerciseId]
                   .sets[index][field] = value;
               }
             } else if (state.activeWorkout) {

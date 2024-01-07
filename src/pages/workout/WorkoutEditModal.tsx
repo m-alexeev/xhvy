@@ -1,5 +1,5 @@
 import { StyleSheet, TextInput, View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@app/types/navigation";
 import { getWorkout } from "@app/zustand/hooks";
@@ -33,7 +33,10 @@ const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
             <Text>{workout!.started_at.toLocaleString()}</Text>
             <Text>{workout!.completed_at!.toLocaleString()}</Text>
           </View>
-          <WorkoutExerciseCardList exercises={workout!.exercises} workoutId={workoutId} />
+          <WorkoutExerciseCardList
+            exercises={workout!.exercises}
+            workoutId={workoutId}
+          />
           <Button>Save Changes</Button>
           <Button textColor={colors.error}>Cancel</Button>
         </View>

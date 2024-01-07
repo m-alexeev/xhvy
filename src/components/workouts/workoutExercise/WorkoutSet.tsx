@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC} from "react";
 import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "@app/components/core/TextInput";

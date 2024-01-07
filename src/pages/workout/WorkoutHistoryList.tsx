@@ -36,7 +36,11 @@ const WorkoutHistoryList = () => {
               </>
             );
           }}
-          sections={createSectionList(workouts, "started_at", DateMapper)}
+          sections={createSectionList(
+            Object.values(workouts),
+            "started_at",
+            DateMapper,
+          )}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <WorkoutCard workout={item} />}
           renderSectionHeader={({ section: { title, data } }) => {

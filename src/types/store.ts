@@ -2,7 +2,7 @@ import { IExercise } from "./exercises";
 import { IWorkout, IWorkoutSet } from "./workouts";
 
 export type WorkoutState = {
-  workouts: Array<IWorkout>;
+  workouts: {[id: string]: IWorkout};
   activeWorkout?: IWorkout;
   pending_workout_updates: Array<IWorkout>;
 };
