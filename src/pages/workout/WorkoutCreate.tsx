@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { WorkoutStackNavigationProp } from "@app/types/navigation";
@@ -13,15 +13,37 @@ interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
 }
 
-const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
-  const { colors } = useTheme();
+const ListHeader: FC = () => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
-  const updateField = useWorkout((state) => state.updateExercise);
+  const { colors } = useTheme();
+  const updateField = useWorkout((state) => state.updateField);
+  return (
+    <View style={styles.header}>
+      <TextInput
+        style={[styles.workoutTitle, { color: colors.onSurface }]}
+        value={activeWorkout!.name}
+        onChangeText={(text) => updateField("name", text)}
+      />
+      <WorkoutDuration style={{ marginVertical: 5 }} />
+      <CustomTextInput
+        placeholder="Workout Note"
+        value={activeWorkout?.note}
+        onChangeText={(text) => updateField("note", text)}
+      />
+    </View>
+  );
+};
+
+const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
 
   const addExercise = () => {
     navigation.navigate("AddExericiseModal");
   };
 
+  useEffect(() => {
+    console.log(activeWorkout?.note);
+  }, []);
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (
       <WorkoutExerciseCard
@@ -33,27 +55,11 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
     [],
   );
 
-  const Header = () => (
-    <View style={styles.header}>
-      <TextInput
-        style={[styles.workoutTitle, { color: colors.onSurface }]}
-        value={activeWorkout!.name}
-        onChangeText={(text) => () => updateField("name", text)}
-      />
-      <WorkoutDuration style={{ marginVertical: 5 }} />
-      <CustomTextInput
-        placeholder="Workout Note"
-        value={activeWorkout?.note}
-        onChangeText={(text) => () => updateField("note", text)}
-      />
-    </View>
-  );
-
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
         <FlatList
-          ListHeaderComponent={Header}
+          ListHeaderComponent={ListHeader}
           data={Object.values(activeWorkout!.exercises)}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
@@ -66,13 +72,14 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
               <CancelWorkout />
             </>
           )}
-        >
-        </FlatList>
+        />
       </View>
     </View>
   );
 };
 
+// >
+// </FlatList>
 export default WorkoutCreate;
 
 const styles = StyleSheet.create({

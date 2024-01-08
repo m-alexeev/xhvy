@@ -52,7 +52,7 @@ const useWorkout = create<WorkoutStoreType>()(
           }),
         ),
       cancelWorkout: () => set(() => ({ activeWorkout: undefined })),
-      updateExercise: (field, value, workoutId) =>
+      updateField: (field, value, workoutId) =>
         set(
           produce((state: WorkoutStoreType) => {
             if (workoutId) {
@@ -61,7 +61,7 @@ const useWorkout = create<WorkoutStoreType>()(
               if (workout) {
                 state.workouts[workoutId][field] = value;
               }
-            } else if (state.activeWorkout) {
+            }else if (state.activeWorkout) {
               // Update currently active workout
               state.activeWorkout[field] = value;
             }

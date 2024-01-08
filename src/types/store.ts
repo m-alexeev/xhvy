@@ -13,7 +13,7 @@ export type WorkoutAction = {
   deleteWorkout: (workout_id: string) => void;
   startWorkout: (template?: IWorkout) => void;
   cancelWorkout: () => void;
-  updateExercise: <T extends keyof IWorkout, K extends IWorkout[T]>(
+  updateField: <T extends keyof IWorkout, K extends IWorkout[T]>(
     field: T,
     value: K,
     workoutId?: string,
