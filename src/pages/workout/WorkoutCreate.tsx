@@ -37,13 +37,6 @@ const ListHeader: FC = () => {
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
 
-  const addExercise = () => {
-    navigation.navigate("AddExericiseModal");
-  };
-
-  useEffect(() => {
-    console.log(activeWorkout?.note);
-  }, []);
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (
       <WorkoutExerciseCard
@@ -66,7 +59,7 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           initialNumToRender={5}
           ListFooterComponent={() => (
             <>
-              <Button onPress={addExercise} mode="text">
+              <Button onPress={() => navigation.navigate("AddExericiseModal")} mode="text">
                 Add Exercise
               </Button>
               <CancelWorkout />

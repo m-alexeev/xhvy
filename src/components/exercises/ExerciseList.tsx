@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { SectionList, StyleSheet } from "react-native";
 import { FAB, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -6,17 +6,18 @@ import { useFilter } from "@app/zustand/filterStore";
 import { ExerciseDetailsTabProps } from "@app/types/navigation";
 import { ExerciseStore } from "@app/zustand/exerciseStore";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { FirstLetterMapper, createSectionList } from "@app/utils/helpers";
+import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
+import { IExercise } from "@app/types/exercises";
 
 interface ExerciseListProps {
   onPress?: (exercise_id: string) => void;
   select?: boolean;
 }
 
-const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
+const ExerciseList: FC<ExerciseListProps> = ({ select}) => {
   const { search } = useFilter();
-  const activeWorkout = useWorkout(state => state.activeWorkout);
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const navigation = useNavigation<ExerciseDetailsTabProps>();
   const [activeExercises, setActiveExercises] = useState<string[]>([]);
   const exercises = ExerciseStore((state) => state.exercises);
@@ -24,6 +25,8 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
   const filteredExercises = exercises.filter((exercise) =>
     exercise.name.toLowerCase().includes(search.trim().toLowerCase())
   );
+
+  // FIX: this page gets re-rendered when an exercise is removed...
 
   const handlePress = (exercise_id: string) => {
     if (select) {
@@ -43,24 +46,31 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
     navigation.goBack();
   };
 
+  const renderItem = useCallback(
+    ({ item }: { item: IExercise }) => (
+      <ExerciseItem
+        onPress={handlePress}
+        exercise={item}
+        selected={(activeExercises.includes(item.id) ||
+          !!activeWorkout?.exercises[item.id])}
+      />
+    ),
+    [],
+  );
+
   return (
     <>
       <SectionList
         sections={createSectionList(
           filteredExercises,
           "name",
-          FirstLetterMapper
+          FirstLetterMapper,
         )}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ExerciseItem
-            onPress={handlePress}
-            exercise={item}
-            selected={activeExercises.includes(item.id) || !!activeWorkout?.exercises[item.id]}
-          />
-        )}
+        renderItem={renderItem}
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
-      ></SectionList>
+      >
+      </SectionList>
       <FAB
         icon="plus"
         variant="secondary"

@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableHighlight, View } from "react-native";
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Text, useTheme } from "react-native-paper";
 import { IExercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   itemContainer: { paddingHorizontal: 5, paddingVertical: 10 },
 });
-export default ExerciseItem;
+export default memo(ExerciseItem);
