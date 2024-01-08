@@ -1,5 +1,5 @@
 import { FlatList, View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, memo, useCallback } from "react";
 import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
@@ -15,13 +15,29 @@ interface WorkoutSetTableProps {
   updateSet: WorkoutAction["updateSet"];
 }
 
-const WorkoutSetTable: FC<WorkoutSetTableProps> = (
+const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
   { sets, exerciseId, workoutId, removeSet, updateSet },
 ) => {
-
   const closeSwipable = (index: number) => {
     removeSet(exerciseId, index);
   };
+
+
+  const renderItem = useCallback(
+    ({ item, index }: { item: IWorkoutSet; index: number }) => (
+      <SwipableWorkoutSetWrapper
+        onSwipeableOpen={() => closeSwipable(index)}
+        key={item.id}
+      >
+        <WorkoutSet
+          setNum={index + 1}
+          set={item}
+          updateField={(k, v) => updateSet(exerciseId, index, k, v, workoutId)}
+        />
+      </SwipableWorkoutSetWrapper>
+    ),
+    [],
+  );
 
   return (
     <View style={tableStyles({}).container}>
@@ -45,23 +61,11 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = (
         scrollEnabled={false}
         data={sets}
         keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => (
-          <SwipableWorkoutSetWrapper
-            onSwipeableOpen={() => closeSwipable(index)}
-            key={item.id}
-          >
-            <WorkoutSet
-              setNum={index + 1}
-              set={item}
-              updateField={(k, v) =>
-                updateSet(exerciseId, index, k, v, workoutId)}
-            />
-          </SwipableWorkoutSetWrapper>
-        )}
+        renderItem={renderItem}
       >
       </FlatList>
     </View>
   );
-};
+});
 
 export default WorkoutSetTable;
