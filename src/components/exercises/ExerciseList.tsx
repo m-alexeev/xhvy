@@ -16,7 +16,7 @@ interface ExerciseListProps {
 
 const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
   const { search } = useFilter();
-
+  const activeWorkout = useWorkout(state => state.activeWorkout);
   const navigation = useNavigation<ExerciseDetailsTabProps>();
   const [activeExercises, setActiveExercises] = useState<string[]>([]);
   const exercises = ExerciseStore((state) => state.exercises);
@@ -56,7 +56,7 @@ const ExerciseList: FC<ExerciseListProps> = ({ select }) => {
           <ExerciseItem
             onPress={handlePress}
             exercise={item}
-            selected={activeExercises.includes(item.id)}
+            selected={activeExercises.includes(item.id) || !!activeWorkout?.exercises[item.id]}
           />
         )}
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
