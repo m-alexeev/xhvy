@@ -1,13 +1,13 @@
-import { StyleSheet, TextInput, View } from "react-native";
-import React, { FC } from "react";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import React, { FC, useCallback } from "react";
 import { Button, useTheme } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { WorkoutStackNavigationProp } from "@app/types/navigation";
 import WorkoutDuration from "@app/components/core/WorkoutDuration";
-import WorkoutExerciseCardList from "@app/components/workouts/workoutExercise/WorkoutExerciseCardList";
 import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
+import { IWorkoutExercise } from "@app/types/workouts";
+import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -22,30 +22,53 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
     navigation.navigate("AddExericiseModal");
   };
 
+  const renderItem = useCallback(
+    ({ item }: { item: IWorkoutExercise }) => (
+      <WorkoutExerciseCard
+        key={item.id}
+        workoutExercise={item}
+      >
+      </WorkoutExerciseCard>
+    ),
+    [],
+  );
+
+  const Header = () => (
+    <View style={styles.header}>
+      <TextInput
+        style={[styles.workoutTitle, { color: colors.onSurface }]}
+        value={activeWorkout!.name}
+        onChangeText={(text) => () => updateField("name", text)}
+      />
+      <WorkoutDuration style={{ marginVertical: 5 }} />
+      <CustomTextInput
+        placeholder="Workout Note"
+        value={activeWorkout?.note}
+        onChangeText={(text) => () => updateField("note", text)}
+      />
+    </View>
+  );
+
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <TextInput
-              style={[styles.workoutTitle, { color: colors.onSurface }]}
-              value={activeWorkout!.name}
-              onChangeText={(text) => () => updateField("name", text)}
-            />
-            <WorkoutDuration style={{ marginVertical: 5 }} />
-            <CustomTextInput
-              placeholder="Workout Note"
-              value={activeWorkout?.note}
-              onChangeText={(text) => () => updateField("note", text)}
-            />
-          </View>
-          <WorkoutExerciseCardList exercises={activeWorkout!.exercises} />
-          <Button onPress={addExercise} mode="text">
-            Add Exercise
-          </Button>
-          <CancelWorkout />
-        </View>
-      </ScrollView>
+      <View style={styles.container}>
+        <FlatList
+          ListHeaderComponent={Header}
+          data={Object.values(activeWorkout!.exercises)}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+          initialNumToRender={5}
+          ListFooterComponent={() => (
+            <>
+              <Button onPress={addExercise} mode="text">
+                Add Exercise
+              </Button>
+              <CancelWorkout />
+            </>
+          )}
+        >
+        </FlatList>
+      </View>
     </View>
   );
 };
