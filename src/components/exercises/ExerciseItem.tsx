@@ -18,11 +18,11 @@ const ExerciseItem: FC<ExerciseItemProps> = (
   const theme = useTheme();
   const navigation = useNavigation<ExerciseDetailsTabProps>();
   const selectedExercises = useExercise((s) => s.selectedExercises);
-  const selectExercise = useExercise((s) => s.selectExercise);
+  const toggleExercise = useExercise((s) => s.toggleExercise);
 
   const handlePress = () => {
     if (selectable) {
-      selectExercise(exercise);
+      toggleExercise(exercise);
     } else {
       navigation.navigate("Details", { exercise_id: exercise.id });
     }

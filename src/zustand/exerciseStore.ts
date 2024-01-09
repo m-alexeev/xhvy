@@ -16,7 +16,8 @@ type ExerciseAction = {
   updateExercise: (exerciseId: string, exercise: IExercise) => void;
   deleteExercise: (exerciseId: string) => void;
 
-  selectExercise: (exercise: IExercise) => void;
+  addExercise: (exercise: IExercise) => void;
+  toggleExercise: (exercise: IExercise) => void;
   clearSelection: () => void;
 };
 
@@ -38,7 +39,7 @@ const useExercise = create<ExerciseState & ExerciseAction>()(
         set((state) => ({
           exercises: [...state.exercises.filter((e) => e.id !== exerciseId)],
         })),
-      selectExercise: (exercise) =>
+      toggleExercise: (exercise) =>
         set(produce((state: ExerciseState & ExerciseAction) => {
           if (state.selectedExercises.find((e) => e.id === exercise.id)) {
             const index = state.selectedExercises.findIndex((e) =>
@@ -47,6 +48,12 @@ const useExercise = create<ExerciseState & ExerciseAction>()(
             state.selectedExercises.splice(index, 1);
           } else {
             state.selectedExercises.push(exercise);
+          }
+        })),
+      addExercise: (exericse) =>
+        set(produce((state: ExerciseState & ExerciseAction) => {
+          if (!state.selectedExercises.find((e) => e.id === exericse.id)) {
+            state.selectedExercises.push(exericse);
           }
         })),
       clearSelection: () => set((state) => ({ selectedExercises: [] })),

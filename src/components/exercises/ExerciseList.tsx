@@ -8,7 +8,6 @@ import ExerciseItem from "./ExerciseItem";
 import { IExercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import AddExercisesFab from "./buttons/AddExercisesFab";
-import { useWorkout } from "@app/zustand/workoutStore";
 
 interface ExerciseListProps {
   selectable?: boolean;
