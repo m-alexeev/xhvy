@@ -3,32 +3,34 @@ import React, { FC } from "react";
 import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { ExerciseStore } from "@app/zustand/exerciseStore";
+import { useExercise } from "@app/zustand/exerciseStore";
 
 interface AddExercisesFabProps {
-  activeExercises: Set<string>;
 }
 
 const AddExercisesFab: FC<AddExercisesFabProps> = (
-  { activeExercises },
+  {},
 ) => {
   const navigation = useNavigation();
   const addExercises = useWorkout((state) => state.addExercises);
-  const exercises = ExerciseStore((state) => state.exercises);
+  const exercises = useExercise((state) => state.exercises);
+  const activeExercises = useExercise((state) => state.selectedExercises);
+  const clearSelected = useExercise((state) => state.clearSelection);
 
   const handlePress = () => {
-    addExercises(exercises.filter((e) => activeExercises.has(e.id)));
+    addExercises(exercises.filter((e) => activeExercises.includes(e)));
+    clearSelected();
     navigation.goBack();
   };
 
   return (
     <>
-      {activeExercises.size > 0 && (
+      {activeExercises.length > 0 && (
         <FAB
           icon="plus"
           variant="secondary"
           style={styles.fab}
-          label={`Add ${activeExercises.size} Exercises`}
+          label={`Add ${activeExercises.length} Exercises`}
           onPress={handlePress}
         >
         </FAB>
