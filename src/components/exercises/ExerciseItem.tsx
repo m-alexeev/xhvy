@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableHighlight, View } from "react-native";
-import { FC, memo } from "react";
+import { FC } from "react";
 import { Text, useTheme } from "react-native-paper";
 import { IExercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
@@ -31,7 +31,7 @@ const ExerciseItem: FC<ExerciseItemProps> = (
   return (
     <View
       style={[styles.container, {
-        backgroundColor: selectedExercises.includes(exercise)
+        backgroundColor: selectedExercises.find((e) => e.id === exercise.id)
           ? theme.colors.surfaceVariant
           : theme.colors.background,
       }]}
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   itemContainer: { paddingHorizontal: 5, paddingVertical: 10 },
 });
-export default memo(ExerciseItem);
+export default ExerciseItem;
