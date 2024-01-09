@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 import { FAB, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -10,6 +10,7 @@ import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
 import { IExercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
+import AddExercisesFab from "./buttons/AddExercisesFab";
 
 interface ExerciseListProps {
   onPress?: (exercise_id: string) => void;
@@ -20,38 +21,41 @@ const ExerciseList: FC<ExerciseListProps> = ({ select = false }) => {
   const navigation = useNavigation<ExerciseDetailsTabProps>();
   const search = useFilter((state) => state.search);
   const activeWorkout = useWorkout((state) => state.activeWorkout);
-  const [activeExercises, setActiveExercises] = useState<string[]>([]);
+  const [activeExercises, setActiveExercises] = useState<Set<string>>(() =>
+    new Set()
+  );
   const exercises = ExerciseStore((state) => state.exercises);
-  const addExercises = useWorkout((state) => state.addExercises);
-  const filteredExercises = getFilteredExercises(exercises, search);
+  const filteredExercises = useMemo(
+    () => getFilteredExercises(exercises, search),
+    [exercises, search],
+  );
 
-  const handlePress = (exercise_id: string) => {
+  const handlePress = useCallback((exercise_id: string) => {
     if (select) {
-      if (activeExercises.includes(exercise_id)) {
-        setActiveExercises(activeExercises.filter((e) => e !== exercise_id));
+      if (activeExercises.has(exercise_id)) {
+        setActiveExercises((s) => {
+          const next = new Set(s);
+          next.delete(exercise_id);
+          return next;
+        });
       } else {
-        setActiveExercises((s) => [...s, exercise_id]);
+        setActiveExercises((s) => new Set(s).add(exercise_id));
       }
     } else {
       navigation.navigate("Details", { exercise_id: exercise_id });
     }
-  };
-
-  const handleFabPress = () => {
-    addExercises(exercises.filter((e) => activeExercises.includes(e.id)));
-    navigation.goBack();
-  };
+  }, [select, activeExercises, navigation]);
 
   const renderItem = useCallback(
     ({ item }: { item: IExercise }) => (
       <ExerciseItem
         onPress={handlePress}
         exercise={item}
-        selected={select && (activeExercises.includes(item.id) ||
+        selected={select && (activeExercises.has(item.id) ||
           !!activeWorkout?.exercises[item.id])}
       />
     ),
-    [handlePress, select],
+    [handlePress, activeExercises, activeWorkout],
   );
 
   return (
@@ -67,17 +71,8 @@ const ExerciseList: FC<ExerciseListProps> = ({ select = false }) => {
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
       >
       </SectionList>
-      <FAB
-        icon="plus"
-        variant="secondary"
-        style={[
-          styles.fab,
-          {
-            display: activeExercises.length > 0 ? "flex" : "none",
-          },
-        ]}
-        label={`Add ${activeExercises.length} Exercises`}
-        onPress={handleFabPress}
+      <AddExercisesFab
+        activeExercises={activeExercises}
       />
     </View>
   );
