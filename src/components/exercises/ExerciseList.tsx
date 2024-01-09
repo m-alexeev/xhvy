@@ -1,5 +1,5 @@
-import { FC, useCallback, useState } from "react";
-import { SectionList, StyleSheet } from "react-native";
+import { FC, useCallback, useEffect, useState } from "react";
+import { SectionList, StyleSheet, View } from "react-native";
 import { FAB, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useFilter } from "@app/zustand/filterStore";
@@ -9,24 +9,21 @@ import { useWorkout } from "@app/zustand/workoutStore";
 import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
 import { IExercise } from "@app/types/exercises";
+import { getFilteredExercises } from "@app/utils/exercises";
 
 interface ExerciseListProps {
   onPress?: (exercise_id: string) => void;
   select?: boolean;
 }
 
-const ExerciseList: FC<ExerciseListProps> = ({ select}) => {
-  const { search } = useFilter();
-  const activeWorkout = useWorkout((state) => state.activeWorkout);
+const ExerciseList: FC<ExerciseListProps> = ({ select = false }) => {
   const navigation = useNavigation<ExerciseDetailsTabProps>();
+  const search = useFilter((state) => state.search);
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const [activeExercises, setActiveExercises] = useState<string[]>([]);
   const exercises = ExerciseStore((state) => state.exercises);
-  const { addExercises } = useWorkout();
-  const filteredExercises = exercises.filter((exercise) =>
-    exercise.name.toLowerCase().includes(search.trim().toLowerCase())
-  );
-
-  // FIX: this page gets re-rendered when an exercise is removed...
+  const addExercises = useWorkout((state) => state.addExercises);
+  const filteredExercises = getFilteredExercises(exercises, search);
 
   const handlePress = (exercise_id: string) => {
     if (select) {
@@ -40,7 +37,6 @@ const ExerciseList: FC<ExerciseListProps> = ({ select}) => {
     }
   };
 
-  // TODO: refactor this component as it currently has more than 1 function
   const handleFabPress = () => {
     addExercises(exercises.filter((e) => activeExercises.includes(e.id)));
     navigation.goBack();
@@ -51,15 +47,15 @@ const ExerciseList: FC<ExerciseListProps> = ({ select}) => {
       <ExerciseItem
         onPress={handlePress}
         exercise={item}
-        selected={(activeExercises.includes(item.id) ||
+        selected={select && (activeExercises.includes(item.id) ||
           !!activeWorkout?.exercises[item.id])}
       />
     ),
-    [],
+    [handlePress, select],
   );
 
   return (
-    <>
+    <View style={styles.container}>
       <SectionList
         sections={createSectionList(
           filteredExercises,
@@ -83,13 +79,17 @@ const ExerciseList: FC<ExerciseListProps> = ({ select}) => {
         label={`Add ${activeExercises.length} Exercises`}
         onPress={handleFabPress}
       />
-    </>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  fab: {
+  container: {
     flex: 1,
+    padding: 10,
+    flexDirection: "column",
+  },
+  fab: {
     position: "absolute",
     bottom: 10,
     right: 0,

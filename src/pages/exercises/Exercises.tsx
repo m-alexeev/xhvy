@@ -14,7 +14,7 @@ interface IExercisePageProps {
 // TODO: Refactor component, Single responsibility principle
 // This page should only be responsible for rendering the list of items
 // Move the filtering out
-const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
+const ExercisesScreen: FC<IExercisePageProps> = () => {
   const theme = useTheme();
   const [showModal, setShowModal] = useState(false);
 
@@ -23,16 +23,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <ExerciseSearch onShowFilter={toggleModal} />
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: theme.colors.background,
-          },
-        ]}
-      >
-        <ExerciseList />
-      </View>
+      <ExerciseList />
       <ActiveWorkoutPopup />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
         <Text>Filters</Text>

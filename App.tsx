@@ -6,7 +6,6 @@ import { CombinedDarkTheme, CombinedDefaultTheme } from "./src/themes/base";
 import { ThemeProvider, useThemeSwitch } from "./src/contexts/ThemeContext";
 import {
   GestureHandlerRootView,
-  ScrollView,
 } from "react-native-gesture-handler";
 import {
   useFonts,
@@ -14,8 +13,6 @@ import {
   Montserrat_500Medium,
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
-import { Text } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const AppWrapper = () => {
   const { isThemeDark } = useThemeSwitch();
