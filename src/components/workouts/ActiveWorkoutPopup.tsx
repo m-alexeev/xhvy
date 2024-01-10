@@ -28,7 +28,10 @@ const ActiveWorkoutPopup: FC = () => {
         <Text variant="titleLarge">{activeWorkout!.name}</Text>
         <WorkoutDuration variant="bodyMedium" />
       </View>
-      <Button onPress={() => navigation.navigate("WorkoutCreateModal")}>
+      <Button
+        onPress={() =>
+          navigation.navigate("WorkoutCreateModal", { templateId: undefined })}
+      >
         Resume
       </Button>
     </Animated.View>
@@ -37,12 +40,12 @@ const ActiveWorkoutPopup: FC = () => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 5,
     paddingHorizontal: 5,
     paddingTop: 5,
     justifyContent: "flex-end",
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    overflow: 'hidden',
   },
   header: {
     display: "flex",

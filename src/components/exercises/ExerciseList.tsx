@@ -50,7 +50,7 @@ const ExerciseList: FC<ExerciseListProps> = ({ selectable = false }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 10,
     flexDirection: "column",
   },
   fab: {
