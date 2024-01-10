@@ -39,6 +39,7 @@ const ExerciseList: FC<ExerciseListProps> = ({ selectable = false }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+        initialNumToRender={10}
       >
       </SectionList>
       <AddExercisesFab />

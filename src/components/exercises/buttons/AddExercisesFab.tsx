@@ -16,9 +16,7 @@ const AddExercisesFab: FC<AddExercisesFabProps> = (
   const exercises = useExercise((state) => state.exercises);
   const activeExercises = useExercise((state) => state.selectedExercises);
   const clearSelected = useExercise((state) => state.clearSelection);
-  const workoutExercises = useWorkout((state) =>
-    state.activeWorkout!.exercises
-  );
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
 
   const handlePress = () => {
     addExercises(exercises.filter((e) => activeExercises.includes(e)));
@@ -27,7 +25,7 @@ const AddExercisesFab: FC<AddExercisesFabProps> = (
   };
 
   const exerciseAddCount = activeExercises.length -
-    Object.keys(workoutExercises).length;
+    Object.keys(activeWorkout?.exercises || {}).length;
 
   return (
     <>
