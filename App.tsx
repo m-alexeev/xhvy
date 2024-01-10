@@ -4,29 +4,25 @@ import { OptionsProvider } from "./src/contexts/OptionsContext";
 import { PaperProvider } from "react-native-paper";
 import { CombinedDarkTheme, CombinedDefaultTheme } from "./src/themes/base";
 import { ThemeProvider, useThemeSwitch } from "./src/contexts/ThemeContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
-import {
-  useFonts,
   Montserrat_400Regular,
   Montserrat_500Medium,
   Montserrat_700Bold,
+  useFonts,
 } from "@expo-google-fonts/montserrat";
 
 const AppWrapper = () => {
   const { isThemeDark } = useThemeSwitch();
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
-  const [fontsLoaded, fontError] = useFonts({
+  const [fontsLoaded, fontsError] = useFonts({
     Montserrat_400Regular,
     Montserrat_500Medium,
     Montserrat_700Bold,
   });
 
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
+  if (!fontsLoaded || fontsError) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
