@@ -1,30 +1,44 @@
 import { StyleSheet, TouchableHighlight, View } from "react-native";
-import { FC, memo } from "react";
+import { FC } from "react";
 import { Text, useTheme } from "react-native-paper";
 import { IExercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
+import { useExercise } from "@app/zustand/exerciseStore";
+import { useNavigation } from "@react-navigation/native";
+import { ExerciseDetailsTabProps } from "@app/types/navigation";
 
 interface ExerciseItemProps {
   exercise: IExercise;
-  onPress: (exercise_id: string) => void;
-  selected: boolean;
+  selectable: boolean;
 }
 
 const ExerciseItem: FC<ExerciseItemProps> = (
-  { exercise, onPress, selected },
+  { exercise, selectable },
 ) => {
   const theme = useTheme();
+  const navigation = useNavigation<ExerciseDetailsTabProps>();
+  const selectedExercises = useExercise((s) => s.selectedExercises);
+  const toggleExercise = useExercise((s) => s.toggleExercise);
+
+  const handlePress = () => {
+    if (selectable) {
+      toggleExercise(exercise);
+    } else {
+      navigation.navigate("Details", { exercise_id: exercise.id });
+    }
+  };
+
   return (
     <View
       style={[styles.container, {
-        backgroundColor: selected
+        backgroundColor: selectedExercises.find((e) => e.id === exercise.id)
           ? theme.colors.surfaceVariant
           : theme.colors.background,
       }]}
     >
       <TouchableHighlight
         style={[styles.itemContainer]}
-        onPress={() => onPress(exercise.id)}
+        onPress={handlePress}
         underlayColor={theme.colors.secondaryContainer}
       >
         <View>
@@ -46,4 +60,4 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   itemContainer: { paddingHorizontal: 5, paddingVertical: 10 },
 });
-export default memo(ExerciseItem);
+export default ExerciseItem;

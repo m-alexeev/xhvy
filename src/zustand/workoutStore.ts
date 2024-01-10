@@ -28,8 +28,6 @@ const useWorkout = create<WorkoutStoreType>()(
         ),
       deleteWorkout: (workoutId: string) =>
         set(produce((state: WorkoutStoreType) => {
-          console.log(state.workouts);
-          console.log(workoutId);
           if (state.workouts[workoutId]) {
             delete state.workouts[workoutId];
           }

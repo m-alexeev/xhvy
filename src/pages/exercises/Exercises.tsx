@@ -1,4 +1,4 @@
-import { Text, useTheme } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ExerciseStackScreenProps } from "@app/types/navigation";
@@ -11,28 +11,15 @@ interface IExercisePageProps {
   navigation: ExerciseStackScreenProps<"View">["navigation"];
 }
 
-// TODO: Refactor component, Single responsibility principle
-// This page should only be responsible for rendering the list of items
-// Move the filtering out
-const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
-  const theme = useTheme();
+const ExercisesScreen: FC<IExercisePageProps> = () => {
   const [showModal, setShowModal] = useState(false);
 
   const toggleModal = () => setShowModal(!showModal);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ExerciseSearch onShowFilter={toggleModal} />
-      <View
-        style={[
-          styles.container,
-          {
-            backgroundColor: theme.colors.background,
-          },
-        ]}
-      >
-        <ExerciseList />
-      </View>
+      <ExerciseList />
       <ActiveWorkoutPopup />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
         <Text>Filters</Text>
@@ -43,9 +30,7 @@ const ExercisesScreen: FC<IExercisePageProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
     flex: 1,
-    flexDirection: "column",
   },
 });
 

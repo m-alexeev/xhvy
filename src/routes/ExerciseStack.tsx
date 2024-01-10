@@ -3,9 +3,9 @@ import ExerciseDetailsTabRoutes from "./ExerciseDetailsTab";
 import { Appbar } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import ExerciseCreate from "@app/pages/exercises/Create";
-import ExercisesScreen from "@app/pages/home/Exercises";
 import { ExerciseStackParamList } from "@app/types/navigation";
 import Header from "@app/components/core/Header";
+import ExercisesScreen from "@app/pages/exercises/Exercises";
 
 const ExercisedStack = createNativeStackNavigator<ExerciseStackParamList>();
 
@@ -19,7 +19,7 @@ const ExerciseStackRouter = () => {
         component={ExercisesScreen}
         options={{
           headerShown: true,
-          header: (props) => {
+          header: () => {
             return (
               <Header title="Exercises">
                 <Appbar.Action

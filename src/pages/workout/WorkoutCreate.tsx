@@ -8,6 +8,7 @@ import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
 import { IWorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
+import { useExercise } from "@app/zustand/exerciseStore";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -36,6 +37,13 @@ const ListHeader: FC = () => {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
+  const addExercise = useExercise((state) => state.addExercise);
+
+  useEffect(() => {
+    Object.values(activeWorkout!.exercises).forEach((e) => {
+      addExercise(e);
+    });
+  }, [activeWorkout?.exercises]);
 
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (
@@ -59,7 +67,10 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
           initialNumToRender={5}
           ListFooterComponent={() => (
             <>
-              <Button onPress={() => navigation.navigate("AddExericiseModal")} mode="text">
+              <Button
+                onPress={() => navigation.navigate("AddExericiseModal")}
+                mode="text"
+              >
                 Add Exercise
               </Button>
               <CancelWorkout />
