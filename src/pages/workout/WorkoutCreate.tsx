@@ -18,6 +18,7 @@ const ListHeader: FC = () => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const { colors } = useTheme();
   const updateField = useWorkout((state) => state.updateField);
+
   return (
     <View style={styles.header}>
       <TextInput
@@ -38,8 +39,10 @@ const ListHeader: FC = () => {
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const addExercise = useExercise((state) => state.addExercise);
+  const clearExercises = useExercise((state) => state.clearSelection);
 
   useEffect(() => {
+    clearExercises();
     Object.values(activeWorkout!.exercises).forEach((e) => {
       addExercise(e);
     });
