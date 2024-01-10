@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { Divider, Text } from "react-native-paper";
 import { useFilter } from "@app/zustand/filterStore";
 import { useExercise } from "@app/zustand/exerciseStore";
 import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
@@ -20,7 +20,6 @@ const ExerciseList: FC<ExerciseListProps> = ({ selectable = false }) => {
     () => getFilteredExercises(exercises, search),
     [exercises, search],
   );
-
 
   const renderItem = ({ item }: { item: IExercise }) => (
     <ExerciseItem
