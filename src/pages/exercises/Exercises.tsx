@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ExerciseStackScreenProps } from "@app/types/navigation";
 import ExerciseSearch from "@app/components/exercises/ExerciseSearch";
-import SelectableExerciseList from "@app/components/exercises/ExerciseList";
+import ExerciseList from "@app/components/exercises/ExerciseList";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 import SwipableModal from "@app/components/core/SwipableModal";
 
@@ -19,7 +19,7 @@ const ExercisesScreen: FC<IExercisePageProps> = () => {
   return (
     <View style={styles.container}>
       <ExerciseSearch onShowFilter={toggleModal} />
-      <SelectableExerciseList />
+      <ExerciseList />
       <ActiveWorkoutPopup />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
         <Text>Filters</Text>

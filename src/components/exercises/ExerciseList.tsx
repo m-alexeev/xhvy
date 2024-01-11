@@ -7,7 +7,6 @@ import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
 import { IExercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
-import AddExercisesFab from "./buttons/AddExercisesFab";
 import { useNavigation } from "@react-navigation/native";
 import { ExerciseDetailsTabProps } from "@app/types/navigation";
 
