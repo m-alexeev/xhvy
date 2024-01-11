@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useCallback } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { WorkoutStackNavigationProp } from "@app/types/navigation";
@@ -8,7 +8,6 @@ import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
 import { IWorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
-import { useExercise } from "@app/zustand/exerciseStore";
 
 interface IWorkoutCreatePageProps {
   navigation: WorkoutStackNavigationProp<"New">["navigation"];
@@ -38,15 +37,6 @@ const ListHeader: FC = () => {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
-  const addExercise = useExercise((state) => state.addExercise);
-  const clearExercises = useExercise((state) => state.clearSelection);
-
-  useEffect(() => {
-    clearExercises();
-    Object.values(activeWorkout!.exercises).forEach((e) => {
-      addExercise(e);
-    });
-  }, [activeWorkout?.exercises]);
 
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (
@@ -85,8 +75,6 @@ const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   );
 };
 
-// >
-// </FlatList>
 export default WorkoutCreate;
 
 const styles = StyleSheet.create({
