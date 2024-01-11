@@ -1,49 +1,45 @@
-import { Image, StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { FC, memo } from "react";
-import { Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Icon, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { IExercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
-import { useExercise } from "@app/zustand/exerciseStore";
-import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabProps } from "@app/types/navigation";
 
-interface ExerciseItemProps {
-  exercise: IExercise;
-  selectable: boolean;
+interface SelectableExerciseProps {
+  mode: "select";
+  selected: boolean;
 }
 
-const ExerciseItem: FC<ExerciseItemProps> = (
-  { exercise, selectable },
-) => {
-  const { colors } = useTheme();
-  const navigation = useNavigation<ExerciseDetailsTabProps>();
-  const selectedExercises = useExercise((s) => s.selectedExercises);
-  const toggleExercise = useExercise((s) => s.toggleExercise);
+interface LinkExerciseProps {
+  mode: "link";
+}
+interface GeneralExerciseProps {
+  exercise: IExercise;
+  handlePress: (exercise: IExercise) => void;
+}
 
-  const handlePress = () => {
-    if (selectable) {
-      toggleExercise(exercise);
-    } else {
-      navigation.navigate("Details", { exercise_id: exercise.id });
-    }
-  };
-  //NOTE: Add images after optimizing them
-  // <Image
-  //   style={[styles.img, { overlayColor: colors.background }]}
-  //   source={EXERCISE_GIFS["id"]}
-  // >
-  // </Image>
+type ExerciseItemProps =
+  & GeneralExerciseProps
+  & (SelectableExerciseProps | LinkExerciseProps);
+
+const ExerciseItem: FC<ExerciseItemProps> = (props) => {
+  let selected = undefined;
+  const { exercise, mode, handlePress } = props;
+
+  if (mode === "select") {
+    selected = props.selected;
+  }
+
+  const { colors } = useTheme();
+
   return (
     <View
       style={[styles.container, {
-        backgroundColor: selectedExercises.find((e) => e.id === exercise.id)
-          ? colors.surfaceVariant
-          : colors.background,
+        backgroundColor: selected ? colors.surfaceVariant : colors.background,
       }]}
     >
       <TouchableRipple
         style={[styles.touchable]}
-        onPress={handlePress}
+        onPress={() => handlePress(exercise)}
         underlayColor={colors.secondaryContainer}
         borderless
       >
@@ -58,6 +54,11 @@ const ExerciseItem: FC<ExerciseItemProps> = (
               </Text>
             )}
           </View>
+          {selected && (
+            <View style={styles.iconContainer}>
+              <Icon size={32} source={"check"} color={colors.primary} />
+            </View>
+          )}
         </View>
       </TouchableRipple>
     </View>
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
   img: {
     width: 56,
@@ -86,6 +88,9 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 10,
+  },
+  iconContainer: {
+    marginRight: 10,
   },
 });
 export default memo(ExerciseItem);

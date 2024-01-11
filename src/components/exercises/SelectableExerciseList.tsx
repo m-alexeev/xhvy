@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from "react";
+import { FC, useCallback, useMemo, useState } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import { useFilter } from "@app/zustand/filterStore";
@@ -7,30 +7,49 @@ import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
 import { IExercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
-import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabProps } from "@app/types/navigation";
+import AddExercisesFab from "./buttons/AddExercisesFab";
+import { useWorkout } from "@app/zustand/workoutStore";
 
-interface ExerciseListProps {}
+interface SelectableExerciseListProps {}
 
-const ExerciseList: FC<ExerciseListProps> = () => {
-  const navigation = useNavigation<ExerciseDetailsTabProps>();
+const SelectableExerciseList: FC<SelectableExerciseListProps> = () => {
   const search = useFilter((state) => state.search);
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const exercises = useExercise((state) => state.exercises);
   const filteredExercises = useMemo(
     () => getFilteredExercises(exercises, search),
     [exercises, search],
   );
+  const [selectedExercises, setSelectedExercises] = useState<IExercise[]>([]);
+
+  const toggleExercise = (exercise: IExercise) => {
+    const index = selectedExercises.findIndex((e) => e.id === exercise.id);
+    if (index !== -1) {
+      // If exericse not in selected list, add it 
+      setSelectedExercises((prev) => {
+        const updatedExercises = [...prev];
+        updatedExercises.splice(index, 1);
+        return updatedExercises;
+      });
+    } else {
+      // first check if theyre already selected as part of the workout
+      if (!activeWorkout?.exercises[exercise.id]) {
+        setSelectedExercises((prev) => [...prev, exercise]);
+      }
+    }
+  };
 
   const renderItem = useCallback(
     ({ item }: { item: IExercise }) => (
       <ExerciseItem
         exercise={item}
-        mode="link"
-        handlePress={() =>
-          navigation.navigate("Details", { exercise_id: item.id })}
+        mode="select"
+        selected={!!activeWorkout?.exercises[item.id] ||
+          selectedExercises.some((e) => e.id === item.id)}
+        handlePress={toggleExercise}
       />
     ),
-    [],
+    [selectedExercises],
   );
 
   return (
@@ -48,6 +67,7 @@ const ExerciseList: FC<ExerciseListProps> = () => {
         windowSize={5}
       >
       </SectionList>
+      <AddExercisesFab selectedExercises={selectedExercises} />
     </View>
   );
 };
@@ -65,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ExerciseList;
+export default SelectableExerciseList;
