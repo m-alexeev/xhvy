@@ -1,4 +1,4 @@
-import React, { Children, FC } from "react";
+import React, { FC } from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation";
@@ -17,8 +17,7 @@ const RestartWorkoutButton: FC<RestartWorkoutButtonProps> = (
       style={{ borderRadius: 5 }}
       {...props}
       mode="contained"
-      onPress={() =>
-        navigation.navigate("WorkoutCreateModal", { templateId: workoutId })}
+      onPress={() => navigation.navigate("WorkoutCreateModal")}
     >
       {props.children}
     </Button>

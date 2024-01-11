@@ -2,35 +2,55 @@ import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
-import { RootStackNavigationProp } from "@app/types/navigation";
+import { ButtonProps } from "react-native-paper";
+import { RootStackParamList } from "@app/types/navigation";
 import { useWorkout } from "@app/zustand/workoutStore";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const StartWorkoutButton: FC = () => {
-  const theme = useTheme();
-  const navigation = useNavigation<RootStackNavigationProp>();
+interface StartWorkoutButtonProps extends ButtonProps {
+  workoutId?: string;
+  templateId?: string;
+}
+
+const StartWorkoutButton: FC<StartWorkoutButtonProps> = (
+  { workoutId, templateId, ...props },
+) => {
+  const navigation = useNavigation<
+    NativeStackNavigationProp<RootStackParamList>
+  >();
   const activeWorkout = useWorkout((state) => state.activeWorkout);
+  const workouts = useWorkout((state) => state.workouts);
   const startWorkout = useWorkout((state) => state.startWorkout);
 
   const handleStartPress = () => {
+    console.log(workoutId);
+
     // Start empty workout
     if (!activeWorkout) {
+      if (workoutId) {
+        startWorkout(workouts[workoutId]);
+        navigation.replace("WorkoutCreateModal");
+      } else {
+        startWorkout();
+        navigation.navigate("WorkoutCreateModal");
+      }
+    }
+  };
+
+  const handleModalConfirm = () => {
+    console.log(workoutId);
+    if (workoutId) {
+      startWorkout(workouts[workoutId]);
+      navigation.replace("WorkoutCreateModal");
+    } else {
       startWorkout();
       navigation.navigate("WorkoutCreateModal");
     }
   };
 
-  const handleModalConfirm = () => {
-    startWorkout();
-    navigation.navigate("WorkoutCreateModal");
-  };
-
   return (
     <View style={styles.container}>
-      <Text variant="bodySmall" style={{ color: theme.colors.outline }}>
-        Quick Links
-      </Text>
       <ConfirmationButton
         style={styles.button}
         onPress={handleStartPress}
@@ -38,8 +58,9 @@ const StartWorkoutButton: FC = () => {
         mode="elevated"
         popupText="There is an active workout already started, are you sure you want to cancel and restart it?"
         onConfirm={handleModalConfirm}
+        {...props}
       >
-        Start Empty Workout
+        {props.children}
       </ConfirmationButton>
     </View>
   );

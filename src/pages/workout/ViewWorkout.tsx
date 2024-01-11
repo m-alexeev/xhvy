@@ -8,6 +8,7 @@ import { createSectionList, NameMapper } from "@app/utils/helpers";
 import RestartWorkoutButton from "@app/components/workouts/buttons/RestartWorkoutButton";
 import EditWorkoutButton from "@app/components/workouts/buttons/EditWorkoutButton";
 import WorkoutExerciseCardView from "@app/components/workouts/WorkoutExerciseCard";
+import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
 
 type ViewWorkoutNavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -47,9 +48,13 @@ const ViewWorkoutModal: FC<ViewWorkoutNavigationProps> = (
         <EditWorkoutButton mode="elevated" workoutId={workoutId}>
           Edit Workout
         </EditWorkoutButton>
-        <RestartWorkoutButton workoutId={workoutId}>
-          Perform again
-        </RestartWorkoutButton>
+        <StartWorkoutButton
+          style={{ borderRadius: 5 }}
+          mode="contained"
+          workoutId={workoutId}
+        >
+          Perform Again
+        </StartWorkoutButton>
       </View>
     );
   };

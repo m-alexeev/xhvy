@@ -26,7 +26,14 @@ const WorkoutHistoryList = () => {
           ListHeaderComponent={() => {
             return (
               <>
-                <StartWorkoutButton />
+
+                <Text
+                  variant="bodySmall"
+                  style={{ color: theme.colors.outline }}
+                >
+                  Quick Start 
+                </Text>
+                <StartWorkoutButton>Start Empty Workout</StartWorkoutButton>
                 <Text
                   variant="bodySmall"
                   style={{ color: theme.colors.outline }}

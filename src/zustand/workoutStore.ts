@@ -36,9 +36,12 @@ const useWorkout = create<WorkoutStoreType>()(
         set(
           produce((state: WorkoutStoreType) => {
             state.activeWorkout = undefined;
+
             if (template) {
-              state.activeWorkout = template;
-              state.activeWorkout.id = uuid.v4().toString();
+              const newWorkout: IWorkout = { ...template };
+              newWorkout.started_at = new Date();
+              newWorkout.id = uuid.v4().toString();
+              state.activeWorkout = newWorkout;
             } else {
               state.activeWorkout = {
                 id: uuid.v4().toString(),
@@ -59,7 +62,7 @@ const useWorkout = create<WorkoutStoreType>()(
               if (workout) {
                 state.workouts[workoutId][field] = value;
               }
-            }else if (state.activeWorkout) {
+            } else if (state.activeWorkout) {
               // Update currently active workout
               state.activeWorkout[field] = value;
             }
