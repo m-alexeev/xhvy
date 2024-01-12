@@ -1,5 +1,5 @@
 import { SectionList, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
@@ -8,8 +8,16 @@ import { createSectionList, DateMapper } from "@app/utils/helpers";
 import WorkoutCard from "@app/components/workouts/WorkoutCard";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 
+//TODO: simplify this component
 const WorkoutHistoryList = () => {
   const workouts = useWorkout((state) => state.workouts);
+  const sortedWorkouts = useMemo(
+    () =>
+      Object.values(workouts).sort((a, b) =>
+        b.started_at.getTime() - a.started_at.getTime()
+      ),
+    [workouts],
+  );
 
   const theme = useTheme();
   return (
@@ -26,12 +34,11 @@ const WorkoutHistoryList = () => {
           ListHeaderComponent={() => {
             return (
               <>
-
                 <Text
                   variant="bodySmall"
                   style={{ color: theme.colors.outline }}
                 >
-                  Quick Start 
+                  Quick Start
                 </Text>
                 <StartWorkoutButton>Start Empty Workout</StartWorkoutButton>
                 <Text
@@ -44,7 +51,7 @@ const WorkoutHistoryList = () => {
             );
           }}
           sections={createSectionList(
-            Object.values(workouts),
+            sortedWorkouts,
             "started_at",
             DateMapper,
           )}

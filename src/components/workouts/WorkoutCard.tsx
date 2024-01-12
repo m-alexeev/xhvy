@@ -46,38 +46,42 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
   const deleteWorkout = useWorkout((state) => state.deleteWorkout);
 
   return (
-    <TouchableRipple
-      style={[
-        styles.container,
-        {
-          backgroundColor: theme.colors.surfaceVariant,
-        },
-      ]}
-      onPress={() =>
-        navigation.navigate("WorkoutViewModal", { workoutId: workout.id })}
-    >
-      <View>
-        <View style={styles.headerContainer}>
-          <Text variant="titleMedium">{workout.name}</Text>
-          <View style={styles.durationStyle}>
-            <Text style={{ marginEnd: 5 }}>
-              {calculateDuration(workout.started_at, workout.completed_at!)}
-            </Text>
-            <Icon size={16} source="clock" />
-            <IconButton
-              onPress={() => deleteWorkout(workout.id)}
-              icon={"delete-outline"}
-              color={theme.colors.onErrorContainer}
-            >
-            </IconButton>
+    <View>
+      <TouchableRipple
+        borderless
+        style={[
+          styles.container,
+          {
+            backgroundColor: theme.colors.elevation.level4,
+          },
+        ]}
+        onPress={() =>
+          navigation.navigate("WorkoutViewModal", { workoutId: workout.id })}
+      >
+        <View>
+          <View style={styles.headerContainer}>
+            <Text variant="titleMedium">{workout.name}</Text>
+            <View style={styles.durationStyle}>
+              <Text style={{ marginEnd: 5 }}>
+                {calculateDuration(workout.started_at, workout.completed_at!)}
+              </Text>
+              <Icon size={16} source="clock" />
+              <IconButton
+                onPress={() => deleteWorkout(workout.id)}
+                icon={"delete-outline"}
+                color={theme.colors.onErrorContainer}
+              >
+              </IconButton>
+            </View>
+          </View>
+          <Text variant="bodySmall">{workout.started_at.toLocaleString()}</Text>
+          <View style={styles.exerciseContainer}>
+            <Text variant="titleSmall">Exercises</Text>
+            <WorkoutCardExercises exercises={workout.exercises} />
           </View>
         </View>
-        <View style={styles.exerciseContainer}>
-          <Text variant="titleSmall">Exercises</Text>
-          <WorkoutCardExercises exercises={workout.exercises} />
-        </View>
-      </View>
-    </TouchableRipple>
+      </TouchableRipple>
+    </View>
   );
 };
 
