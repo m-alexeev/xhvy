@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback} from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { WorkoutStackNavigationProp } from "@app/types/navigation";
@@ -16,7 +16,7 @@ interface IWorkoutCreatePageProps {
 const ListHeader: FC = () => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const { colors } = useTheme();
-  const updateField = useWorkout((state) => state.updateField);
+  const updateField = useWorkout((s) => s.updateField);
 
   return (
     <View style={styles.header}>
@@ -37,12 +37,18 @@ const ListHeader: FC = () => {
 
 const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
+  const updateSet = useWorkout((s) => s.updateSet);
+  const removeSet = useWorkout((s) => s.removeSet);
+  const removeExercise = useWorkout((s) => s.removeExercise);
 
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (
       <WorkoutExerciseCard
         key={item.id}
         workoutExercise={item}
+        updateSet={updateSet}
+        removeExercise={removeExercise}
+        removeSet={removeSet}
       >
       </WorkoutExerciseCard>
     ),

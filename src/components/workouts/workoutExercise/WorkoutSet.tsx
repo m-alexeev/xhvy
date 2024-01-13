@@ -15,9 +15,13 @@ interface WorkoutSetProps {
     value: K,
   ) => void;
 }
+let i = 0
 
 const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
   const theme = useTheme();
+  i++;
+  console.log("rendering", i);
+  
 
   return (
     <Animated.View

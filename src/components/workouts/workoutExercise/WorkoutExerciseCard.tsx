@@ -6,19 +6,20 @@ import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
 import { useWorkout } from "@app/zustand/workoutStore";
 import IconButton from "@app/components/core/IconButton";
+import { WorkoutAction } from "@app/types/store";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: IWorkoutExercise;
   workoutId?: string;
+  removeExercise: WorkoutAction["removeExercise"];
+  updateSet: WorkoutAction["updateSet"];
+  removeSet: WorkoutAction["removeSet"];
 }
 
 // Card for workout exercises
-const WorkoutExerciseCard:FC<WorkoutExerciseItemProps> = memo(
-  ({ workoutExercise, workoutId }) => {
+const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
+  ({ workoutExercise, workoutId, removeSet, removeExercise, updateSet }) => {
     const addSet = useWorkout((state) => state.addSet);
-    const removeExercise = useWorkout((state) => state.removeExercise);
-    const removeSet = useWorkout((state) => state.removeSet);
-    const updateSet = useWorkout((state) => state.updateSet);
     const { colors } = useTheme();
     const { name, id, sets } = workoutExercise;
 
