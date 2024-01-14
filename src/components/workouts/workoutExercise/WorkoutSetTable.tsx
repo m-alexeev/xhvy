@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import React, { FC, memo, useCallback } from "react";
 import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
@@ -57,7 +57,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
         <View style={tableStyles({ width: 0.6 }).headerColumn}>
         </View>
       </View>
-      <View style={{ minHeight: 100 }}>
+      <View style={{ minHeight: 20 }}>
         <FlashList
           estimatedItemSize={20}
           scrollEnabled={false}
