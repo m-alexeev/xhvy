@@ -21,7 +21,7 @@ const WorkoutHistoryList = () => {
 
   const theme = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={[
           styles.container,
@@ -33,7 +33,7 @@ const WorkoutHistoryList = () => {
         <SectionList
           ListHeaderComponent={() => {
             return (
-              <>
+              <View>
                 <Text
                   variant="bodySmall"
                   style={{ color: theme.colors.outline }}
@@ -47,7 +47,7 @@ const WorkoutHistoryList = () => {
                 >
                   History
                 </Text>
-              </>
+              </View>
             );
           }}
           sections={createSectionList(
@@ -68,7 +68,7 @@ const WorkoutHistoryList = () => {
         />
       </View>
       <ActiveWorkoutPopup />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -77,7 +77,7 @@ export default WorkoutHistoryList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    margin: 10,
   },
   newWorkoutContainer: {
     marginVertical: 5,

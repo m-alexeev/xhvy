@@ -2,7 +2,7 @@ import { IExercise } from "./exercises";
 import { IWorkout, IWorkoutSet } from "./workouts";
 
 export type WorkoutState = {
-  workouts: {[id: string]: IWorkout};
+  workouts: { [id: string]: IWorkout };
   activeWorkout?: IWorkout;
   pending_workout_updates: Array<IWorkout>;
 };
@@ -32,4 +32,16 @@ export type WorkoutAction = {
   ) => void;
 };
 
+export type ExerciseState = {
+  exercises: Array<IExercise>;
+  pending_exercse_updates: Array<IExercise>;
+};
+
+export type ExerciseAction = {
+  createExercise: (exercise: IExercise) => void;
+  updateExercise: (exerciseId: string, exercise: IExercise) => void;
+  deleteExercise: (exerciseId: string) => void;
+};
+
 export type WorkoutStoreType = WorkoutState & WorkoutAction;
+export type ExerciseStoreType = ExerciseState & ExerciseAction;

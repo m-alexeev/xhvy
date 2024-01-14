@@ -5,7 +5,6 @@ import { RootStackParamList } from "@app/types/navigation";
 import { Text } from "react-native-paper";
 import { getWorkout } from "@app/zustand/hooks";
 import { createSectionList, NameMapper } from "@app/utils/helpers";
-import RestartWorkoutButton from "@app/components/workouts/buttons/RestartWorkoutButton";
 import EditWorkoutButton from "@app/components/workouts/buttons/EditWorkoutButton";
 import WorkoutExerciseCardView from "@app/components/workouts/WorkoutExerciseCard";
 import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";

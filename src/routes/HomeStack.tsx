@@ -4,9 +4,10 @@ import { Icon } from "react-native-paper";
 import WorkoutStackRouter from "./WorkoutStack";
 import HomeScreen from "@app/pages/home/Home";
 import ProfileScreen from "@app/pages/home/Profile";
-import Templates from "@app/pages/home/Templates";
 import { MainBottomTabParamList } from "@app/types/navigation";
 import ExerciseStackRouter from "./ExerciseStack";
+import TemplateHomePage from "@app/pages/templates/TemplateView";
+import Header from "@app/components/core/Header";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
@@ -15,7 +16,7 @@ const HomeStackComponent: FC = ({}) => {
     <>
       <HomeStack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Workout"
+        initialRouteName="Templates"
       >
         <HomeStack.Screen
           name="Home"
@@ -24,8 +25,12 @@ const HomeStackComponent: FC = ({}) => {
         />
         <HomeStack.Screen
           name="Templates"
-          component={Templates}
+          component={TemplateHomePage}
           options={{
+            headerShown: true,
+            header: () => {
+              return <Header title="Templates" />;
+            },
             tabBarIcon: (props) => <Icon {...props} source="folder" />,
           }}
         />
