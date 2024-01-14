@@ -1,4 +1,4 @@
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import React, { FC, memo, useCallback } from "react";
 import { IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
@@ -6,6 +6,7 @@ import WorkoutSet from "./WorkoutSet";
 import { tableStyles } from "./styles";
 import SwipableWorkoutSetWrapper from "./SwipableWorkoutSetWrapper";
 import { WorkoutAction } from "@app/types/store";
+import { FlashList } from "@shopify/flash-list";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
@@ -21,7 +22,6 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
   const closeSwipable = (index: number) => {
     removeSet(exerciseId, index);
   };
-
 
   const renderItem = useCallback(
     ({ item, index }: { item: IWorkoutSet; index: number }) => (
@@ -57,13 +57,15 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
         <View style={tableStyles({ width: 0.6 }).headerColumn}>
         </View>
       </View>
-      <FlatList
-        scrollEnabled={false}
-        data={sets}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      >
-      </FlatList>
+      <View style={{ minHeight: 20 }}>
+        <FlashList
+          estimatedItemSize={20}
+          scrollEnabled={false}
+          data={sets}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      </View>
     </View>
   );
 });

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { Text, useTheme } from "react-native-paper";
 import Animated, { FadeIn } from "react-native-reanimated";
 import CustomTextInput from "@app/components/core/TextInput";
@@ -16,7 +16,7 @@ interface WorkoutSetProps {
   ) => void;
 }
 
-const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
+const WorkoutSet: FC<WorkoutSetProps> = memo(({ set, setNum, updateField }) => {
   const theme = useTheme();
 
   return (
@@ -66,6 +66,6 @@ const WorkoutSet: FC<WorkoutSetProps> = ({ set, setNum, updateField }) => {
       </IconButton>
     </Animated.View>
   );
-};
+});
 
 export default WorkoutSet;
