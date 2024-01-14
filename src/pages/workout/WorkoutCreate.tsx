@@ -1,17 +1,19 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import React, { FC, useCallback} from "react";
+import React, { FC, useCallback } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { WorkoutStackNavigationProp } from "@app/types/navigation";
 import WorkoutDuration from "@app/components/core/WorkoutDuration";
 import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
 import { IWorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "@app/types/navigation";
 
-interface IWorkoutCreatePageProps {
-  navigation: WorkoutStackNavigationProp<"New">["navigation"];
-}
+type WorkoutCreateNavigationProps = NativeStackScreenProps<
+  RootStackParamList,
+  "WorkoutCreateModal"
+>;
 
 const ListHeader: FC = () => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
@@ -35,11 +37,14 @@ const ListHeader: FC = () => {
   );
 };
 
-const WorkoutCreate: FC<IWorkoutCreatePageProps> = ({ navigation }) => {
+const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
+  { navigation, route },
+) => {
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const updateSet = useWorkout((s) => s.updateSet);
   const removeSet = useWorkout((s) => s.removeSet);
   const removeExercise = useWorkout((s) => s.removeExercise);
+
 
   const renderItem = useCallback(
     ({ item }: { item: IWorkoutExercise }) => (

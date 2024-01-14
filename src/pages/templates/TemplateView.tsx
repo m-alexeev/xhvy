@@ -1,23 +1,29 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { MainBottomTabParamList } from "@app/types/navigation";
+import { MainTabsNavigationProp } from "@app/types/navigation";
 import { getTemplates } from "@app/zustand/hooks";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { IWorkout } from "@app/types/workouts";
 
-type ViewTemplateNavigationProps = NativeStackScreenProps<
-  MainBottomTabParamList,
-  "Templates"
->;
+type ViewTemplateNavigationProps = MainTabsNavigationProp<"Templates">;
 
-const TemplateHomePage: FC<ViewTemplateNavigationProps> = () => {
+const TemplateHomePage: FC<ViewTemplateNavigationProps> = ({ navigation }) => {
   const templates = getTemplates();
   const { colors } = useTheme();
 
   const renderTemplateItem = ({ item }: { item: IWorkout }) => {
     return <Text key={item.id}>{item.name}</Text>;
+  };
+
+  const emptyList = () => {
+    return (
+      <View style={styles.emptyList}>
+        <Text variant="bodyLarge" style={{ color: colors.outline }}>
+          There is nothing here yet...
+        </Text>
+      </View>
+    );
   };
 
   return (
@@ -26,7 +32,13 @@ const TemplateHomePage: FC<ViewTemplateNavigationProps> = () => {
         <Text variant="bodySmall" style={{ color: colors.outline }}>
           Quick Start
         </Text>
-        <Button mode="elevated">Create Workout Template</Button>
+        <Button
+          mode="elevated"
+          onPress={() =>
+            navigation.navigate("WorkoutCreateModal", { template: true })}
+        >
+          Create Workout Template
+        </Button>
       </View>
       <View style={styles.content}>
         <Text variant="bodySmall" style={{ color: colors.outline }}>
@@ -34,6 +46,7 @@ const TemplateHomePage: FC<ViewTemplateNavigationProps> = () => {
         </Text>
         <FlashList
           data={templates}
+          ListEmptyComponent={emptyList}
           renderItem={renderTemplateItem}
           estimatedItemSize={200}
         />
@@ -53,5 +66,10 @@ const styles = StyleSheet.create({
   content: {
     marginTop: 10,
     minHeight: 50,
+  },
+  emptyList: {
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

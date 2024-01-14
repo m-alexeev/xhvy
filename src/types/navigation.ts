@@ -4,12 +4,12 @@ import {
   NavigationProp,
   NavigatorScreenParams,
 } from "@react-navigation/native";
-import { NativeStackScreenProps} from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
-  WorkoutCreateModal: undefined;
+  WorkoutCreateModal: { template?: boolean };
   WorkoutViewModal: { workoutId: string };
   WorkoutEditModal: { workoutId: string };
   AddExericiseModal: undefined;
@@ -29,6 +29,12 @@ export type MainBottomTabParamList = {
   Profile: undefined;
   Exercises: undefined;
 };
+
+export type MainTabsNavigationProp<T extends keyof MainBottomTabParamList> =
+  CompositeScreenProps<
+    BottomTabScreenProps<MainBottomTabParamList, T>,
+    NativeStackScreenProps<RootStackParamList>
+  >;
 
 export type WorkoutStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
