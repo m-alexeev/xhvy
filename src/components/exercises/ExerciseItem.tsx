@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { FC, memo } from "react";
 import { Icon, Text, TouchableRipple, useTheme } from "react-native-paper";
-import { IExercise } from "@app/types/exercises";
+import { Exercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
 
 interface SelectableExerciseProps {
@@ -13,8 +13,8 @@ interface LinkExerciseProps {
   mode: "link";
 }
 interface GeneralExerciseProps {
-  exercise: IExercise;
-  handlePress: (exercise: IExercise) => void;
+  exercise: Exercise;
+  handlePress: (exercise: Exercise) => void;
 }
 
 type ExerciseItemProps =

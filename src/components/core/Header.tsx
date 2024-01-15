@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import React, { FC, ReactNode } from "react";
 import { Appbar, Surface } from "react-native-paper";
 
@@ -13,7 +12,7 @@ const Header: FC<HeaderProps> = ({ title, backButton, children }) => {
   return (
     <Surface elevation={2}>
       <Appbar.Header mode="small" elevated>
-        {backButton} 
+        {backButton}
         {title && <Appbar.Content title={title} />}
         {children}
       </Appbar.Header>
@@ -22,4 +21,3 @@ const Header: FC<HeaderProps> = ({ title, backButton, children }) => {
 };
 
 export default Header;
-

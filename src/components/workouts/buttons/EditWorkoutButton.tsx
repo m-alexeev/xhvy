@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "@app/types/navigation";
+import { RootStackNavigationProp } from "@app/types/navigation/root";
 
 interface EditWorkoutButtonProps extends ButtonProps {
   workoutId: string;

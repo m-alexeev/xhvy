@@ -1,10 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
-import { MainTabsNavigationProp } from "@app/types/navigation";
 import { getTemplates } from "@app/zustand/hooks";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
-import { IWorkout } from "@app/types/workouts";
+import { MainTabsNavigationProp } from "@app/types/navigation/main";
+import { Workout } from "@app/types/workouts";
 
 type ViewTemplateNavigationProps = MainTabsNavigationProp<"Templates">;
 
@@ -12,7 +12,7 @@ const TemplateHomePage: FC<ViewTemplateNavigationProps> = ({ navigation }) => {
   const templates = getTemplates();
   const { colors } = useTheme();
 
-  const renderTemplateItem = ({ item }: { item: IWorkout }) => {
+  const renderTemplateItem = ({ item }: { item: Workout }) => {
     return <Text key={item.id}>{item.name}</Text>;
   };
 
@@ -34,8 +34,7 @@ const TemplateHomePage: FC<ViewTemplateNavigationProps> = ({ navigation }) => {
         </Text>
         <Button
           mode="elevated"
-          onPress={() =>
-            navigation.navigate("WorkoutCreateModal", { template: true })}
+          onPress={() => navigation.navigate("WorkoutCreateModal")}
         >
           Create Workout Template
         </Button>

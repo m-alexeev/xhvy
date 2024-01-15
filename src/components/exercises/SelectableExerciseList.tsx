@@ -5,7 +5,7 @@ import { useFilter } from "@app/zustand/filterStore";
 import { useExercise } from "@app/zustand/exerciseStore";
 import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
-import { IExercise } from "@app/types/exercises";
+import { Exercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import AddExercisesFab from "./buttons/AddExercisesFab";
 import { useWorkout } from "@app/zustand/workoutStore";
@@ -20,12 +20,12 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = () => {
     () => getFilteredExercises(exercises, search),
     [exercises, search],
   );
-  const [selectedExercises, setSelectedExercises] = useState<IExercise[]>([]);
+  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
 
-  const toggleExercise = (exercise: IExercise) => {
+  const toggleExercise = (exercise: Exercise) => {
     const index = selectedExercises.findIndex((e) => e.id === exercise.id);
     if (index !== -1) {
-      // If exericse not in selected list, add it 
+      // If exericse not in selected list, add it
       setSelectedExercises((prev) => {
         const updatedExercises = [...prev];
         updatedExercises.splice(index, 1);
@@ -40,7 +40,7 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = () => {
   };
 
   const renderItem = useCallback(
-    ({ item }: { item: IExercise }) => (
+    ({ item }: { item: Exercise }) => (
       <ExerciseItem
         exercise={item}
         mode="select"
