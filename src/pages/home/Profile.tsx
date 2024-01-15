@@ -3,22 +3,13 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import auth from "@react-native-firebase/auth";
-import { CompositeScreenProps } from "@react-navigation/native";
-import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  MainBottomTabParamList,
-  RootStackParamList,
-} from "@app/types/navigation";
 import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import UserDetails from "@app/components/profile/UserDetails";
 import OptionsConfigurator from "@app/components/profile/Options";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
+import { MainTabsNavigationProp } from "@app/types/navigation/main";
 
-type ProfileScreenProps = CompositeScreenProps<
-  BottomTabScreenProps<MainBottomTabParamList, "Profile">,
-  NativeStackScreenProps<RootStackParamList>
->;
+type ProfileScreenProps = MainTabsNavigationProp<"Profile">;
 
 const ProfileScreen: FC<ProfileScreenProps> = () => {
   const { toggleTheme } = useThemeSwitch();

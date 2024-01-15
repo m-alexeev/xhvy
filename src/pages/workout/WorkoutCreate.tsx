@@ -8,7 +8,7 @@ import CancelWorkout from "@app/components/workouts/CancelWorkout";
 import { IWorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@app/types/navigation";
+import { RootStackParamList } from "@app/types/navigation/root";
 
 type WorkoutCreateNavigationProps = NativeStackScreenProps<
   RootStackParamList,

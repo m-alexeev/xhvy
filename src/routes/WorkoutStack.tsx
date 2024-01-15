@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Appbar } from "react-native-paper";
 import WorkoutHistoryList from "@app/pages/workout/WorkoutHistoryList";
-import { WorkoutStackParamList } from "@app/types/navigation";
 import Header from "@app/components/core/Header";
+import { WorkoutStackParamList } from "@app/types/navigation/workout";
 
 const WorkoutStack = createNativeStackNavigator<WorkoutStackParamList>();
 

@@ -1,11 +1,11 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabParamList } from "@app/types/navigation";
 import ExerciseAboutScreen from "@app/pages/exercises/About";
 import ExerciseHistoryScreen from "@app/pages/exercises/History";
 import ExerciseChartsScreen from "@app/pages/exercises/Charts";
 import ExerciseRecordsScreen from "@app/pages/exercises/Records";
+import { ExerciseDetailsTabParamList } from "@app/types/navigation/exericse";
 
 const ExerciseTabs =
   createMaterialTopTabNavigator<ExerciseDetailsTabParamList>();

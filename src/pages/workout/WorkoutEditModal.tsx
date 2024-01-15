@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import React, { FC, useCallback } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@app/types/navigation";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { getWorkout } from "@app/zustand/hooks";
 import { Text, useTheme } from "react-native-paper";
@@ -9,6 +8,7 @@ import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { IWorkout, IWorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import CustomTextInput from "@app/components/core/TextInput";
+import { RootStackParamList } from "@app/types/navigation/root";
 
 type EditWorkoutNavigationProps = NativeStackScreenProps<
   RootStackParamList,

@@ -4,10 +4,10 @@ import { Icon } from "react-native-paper";
 import WorkoutStackRouter from "./WorkoutStack";
 import HomeScreen from "@app/pages/home/Home";
 import ProfileScreen from "@app/pages/home/Profile";
-import { MainBottomTabParamList } from "@app/types/navigation";
 import ExerciseStackRouter from "./ExerciseStack";
 import TemplateHomePage from "@app/pages/templates/TemplateView";
 import Header from "@app/components/core/Header";
+import { MainBottomTabParamList } from "@app/types/navigation/main";
 
 const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 

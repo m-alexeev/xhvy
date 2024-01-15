@@ -1,13 +1,13 @@
 import { SectionList, StyleSheet, View } from "react-native";
 import React, { FC } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "@app/types/navigation";
 import { Text } from "react-native-paper";
 import { getWorkout } from "@app/zustand/hooks";
 import { createSectionList, NameMapper } from "@app/utils/helpers";
 import EditWorkoutButton from "@app/components/workouts/buttons/EditWorkoutButton";
 import WorkoutExerciseCardView from "@app/components/workouts/WorkoutExerciseCard";
 import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
+import { RootStackParamList } from "@app/types/navigation/root";
 
 type ViewWorkoutNavigationProps = NativeStackScreenProps<
   RootStackParamList,

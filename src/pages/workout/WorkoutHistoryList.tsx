@@ -1,7 +1,6 @@
 import { SectionList, StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
 import { Text, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { createSectionList, DateMapper } from "@app/utils/helpers";
