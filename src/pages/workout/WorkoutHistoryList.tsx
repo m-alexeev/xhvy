@@ -1,7 +1,6 @@
 import { SectionList, StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
 import { Text, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import StartWorkoutButton from "@app/components/workouts/buttons/StartWorkoutButton";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { createSectionList, DateMapper } from "@app/utils/helpers";
@@ -21,7 +20,7 @@ const WorkoutHistoryList = () => {
 
   const theme = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View
         style={[
           styles.container,
@@ -33,7 +32,7 @@ const WorkoutHistoryList = () => {
         <SectionList
           ListHeaderComponent={() => {
             return (
-              <>
+              <View>
                 <Text
                   variant="bodySmall"
                   style={{ color: theme.colors.outline }}
@@ -47,7 +46,7 @@ const WorkoutHistoryList = () => {
                 >
                   History
                 </Text>
-              </>
+              </View>
             );
           }}
           sections={createSectionList(
@@ -68,7 +67,7 @@ const WorkoutHistoryList = () => {
         />
       </View>
       <ActiveWorkoutPopup />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -77,7 +76,7 @@ export default WorkoutHistoryList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 10,
+    margin: 10,
   },
   newWorkoutContainer: {
     marginVertical: 5,

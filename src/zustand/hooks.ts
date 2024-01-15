@@ -6,4 +6,12 @@ const getWorkout = (id: IWorkout["id"]) => {
   return workouts[id];
 };
 
-export { getWorkout };
+const getTemplates = (): IWorkout[] => {
+  const workouts = useWorkout((state) => state.workouts);
+  const templates = Object.values(workouts).filter((workout) =>
+    workout.template
+  );
+  return templates;
+};
+
+export { getWorkout, getTemplates };

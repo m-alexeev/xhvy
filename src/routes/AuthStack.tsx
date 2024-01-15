@@ -1,6 +1,6 @@
 import Login from "@app/pages/auth/Login";
 import Register from "@app/pages/auth/Register";
-import { AuthStackParamList } from "@app/types/navigation";
+import { AuthStackParamList } from "@app/types/navigation/auth";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FC } from "react";
 
