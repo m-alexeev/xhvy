@@ -143,7 +143,7 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
         <Text variant="bodySmall" style={{ color: colors.outline }}>
           Quick Start
         </Text>
-        <Button mode="elevated" onPress={() => navigation.push('')}>
+        <Button mode="elevated" onPress={() => navigation.navigate("Create")}>
           Create Workout Template
         </Button>
       </View>

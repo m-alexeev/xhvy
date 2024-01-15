@@ -45,7 +45,6 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   const removeSet = useWorkout((s) => s.removeSet);
   const removeExercise = useWorkout((s) => s.removeExercise);
 
-
   const renderItem = useCallback(
     ({ item }: { item: WorkoutExercise }) => (
       <WorkoutExerciseCard
