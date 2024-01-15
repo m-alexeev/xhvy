@@ -1,18 +1,14 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FC, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
-import { useNavigation } from "@react-navigation/native";
 import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import AuthStackRoutes from "./AuthStack";
 import HomeStackComponent from "./HomeStack";
-import ModalGroup from "./ModalGroup";
-import { RootStackNavigationProp, RootStackParamList } from "@app/types/navigation/root";
+import { ModalGroup } from "./ModalGroup";
+import { RootStack } from "./stacks";
 
-export const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 const RootStackComponent: FC = ({}) => {
-  const navigation = useNavigation<RootStackNavigationProp>();
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
@@ -51,7 +47,7 @@ const RootStackComponent: FC = ({}) => {
             headerShown: true,
           }}
         >
-          <ModalGroup />
+          {ModalGroup()}
         </RootStack.Group>
       </RootStack.Navigator>
     </>

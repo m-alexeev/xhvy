@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FC } from "react";
 import { Icon } from "react-native-paper";
 import WorkoutStackRouter from "./WorkoutStack";
@@ -7,9 +6,8 @@ import ProfileScreen from "@app/pages/home/Profile";
 import ExerciseStackRouter from "./ExerciseStack";
 import TemplateHomePage from "@app/pages/templates/TemplateView";
 import Header from "@app/components/core/Header";
-import { MainBottomTabParamList } from "@app/types/navigation/main";
+import { HomeStack } from "./stacks";
 
-const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 const HomeStackComponent: FC = ({}) => {
   return (
