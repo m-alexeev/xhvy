@@ -1,13 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Button, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { Template } from "@app/types/templates";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
-import IconButton from "../core/IconButton";
 import { WorkoutExercise } from "@app/types/workouts";
 import { FlashList } from "@shopify/flash-list";
-import BaseMenu from "../core/menus/BaseMenu";
-import { MenuOption } from "@app/types/general";
+import TemplateMenuOptions from "./TemplateMenuOptions";
 
 interface TemplateCardProps {
   template: Template;
@@ -16,7 +14,6 @@ interface TemplateCardProps {
 const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
   const { colors } = useTheme();
   const exercises = Object.values(template.exercises);
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const renderExerciseItem = ({ item }: { item: WorkoutExercise }) => {
     return (
@@ -26,15 +23,6 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
     );
   };
 
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
-
-  const sampleOptions: Array<MenuOption> = [
-    { title: "Duplicate", onPress: () => {}, leadingIcon: "content-paste" },
-    { title: "Delete", onPress: () => {}, leadingIcon: "delete" },
-  ];
-
   return (
     <View style={styles(colors).outerContainer}>
       <TouchableRipple borderless>
@@ -43,12 +31,7 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
             <Text variant="titleMedium">
               {template.name}
             </Text>
-            <BaseMenu
-              visible={menuOpen}
-              options={sampleOptions}
-              onDismiss={toggleMenu}
-              anchor={<IconButton icon="dots-vertical" onPress={toggleMenu} />}
-            />
+            <TemplateMenuOptions templateId={template.id} />
           </View>
           <View style={styles().content}>
             <Text variant="labelMedium" style={{ color: colors.outline }}>
