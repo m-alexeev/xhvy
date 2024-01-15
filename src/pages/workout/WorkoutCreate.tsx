@@ -72,7 +72,7 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
           ListFooterComponent={() => (
             <>
               <Button
-                onPress={() => navigation.navigate("AddExericiseModal")}
+                onPress={() => navigation.navigate("AddExerciseModal")}
                 mode="text"
               >
                 Add Exercise
