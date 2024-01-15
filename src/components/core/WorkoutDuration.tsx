@@ -11,7 +11,7 @@ const WorkoutDuration: FC<WorkoutDurationProps> = (props) => {
   
   const updateDuration = () => {
     if (activeWorkout) {
-      const parsedStartDate = new Date(activeWorkout.started_at);
+      const parsedStartDate = new Date(activeWorkout.startedAt);
       setDuration((new Date().getTime() - parsedStartDate.getTime()) / 1000);
     }
   };

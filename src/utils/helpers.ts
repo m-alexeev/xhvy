@@ -59,3 +59,4 @@ export const calculateDuration = (start: Date, end: Date): string => {
   return `${hours}:${minutes.toLocaleString().padStart(2, "0")}`;
 };
 
+

@@ -34,7 +34,7 @@ const ViewWorkoutModal: FC<ViewWorkoutNavigationProps> = (
         <Text variant="titleLarge">{workout.name}</Text>
         <View>
           <Text variant="labelMedium">
-            Performed on: {workout.started_at.toLocaleString()}
+            Performed on: {workout.startedAt.toLocaleString()}
           </Text>
         </View>
       </View>

@@ -2,14 +2,15 @@ import { create } from "zustand";
 import { produce } from "immer";
 import { persist } from "zustand/middleware";
 import {
-  IWorkout,
-  IWorkoutExercise,
-  IWorkoutSet,
+  Workout,
+  WorkoutExercise,
   WorkoutExercises,
+  WorkoutSet,
 } from "../types/workouts";
 import uuid from "react-native-uuid";
 import { WorkoutStoreType } from "@app/types/store";
 import { CustomStorage } from "./customStorage";
+import { Template, WorkoutOrTemplate } from "@app/types/templates";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -18,36 +19,54 @@ const useWorkout = create<WorkoutStoreType>()(
   persist(
     (set) => ({
       workouts: {},
+      templates: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
-      createWorkout: (workout: IWorkout) =>
+      createTemplate: (template: Template) =>
         set(
           produce((state: WorkoutStoreType) => {
-            state.workouts[workout.id] = workout;
+            state.templates[template.id] = template;
           }),
         ),
-      deleteWorkout: (workoutId: string) =>
+      deleteWorkout: (id: string, template?: boolean) =>
         set(produce((state: WorkoutStoreType) => {
-          if (state.workouts[workoutId]) {
-            delete state.workouts[workoutId];
+          if (template) {
+            delete state.templates[id];
+          } else {
+            delete state.workouts[id];
           }
         })),
-      startWorkout: (template?: IWorkout) =>
+      saveActiveWorkout: () =>
         set(
           produce((state: WorkoutStoreType) => {
+            if (state.activeWorkout) {
+              // Save to workout array
+              state.activeWorkout.completedAt = new Date();
+              // Add to start of workout array
+              state.workouts[state.activeWorkout.id] = state.activeWorkout;
+              // Clear active workout
+              state.activeWorkout = undefined;
+            }
+          }),
+        ),
+      startWorkout: (base?: WorkoutOrTemplate) =>
+        set(
+          produce((state: WorkoutStoreType) => {
+            // Reset active workout if one exists
             state.activeWorkout = undefined;
-
-            if (template) {
-              const newWorkout: IWorkout = { ...template };
-              newWorkout.started_at = new Date();
+            // Create workout from the template or previous workout
+            if (base) {
+              const newWorkout: Workout = { ...base };
+              newWorkout.startedAt = new Date();
               newWorkout.id = uuid.v4().toString();
               state.activeWorkout = newWorkout;
             } else {
+              // Create empty workout 
               state.activeWorkout = {
                 id: uuid.v4().toString(),
                 name: "Unnamed workout",
                 exercises: {},
-                started_at: new Date(),
+                startedAt: new Date(),
               };
             }
           }),
@@ -71,10 +90,11 @@ const useWorkout = create<WorkoutStoreType>()(
       addExercises: (newExercises) =>
         set(
           produce((state: WorkoutStoreType) => {
+            // Add exercises to active workout
             // Create a WorkoutExercise object
             const workoutExercises: WorkoutExercises = newExercises.reduce(
               (a, e) => {
-                const sets: IWorkoutSet[] = [
+                const sets: WorkoutSet[] = [
                   {
                     id: uuid.v4().toString(),
                     type: "R",
@@ -83,7 +103,7 @@ const useWorkout = create<WorkoutStoreType>()(
                     completed: false,
                   },
                 ];
-                const workoutExercise: IWorkoutExercise = { ...e, sets };
+                const workoutExercise: WorkoutExercise = { ...e, sets };
                 return { ...a, [workoutExercise.id]: workoutExercise };
               },
               {},
@@ -97,24 +117,12 @@ const useWorkout = create<WorkoutStoreType>()(
             });
           }),
         ),
-      removeExercise: (exerciseId) =>
+      removeExercise: (exerciseId: string) =>
         set(
           produce((state: WorkoutStoreType) => {
+            // Remove exercise from active workout
             if (state.activeWorkout) {
               delete state.activeWorkout.exercises[exerciseId];
-            }
-          }),
-        ),
-      saveWorkout: () =>
-        set(
-          produce((state: WorkoutStoreType) => {
-            if (state.activeWorkout) {
-              // Save to workout array
-              state.activeWorkout.completed_at = new Date();
-              // Add to start of workout array
-              state.workouts[state.activeWorkout.id] = state.activeWorkout;
-              // Clear active workout
-              state.activeWorkout = undefined;
             }
           }),
         ),

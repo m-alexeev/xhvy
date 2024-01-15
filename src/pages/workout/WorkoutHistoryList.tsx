@@ -13,7 +13,7 @@ const WorkoutHistoryList = () => {
   const sortedWorkouts = useMemo(
     () =>
       Object.values(workouts).sort((a, b) =>
-        b.started_at.getTime() - a.started_at.getTime()
+        b.startedAt.getTime() - a.startedAt.getTime()
       ),
     [workouts],
   );
