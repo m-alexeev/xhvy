@@ -1,4 +1,4 @@
-import { RootStack } from "./Root";
+import { RootStack } from "./stacks";
 import WorkoutCreate from "@app/pages/workout/WorkoutCreate";
 import Header from "@app/components/core/Header";
 import GoBackButton from "@app/components/core/buttons/GoBackButton";
@@ -10,8 +10,7 @@ import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation/root";
 
-
-const ModalGroup = () => {
+export const ModalGroup = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <>
@@ -55,7 +54,7 @@ const ModalGroup = () => {
         }}
       />
       <RootStack.Screen
-        name="AddExericiseModal"
+        name="AddExerciseModal"
         component={AddExericse}
         options={{
           header: () => (
@@ -72,5 +71,3 @@ const ModalGroup = () => {
     </>
   );
 };
-
-export default ModalGroup;

@@ -16,7 +16,7 @@ export type Muscle = (typeof muscles)[number];
 export type MajorMuscleGroup = (typeof majorMuclesGroups)[number];
 export type Tag = (typeof tags)[number];
 
-export interface IExercise {
+export interface Exercise {
   id: string;
   name: string;
   instructions?: string;

@@ -3,7 +3,6 @@ import {
   ColorValue,
   StyleProp,
   StyleSheet,
-  View,
   ViewStyle,
 } from "react-native";
 import { GestureResponderEvent } from "react-native-modal";

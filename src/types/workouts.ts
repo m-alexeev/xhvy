@@ -1,8 +1,8 @@
-import { IExercise } from "./exercises";
+import { Exercise } from "./exercises";
 
 export type SetType = "R" | "W" | "D" | "F";
 
-interface IWorkoutSet {
+interface WorkoutSet {
   id: string;
   type: SetType;
   reps: number | undefined;
@@ -12,20 +12,21 @@ interface IWorkoutSet {
   previous?: number;
 }
 
-export type WorkoutExercises = { [id: IExercise["id"]]: IWorkoutExercise };
+type WorkoutExercises = { [id: Exercise["id"]]: WorkoutExercise };
 
-interface IWorkoutExercise extends IExercise {
-  sets: IWorkoutSet[];
+interface WorkoutExercise extends Exercise {
+  sets: WorkoutSet[];
 }
 
-interface IWorkout {
+interface Workout {
   id: string;
   name: string;
   exercises: WorkoutExercises;
   note?: string;
-  template?: boolean;
   started_at: Date;
   completed_at?: Date;
 }
 
-export { IWorkout, IWorkoutExercise, IWorkoutSet};
+type Workouts = { [id: Workout["id"]]: Workout };
+
+export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet };

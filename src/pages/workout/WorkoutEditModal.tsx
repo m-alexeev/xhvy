@@ -5,7 +5,7 @@ import { useWorkout } from "@app/zustand/workoutStore";
 import { getWorkout } from "@app/zustand/hooks";
 import { Text, useTheme } from "react-native-paper";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
-import { IWorkout, IWorkoutExercise } from "@app/types/workouts";
+import { Workout, WorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import CustomTextInput from "@app/components/core/TextInput";
 import { RootStackParamList } from "@app/types/navigation/root";
@@ -15,7 +15,7 @@ type EditWorkoutNavigationProps = NativeStackScreenProps<
   "WorkoutEditModal"
 >;
 
-const EditHeader = ({ workout }: { workout: IWorkout }) => {
+const EditHeader = ({ workout }: { workout: Workout }) => {
   const { colors } = useTheme();
   const updateField = useWorkout((state) => state.updateField);
   return (
@@ -44,7 +44,7 @@ const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
   const workout = getWorkout(workoutId);
 
   const renderItem = useCallback(
-    ({ item }: { item: IWorkoutExercise }) => (
+    ({ item }: { item: WorkoutExercise }) => (
       <WorkoutExerciseCard
         key={item.id}
         workoutExercise={item}

@@ -3,10 +3,10 @@ import React, { FC } from "react";
 import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { IExercise } from "@app/types/exercises";
+import { Exercise } from "@app/types/exercises";
 
 interface AddExercisesFabProps {
-  selectedExercises: IExercise[];
+  selectedExercises: Exercise[];
 }
 
 const AddExercisesFab: FC<AddExercisesFabProps> = (

@@ -1,29 +1,29 @@
-import { IExercise } from "./exercises";
-import { IWorkout, IWorkoutSet } from "./workouts";
+import { Exercise } from "./exercises";
+import { Workout, WorkoutSet } from "./workouts";
 
 export type WorkoutState = {
-  workouts: { [id: string]: IWorkout };
-  activeWorkout?: IWorkout;
-  pending_workout_updates: Array<IWorkout>;
+  workouts: { [id: string]: Workout };
+  activeWorkout?: Workout;
+  pending_workout_updates: Array<Workout>;
 };
 
 export type WorkoutAction = {
-  createWorkout: (workout: IWorkout) => void;
+  createWorkout: (workout: Workout) => void;
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
   deleteWorkout: (workout_id: string) => void;
-  startWorkout: (template?: IWorkout) => void;
+  startWorkout: (template?: Workout) => void;
   cancelWorkout: () => void;
-  updateField: <T extends keyof IWorkout, K extends IWorkout[T]>(
+  updateField: <T extends keyof Workout, K extends Workout[T]>(
     field: T,
     value: K,
     workoutId?: string,
   ) => void;
-  addExercises: (exercises: IExercise[]) => void;
+  addExercises: (exercises: Exercise[]) => void;
   removeExercise: (exercise_id: string) => void;
   saveWorkout: () => void;
   addSet: (exercise_id: string) => void;
   removeSet: (exerciseId: string, setIndex: number) => void;
-  updateSet: <T extends keyof IWorkoutSet, K extends IWorkoutSet[T]>(
+  updateSet: <T extends keyof WorkoutSet, K extends WorkoutSet[T]>(
     exerciseId: string,
     index: number,
     field: T,
@@ -33,13 +33,13 @@ export type WorkoutAction = {
 };
 
 export type ExerciseState = {
-  exercises: Array<IExercise>;
-  pending_exercse_updates: Array<IExercise>;
+  exercises: Array<Exercise>;
+  pending_exercse_updates: Array<Exercise>;
 };
 
 export type ExerciseAction = {
-  createExercise: (exercise: IExercise) => void;
-  updateExercise: (exerciseId: string, exercise: IExercise) => void;
+  createExercise: (exercise: Exercise) => void;
+  updateExercise: (exerciseId: string, exercise: Exercise) => void;
   deleteExercise: (exerciseId: string) => void;
 };
 

@@ -3,12 +3,12 @@ import { StyleSheet, View } from "react-native";
 import { RectButton, Swipeable } from "react-native-gesture-handler";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Animated } from "react-native";
-import { IExercise } from "@app/types/exercises";
-import { ExerciseStore } from "@app/zustand/exerciseStore";
+import { Exercise } from "@app/types/exercises";
+import { useExercise } from "@app/zustand/exerciseStore";
 import ExerciseItem from "./ExerciseItem";
 
 interface IExerciseListItem {
-  exercise: IExercise;
+  exercise: Exercise;
   onPress: (exercise_id: string) => void;
   swipable: boolean;
 }
@@ -17,7 +17,7 @@ const ExerciseListItem: FC<IExerciseListItem> = (
   { exercise, onPress, swipable },
 ) => {
   const theme = useTheme();
-  const { deleteExercise } = ExerciseStore();
+  const { deleteExercise } = useExercise();
 
   //TODO: delete popup warning
   const handleDelete = (id: string) => {

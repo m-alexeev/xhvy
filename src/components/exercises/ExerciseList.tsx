@@ -5,10 +5,10 @@ import { useFilter } from "@app/zustand/filterStore";
 import { useExercise } from "@app/zustand/exerciseStore";
 import { createSectionList, FirstLetterMapper } from "@app/utils/helpers";
 import ExerciseItem from "./ExerciseItem";
-import { IExercise } from "@app/types/exercises";
+import { Exercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabProps } from "@app/types/navigation";
+import { ExerciseDetailsTabProps } from "@app/types/navigation/exericse";
 
 interface ExerciseListProps {}
 
@@ -22,7 +22,7 @@ const ExerciseList: FC<ExerciseListProps> = () => {
   );
 
   const renderItem = useCallback(
-    ({ item }: { item: IExercise }) => (
+    ({ item }: { item: Exercise }) => (
       <ExerciseItem
         exercise={item}
         mode="link"

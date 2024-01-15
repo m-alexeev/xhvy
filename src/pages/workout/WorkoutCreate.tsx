@@ -5,7 +5,7 @@ import { useWorkout } from "@app/zustand/workoutStore";
 import WorkoutDuration from "@app/components/core/WorkoutDuration";
 import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
-import { IWorkoutExercise } from "@app/types/workouts";
+import { WorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@app/types/navigation/root";
@@ -47,7 +47,7 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
 
 
   const renderItem = useCallback(
-    ({ item }: { item: IWorkoutExercise }) => (
+    ({ item }: { item: WorkoutExercise }) => (
       <WorkoutExerciseCard
         key={item.id}
         workoutExercise={item}

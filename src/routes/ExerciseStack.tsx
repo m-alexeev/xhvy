@@ -6,8 +6,7 @@ import ExerciseCreate from "@app/pages/exercises/Create";
 import Header from "@app/components/core/Header";
 import ExercisesScreen from "@app/pages/exercises/Exercises";
 import { ExerciseStackParamList } from "@app/types/navigation/exericse";
-
-const ExercisedStack = createNativeStackNavigator<ExerciseStackParamList>();
+import { ExercisedStack } from "./stacks";
 
 const ExerciseStackRouter = () => {
   const navigation = useNavigation<NavigationProp<ExerciseStackParamList>>();
