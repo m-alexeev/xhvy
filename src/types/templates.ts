@@ -1,6 +1,6 @@
 import { Workout } from "./workouts";
 
-type Template = Omit<Workout, "started_at" | "completed_at"> & {
+type Template = Omit<Workout, "startedAt" | "completedAt"> & {
   template: boolean;
 };
 

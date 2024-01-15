@@ -12,7 +12,7 @@ export const FirstLetterMapper: FieldMapper<string> = (field) => {
 
 export const NameMapper: FieldMapper<string> = (field) => {
   return field;
-}
+};
 
 export const createSectionList = <T, K extends keyof T>(
   data: Array<T>,
@@ -58,5 +58,3 @@ export const calculateDuration = (start: Date, end: Date): string => {
   const seconds = Math.floor(difference % 60);
   return `${hours}:${minutes.toLocaleString().padStart(2, "0")}`;
 };
-
-

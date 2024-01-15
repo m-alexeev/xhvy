@@ -51,7 +51,7 @@ const WorkoutHistoryList = () => {
           }}
           sections={createSectionList(
             sortedWorkouts,
-            "started_at",
+            "startedAt",
             DateMapper,
           )}
           keyExtractor={(item) => item.id}

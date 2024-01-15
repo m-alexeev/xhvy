@@ -56,7 +56,8 @@ const useWorkout = create<WorkoutStoreType>()(
             state.activeWorkout = undefined;
             // Create workout from the template or previous workout
             if (base) {
-              const newWorkout: Workout = { ...base };
+              //FIX: Fix this typing issue, check type of base first 
+              const newWorkout: Workout= { ...base };
               newWorkout.startedAt = new Date();
               newWorkout.id = uuid.v4().toString();
               state.activeWorkout = newWorkout;

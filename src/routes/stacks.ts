@@ -5,6 +5,7 @@ import {
 } from "@app/types/navigation/exericse";
 import { MainBottomTabParamList } from "@app/types/navigation/main";
 import { RootStackParamList } from "@app/types/navigation/root";
+import { TemplateStackParamList } from "@app/types/navigation/templates";
 import { WorkoutStackParamList } from "@app/types/navigation/workout";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -26,3 +27,6 @@ export const HomeStack = createBottomTabNavigator<MainBottomTabParamList>();
 
 export const WorkoutStack = createNativeStackNavigator<WorkoutStackParamList>();
 
+export const TemplateStack = createNativeStackNavigator<
+  TemplateStackParamList
+>();

@@ -4,10 +4,8 @@ import WorkoutStackRouter from "./WorkoutStack";
 import HomeScreen from "@app/pages/home/Home";
 import ProfileScreen from "@app/pages/home/Profile";
 import ExerciseStackRouter from "./ExerciseStack";
-import TemplateHomePage from "@app/pages/templates/TemplateView";
-import Header from "@app/components/core/Header";
 import { HomeStack } from "./stacks";
-
+import TemplateStackRouter from "./TemplateStack";
 
 const HomeStackComponent: FC = ({}) => {
   return (
@@ -23,12 +21,8 @@ const HomeStackComponent: FC = ({}) => {
         />
         <HomeStack.Screen
           name="Templates"
-          component={TemplateHomePage}
+          component={TemplateStackRouter}
           options={{
-            headerShown: true,
-            header: () => {
-              return <Header title="Templates" />;
-            },
             tabBarIcon: (props) => <Icon {...props} source="folder" />,
           }}
         />

@@ -2,12 +2,11 @@ import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
-import { MainTabsNavigationProp } from "@app/types/navigation/main";
 import { Template } from "@app/types/templates";
 import TemplateCard from "@app/components/templates/TemplateCard";
+import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 
-type ViewTemplateNavigationProps = MainTabsNavigationProp<"Templates">;
-
+type TemplateHomePageNavProps = TemplateStackNavigationProp<"View">;
 const templates: Template[] = [
   {
     id: "1",
@@ -121,7 +120,7 @@ const templates: Template[] = [
   },
 ];
 
-const TemplateHomePage: FC<ViewTemplateNavigationProps> = ({ navigation }) => {
+const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
   const { colors } = useTheme();
 
   const renderTemplateItem = ({ item }: { item: Template }) => {
@@ -144,7 +143,7 @@ const TemplateHomePage: FC<ViewTemplateNavigationProps> = ({ navigation }) => {
         <Text variant="bodySmall" style={{ color: colors.outline }}>
           Quick Start
         </Text>
-        <Button mode="elevated">
+        <Button mode="elevated" onPress={() => navigation.push('')}>
           Create Workout Template
         </Button>
       </View>
