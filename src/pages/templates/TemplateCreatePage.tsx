@@ -1,24 +1,18 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC, useState } from "react";
-import { Template } from "@app/types/templates";
+import React, { FC } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { WorkoutExercise } from "@app/types/workouts";
 import TemplateExerciseCard from "@app/components/templates/TemplateExerciseCard";
-import uuid from "react-native-uuid";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
+import { getTemplateById } from "@app/zustand/hooks";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
-const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation }) => {
+const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
+  const templateId = route.params.templateId;
   const { colors } = useTheme();
-  const [template, setTemplate] = useState<Template>({
-    id: uuid.v4().toString(),
-    name: "",
-    note: "",
-    exercises: {},
-    template: true,
-  });
+  const template = getTemplateById(templateId);
 
   const renderTemplateExerciseCard = ({ item }: { item: WorkoutExercise }) => {
     return <TemplateExerciseCard exercise={item} />;

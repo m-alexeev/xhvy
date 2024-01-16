@@ -5,6 +5,8 @@ import { FlashList } from "@shopify/flash-list";
 import { Template } from "@app/types/templates";
 import TemplateCard from "@app/components/templates/TemplateCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
+import uuid from "react-native-uuid";
+import { useWorkout } from "@app/zustand/workoutStore";
 
 type TemplateHomePageNavProps = TemplateStackNavigationProp<"View">;
 const templates: Template[] = [
@@ -122,6 +124,7 @@ const templates: Template[] = [
 
 const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
   const { colors } = useTheme();
+  const createTemplate = useWorkout((s) => s.createTemplate);
 
   const renderTemplateItem = ({ item }: { item: Template }) => {
     return <TemplateCard template={item} />;
@@ -137,13 +140,26 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
     );
   };
 
+  const handlePress = () => {
+    const templateId = uuid.v4().toString();
+    // Create template
+    createTemplate({
+      id: templateId,
+      name: "",
+      note: "",
+      exercises: {},
+      template: true,
+    });
+    navigation.navigate("Create", { templateId: templateId });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text variant="bodySmall" style={{ color: colors.outline }}>
           Quick Start
         </Text>
-        <Button mode="elevated" onPress={() => navigation.navigate("Create")}>
+        <Button mode="elevated" onPress={handlePress}>
           Create Workout Template
         </Button>
       </View>

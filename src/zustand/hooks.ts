@@ -13,4 +13,9 @@ const getTemplates = (): Template[] => {
   return workouts;
 };
 
-export { getTemplates, getWorkout };
+const getTemplateById = (id: Template["id"]) => {
+  const templates = useWorkout((s) => s.templates);
+  return templates[id];
+};
+
+export { getTemplates, getTemplateById, getWorkout };

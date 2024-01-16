@@ -10,7 +10,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 export type TemplateStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
   Edit: { templateId: string };
-  Create: undefined;
+  Create: { templateId: string };
 };
 
 export type TemplateStackNavigationProp<
