@@ -6,7 +6,9 @@ export type MenuOption = {
   leadingIcon?: IconSource;
   title: string;
   onPress: () => void;
-  trailingIcon?: IconSource
+  trailingIcon?: IconSource;
 };
+
+export type AddMode = "active" | "template" | "workout";
 
 export { UnitsType };

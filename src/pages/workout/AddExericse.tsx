@@ -1,18 +1,27 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { FC } from "react";
 import ExerciseSearch from "@app/components/exercises/ExerciseSearch";
 import SelectableExerciseList from "@app/components/exercises/SelectableExerciseList";
+import { RootStackParamList } from "@app/types/navigation/root";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AddMode } from "@app/types/general";
 
-const AddExericse = () => {
+type AddExercisePageNavProps = NativeStackScreenProps<
+  RootStackParamList,
+  "AddExerciseModal"
+>;
+
+const AddExercisePage: FC<AddExercisePageNavProps> = ({ route }) => {
+  const mode: AddMode = route.params.mode || "active";
   return (
     <View style={styles.container}>
       <ExerciseSearch onShowFilter={() => {}} />
-      <SelectableExerciseList />
+      <SelectableExerciseList mode={mode} />
     </View>
   );
 };
 
-export default AddExericse;
+export default AddExercisePage;
 
 const styles = StyleSheet.create({
   container: {

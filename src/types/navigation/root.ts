@@ -7,7 +7,7 @@ export type RootStackParamList = {
   WorkoutCreateModal: undefined;
   WorkoutViewModal: { workoutId: string }; // Move to WorkoutStack
   WorkoutEditModal: { workoutId: string };
-  AddExerciseModal: undefined;
+  AddExerciseModal: {mode?: "active" | "workout" | "template"};
 };
 
 // For useNavigation Hook

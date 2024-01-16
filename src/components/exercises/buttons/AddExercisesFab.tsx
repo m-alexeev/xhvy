@@ -4,19 +4,23 @@ import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { Exercise } from "@app/types/exercises";
+import { AddMode } from "@app/types/general";
 
 interface AddExercisesFabProps {
   selectedExercises: Exercise[];
+  mode: AddMode;
 }
 
 const AddExercisesFab: FC<AddExercisesFabProps> = (
-  { selectedExercises },
+  { selectedExercises, mode },
 ) => {
   const navigation = useNavigation();
   const addExercises = useWorkout((state) => state.addExercises);
 
   const handlePress = () => {
-    addExercises(selectedExercises);
+    if (mode === "active") {
+      addExercises(selectedExercises);
+    }
     navigation.goBack();
   };
 
