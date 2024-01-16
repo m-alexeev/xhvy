@@ -5,21 +5,31 @@ import { useNavigation } from "@react-navigation/native";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { Exercise } from "@app/types/exercises";
 import { AddMode } from "@app/types/general";
+import { WorkoutOrTemplate } from "@app/types/templates";
 
 interface AddExercisesFabProps {
   selectedExercises: Exercise[];
   mode: AddMode;
+  id: WorkoutOrTemplate["id"];
 }
 
 const AddExercisesFab: FC<AddExercisesFabProps> = (
-  { selectedExercises, mode },
+  { selectedExercises, mode, id },
 ) => {
   const navigation = useNavigation();
   const addExercises = useWorkout((state) => state.addExercises);
 
   const handlePress = () => {
     if (mode === "active") {
+      // add to active workout
       addExercises(selectedExercises);
+    }
+    if (mode === "workout") {
+      // add to workout
+    }
+    if (mode === "template") {
+      // add to template
+      console.log("Adding exercises to template with id:", id);
     }
     navigation.goBack();
   };

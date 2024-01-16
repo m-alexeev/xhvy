@@ -10,12 +10,16 @@ import { getFilteredExercises } from "@app/utils/exercises";
 import AddExercisesFab from "./buttons/AddExercisesFab";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { AddMode } from "@app/types/general";
+import { WorkoutOrTemplate } from "@app/types/templates";
 
 interface SelectableExerciseListProps {
   mode: AddMode;
+  id?: WorkoutOrTemplate["id"];
 }
 
-const SelectableExerciseList: FC<SelectableExerciseListProps> = ({ mode }) => {
+const SelectableExerciseList: FC<SelectableExerciseListProps> = (
+  { mode, id },
+) => {
   const search = useFilter((state) => state.search);
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const exercises = useExercise((state) => state.exercises);
@@ -70,7 +74,11 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = ({ mode }) => {
         windowSize={5}
       >
       </SectionList>
-      <AddExercisesFab selectedExercises={selectedExercises} mode={mode} />
+      <AddExercisesFab
+        selectedExercises={selectedExercises}
+        mode={mode}
+        id={id}
+      />
     </View>
   );
 };

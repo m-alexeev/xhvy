@@ -1,5 +1,4 @@
 import { Exercise } from "./exercises";
-import { Template } from "./templates";
 
 export type SetType = "R" | "W" | "D" | "F";
 

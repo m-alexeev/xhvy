@@ -13,10 +13,15 @@ type AddExercisePageNavProps = NativeStackScreenProps<
 
 const AddExercisePage: FC<AddExercisePageNavProps> = ({ route }) => {
   const mode: AddMode = route.params.mode || "active";
+  let id = undefined;
+  if (route.params.mode !== "active") {
+    id = route.params.id;
+  }
+
   return (
     <View style={styles.container}>
       <ExerciseSearch onShowFilter={() => {}} />
-      <SelectableExerciseList mode={mode} />
+      <SelectableExerciseList mode={mode} id={id} />
     </View>
   );
 };

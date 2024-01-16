@@ -34,7 +34,10 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
           style={{ borderRadius: 10 }}
           mode="contained-tonal"
           onPress={() =>
-            navigation.navigate("AddExerciseModal", { mode: "template" })}
+            navigation.navigate("AddExerciseModal", {
+              mode: "template",
+              id: templateId,
+            })}
         >
           Add Exercise
         </Button>
