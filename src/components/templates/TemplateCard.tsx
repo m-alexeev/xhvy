@@ -14,7 +14,7 @@ interface TemplateCardProps {
 const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
   const { colors } = useTheme();
   const exercises = Object.values(template.exercises);
-
+  
   const renderExerciseItem = ({ item }: { item: WorkoutExercise }) => {
     return (
       <View style={{ marginLeft: 10 }}>

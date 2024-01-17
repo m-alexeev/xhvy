@@ -29,7 +29,7 @@ const AddExercisesFab: FC<AddExercisesFabProps> = (
     }
     if (mode === "template") {
       // add to template
-      console.log("Adding exercises to template with id:", id);
+      addExercises(selectedExercises, id, mode);
     }
     navigation.goBack();
   };

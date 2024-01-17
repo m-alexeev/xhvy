@@ -1,4 +1,5 @@
 import { Exercise } from "./exercises";
+import { AddMode } from "./general";
 import { Template, Templates, WorkoutOrTemplate } from "./templates";
 import { Workout, Workouts, WorkoutSet } from "./workouts";
 
@@ -23,7 +24,7 @@ export type WorkoutAction = {
     value: K,
     workoutId?: string,
   ) => void;
-  addExercises: (exercises: Exercise[]) => void;
+  addExercises: (exercises: Exercise[], id?: WorkoutOrTemplate["id"], mode?: AddMode) => void;
   removeExercise: (exercise_id: string) => void;
   saveActiveWorkout: () => void;
   addSet: (exercise_id: string) => void;

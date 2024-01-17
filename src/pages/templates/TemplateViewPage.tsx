@@ -9,118 +9,6 @@ import uuid from "react-native-uuid";
 import { useWorkout } from "@app/zustand/workoutStore";
 
 type TemplateHomePageNavProps = TemplateStackNavigationProp<"View">;
-const templates: Template[] = [
-  {
-    id: "1",
-    name: "Basic Template",
-    exercises: {
-      exercise1: {
-        id: "exercise1",
-        name: "Push-ups",
-        sets: [
-          {
-            id: "set1",
-            type: "rep",
-            reps: 10,
-            weight: undefined,
-            completed: false,
-          },
-          {
-            id: "set2",
-            type: "rep",
-            reps: 12,
-            weight: undefined,
-            completed: false,
-          },
-          // Add more sets as needed
-        ],
-      },
-      exercise2: {
-        id: "exercise2",
-        name: "Bodyweight Squats",
-        sets: [
-          {
-            id: "set1",
-            type: "rep",
-            reps: 15,
-            weight: undefined,
-            completed: false,
-          },
-          {
-            id: "set2",
-            type: "rep",
-            reps: 20,
-            weight: undefined,
-            completed: false,
-          },
-          // Add more sets as needed
-        ],
-      },
-      // Add more exercises as needed
-    },
-    note: "This is a basic template for your workout",
-    template: true,
-  },
-  {
-    id: "2",
-    name: "Interval Training",
-    exercises: {
-      exercise1: {
-        id: "exercise1",
-        name: "High Knees",
-        sets: [
-          {
-            id: "set1",
-            type: "time",
-            reps: undefined,
-            weight: undefined,
-            completed: false,
-            bodyweight: true,
-            previous: 30,
-          },
-          {
-            id: "set2",
-            type: "time",
-            reps: undefined,
-            weight: undefined,
-            completed: false,
-            bodyweight: true,
-            previous: 45,
-          },
-          // Add more sets as needed
-        ],
-      },
-      exercise2: {
-        id: "exercise2",
-        name: "Jumping Jacks",
-        sets: [
-          {
-            id: "set1",
-            type: "time",
-            reps: undefined,
-            weight: undefined,
-            completed: false,
-            bodyweight: true,
-            previous: 60,
-          },
-          {
-            id: "set2",
-            type: "time",
-            reps: undefined,
-            weight: undefined,
-            completed: false,
-            bodyweight: true,
-            previous: 75,
-          },
-          // Add more sets as needed
-        ],
-      },
-      // Add more exercises as needed
-    },
-    note: "This template includes interval training exercises",
-    template: true,
-  },
-];
 
 const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
   const { colors } = useTheme();
@@ -173,7 +61,7 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
           }}
         >
           <FlashList
-            data={templates}
+            data={Object.values(templates)}
             ListEmptyComponent={emptyList}
             renderItem={renderTemplateItem}
             estimatedItemSize={200}

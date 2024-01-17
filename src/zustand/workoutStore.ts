@@ -56,13 +56,13 @@ const useWorkout = create<WorkoutStoreType>()(
             state.activeWorkout = undefined;
             // Create workout from the template or previous workout
             if (base) {
-              //FIX: Fix this typing issue, check type of base first 
-              const newWorkout: Workout= { ...base };
+              //FIX: Fix this typing issue, check type of base first
+              const newWorkout: Workout = { ...base };
               newWorkout.startedAt = new Date();
               newWorkout.id = uuid.v4().toString();
               state.activeWorkout = newWorkout;
             } else {
-              // Create empty workout 
+              // Create empty workout
               state.activeWorkout = {
                 id: uuid.v4().toString(),
                 name: "Unnamed workout",
@@ -88,7 +88,7 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           }),
         ),
-      addExercises: (newExercises) =>
+      addExercises: (newExercises, id, mode) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Add exercises to active workout
@@ -111,9 +111,16 @@ const useWorkout = create<WorkoutStoreType>()(
             );
             // Merge existing exercises and new exercises prioritizing existing exercises
             // in case of overlap
+            // TODO: Refactor this as code is repeating
             Object.keys(workoutExercises).forEach((key) => {
-              if (!state.activeWorkout!.exercises[key]) {
-                state.activeWorkout!.exercises[key] = workoutExercises[key];
+              if (mode === "active") {
+                if (!state.activeWorkout!.exercises[key]) {
+                  state.activeWorkout!.exercises[key] = workoutExercises[key];
+                }
+              } else if (mode === "workout") {
+                state.workouts[id!].exercises[key] = workoutExercises[key];
+              } else if (mode === "template") {
+                state.templates[id!].exercises[key] = workoutExercises[key];
               }
             });
           }),
