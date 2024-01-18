@@ -17,7 +17,6 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const template = getTemplateById(templateId);
 
   const renderTemplateExerciseCard = ({ item }: { item: WorkoutExercise }) => {
-    console.log(item);
     return <TemplateExerciseCard exercise={item} />;
   };
 
