@@ -7,15 +7,17 @@ import TemplateCard from "@app/components/templates/TemplateCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 import uuid from "react-native-uuid";
 import { useWorkout } from "@app/zustand/workoutStore";
+import { getTemplates } from "@app/zustand/hooks";
 
 type TemplateHomePageNavProps = TemplateStackNavigationProp<"View">;
 
 const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
   const { colors } = useTheme();
   const createTemplate = useWorkout((s) => s.createTemplate);
+  const templates = getTemplates();
 
   const renderTemplateItem = ({ item }: { item: Template }) => {
-    return <TemplateCard template={item} />;
+    return <TemplateCard key={item.id} template={item} />;
   };
 
   const emptyList = () => {
@@ -30,14 +32,7 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
 
   const handlePress = () => {
     const templateId = uuid.v4().toString();
-    // Create template
-    createTemplate({
-      id: templateId,
-      name: "",
-      note: "",
-      exercises: {},
-      template: true,
-    });
+    createTemplate(templateId);
     navigation.navigate("Create", { templateId: templateId });
   };
 
@@ -47,7 +42,11 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
         <Text variant="bodySmall" style={{ color: colors.outline }}>
           Quick Start
         </Text>
-        <Button mode="elevated" onPress={handlePress}>
+        <Button
+          style={{ borderRadius: 10 }}
+          mode="elevated"
+          onPress={handlePress}
+        >
           Create Workout Template
         </Button>
       </View>
@@ -61,7 +60,7 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
           }}
         >
           <FlashList
-            data={Object.values(templates)}
+            data={templates}
             ListEmptyComponent={emptyList}
             renderItem={renderTemplateItem}
             estimatedItemSize={200}

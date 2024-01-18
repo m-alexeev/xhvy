@@ -11,7 +11,8 @@ export type WorkoutState = {
 };
 
 export type WorkoutAction = {
-  createTemplate: (template: Template) => void;
+  createTemplate: (templateId: Template['id']) => void;
+  saveTemplate: (templateId: Template["id"]) => void;
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
   deleteWorkout: (id: string, template?: boolean) => void;
   startWorkout: (template?: WorkoutOrTemplate) => void;

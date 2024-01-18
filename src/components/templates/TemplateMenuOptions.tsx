@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import React, { FC, useState } from "react";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { MenuOption } from "@app/types/general";

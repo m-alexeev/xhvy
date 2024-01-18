@@ -22,10 +22,23 @@ const useWorkout = create<WorkoutStoreType>()(
       templates: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
-      createTemplate: (template: Template) =>
+      createTemplate: (templateId: Template["id"]) =>
         set(
           produce((state: WorkoutStoreType) => {
+            const template: Template = {
+              id: templateId,
+              name: "",
+              exercises: {},
+              template: true,
+              wip: true,
+            };
             state.templates[template.id] = template;
+          }),
+        ),
+      saveTemplate: (templateId: Template["id"]) =>
+        set(
+          produce((state: WorkoutStoreType) => {
+            delete state.templates[templateId]["wip"];
           }),
         ),
       deleteWorkout: (id: string, template?: boolean) =>
