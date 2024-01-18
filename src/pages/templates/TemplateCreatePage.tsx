@@ -1,12 +1,13 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC } from "react";
-import { Button, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { WorkoutExercise } from "@app/types/workouts";
 import TemplateExerciseCard from "@app/components/templates/TemplateExerciseCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 import { getTemplateById } from "@app/zustand/hooks";
 import { useWorkout } from "@app/zustand/workoutStore";
+import CustomTextInput from "@app/components/core/TextInput";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
@@ -17,7 +18,7 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const template = getTemplateById(templateId);
 
   const renderTemplateExerciseCard = ({ item }: { item: WorkoutExercise }) => {
-    return <TemplateExerciseCard exercise={item} />;
+    return <TemplateExerciseCard exercise={item} onDelete={console.log} />;
   };
 
   const handleAdd = () => {
@@ -31,6 +32,14 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     saveTemplate(templateId);
     navigation.goBack();
   };
+
+  const renderListHeader = () => (
+    <View style={styles.headerContainer}>
+      <Text variant="titleMedium">{template.name}</Text>
+      <CustomTextInput value={template.note} placeholder="Workout Notes" />
+      <Text variant="bodySmall">Exercises</Text>
+    </View>
+  );
 
   const renderListFooter = () => (
     <View style={styles.footerContainer}>
@@ -60,6 +69,7 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
           data={Object.values(template.exercises)}
           renderItem={renderTemplateExerciseCard}
           estimatedItemSize={120}
+          ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
         />
       </View>

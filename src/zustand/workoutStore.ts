@@ -27,7 +27,7 @@ const useWorkout = create<WorkoutStoreType>()(
           produce((state: WorkoutStoreType) => {
             const template: Template = {
               id: templateId,
-              name: "",
+              name: "New Template",
               exercises: {},
               template: true,
               wip: true,
