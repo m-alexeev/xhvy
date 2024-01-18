@@ -32,6 +32,25 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     navigation.goBack();
   };
 
+  const renderListFooter = () => (
+    <View style={styles.footerContainer}>
+      <Button
+        style={{ borderRadius: 10 }}
+        mode="contained-tonal"
+        onPress={handleAdd}
+      >
+        Add Exercise
+      </Button>
+      <Button
+        style={{ borderRadius: 10 }}
+        mode="elevated"
+        onPress={handleSave}
+      >
+        Save Template
+      </Button>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <View>
@@ -41,23 +60,8 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
           data={Object.values(template.exercises)}
           renderItem={renderTemplateExerciseCard}
           estimatedItemSize={120}
+          ListFooterComponent={renderListFooter}
         />
-      </View>
-      <View style={styles.footerContainer}>
-        <Button
-          style={{ borderRadius: 10 }}
-          mode="contained-tonal"
-          onPress={handleAdd}
-        >
-          Add Exercise
-        </Button>
-        <Button
-          style={{ borderRadius: 10 }}
-          mode="elevated"
-          onPress={handleSave}
-        >
-          Save Template
-        </Button>
       </View>
     </View>
   );
