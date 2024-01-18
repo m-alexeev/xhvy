@@ -8,18 +8,17 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
-  Montserrat_700Bold,
   useFonts,
 } from "@expo-google-fonts/montserrat";
+
+import {Poppins_400Regular, Poppins_500Medium} from '@expo-google-fonts/poppins'
 
 const AppWrapper = () => {
   const { isThemeDark } = useThemeSwitch();
   let theme = isThemeDark ? CombinedDarkTheme : CombinedDefaultTheme;
 
   const [fontsLoaded, fontsError] = useFonts({
-    Montserrat_400Regular,
-    Montserrat_500Medium,
-    Montserrat_700Bold,
+    Poppins_400Regular, Poppins_500Medium
   });
 
   if (!fontsLoaded || fontsError) return null;

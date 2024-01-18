@@ -21,8 +21,7 @@ const weight = {
 };
 
 const baseFont = {
-  fontFamily:
-    "Montserrat_400Regular, System, Helvetica, Arial, sans-serif",
+  fontFamily: "Montserrat_400Regular, System, Helvetica, Arial, sans-serif",
 } as const;
 
 const baseVariants = configureFonts({ config: baseFont });
@@ -30,63 +29,63 @@ const baseVariants = configureFonts({ config: baseFont });
 const customVariants = {
   labelSmall: {
     ...baseVariants.labelSmall,
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Poppins_500Medium",
   },
   labelMedium: {
     ...baseVariants.labelMedium,
-    fontFamily: "Montserrat_500Medium",
+    fontFamily: "Poppins_500Medium",
   },
   labelLarge: {
     ...baseVariants.labelLarge,
-    fontFamily: "Montserrat_500Medium"
+    fontFamily: "Poppins_500Medium",
   },
   bodySmall: {
     ...baseVariants.bodySmall,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   bodyMedium: {
     ...baseVariants.bodyMedium,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   bodyLarge: {
     ...baseVariants.bodyLarge,
-    fontFamily: "Montserrat_400Regular"
+    fontFamily: "Poppins_400Regular",
   },
   titleSmall: {
     ...baseVariants.titleSmall,
-    fontFamily: "Montserrat_500Medium"
+    fontFamily: "Poppins_500Medium",
   },
   titleMedium: {
     ...baseVariants.titleMedium,
-    fontFamily: "Montserrat_500Medium"
+    fontFamily: "Poppins_500Medium",
   },
   titleLarge: {
     ...baseVariants.titleLarge,
-    fontFamily: "Montserrat_500Medium"
+    fontFamily: "Poppins_500Medium",
   },
   headlineSmall: {
     ...baseVariants.headlineSmall,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   headlineMedium: {
     ...baseVariants.headlineMedium,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   headlineLarge: {
     ...baseVariants.headlineLarge,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   displaySmall: {
     ...baseVariants.displaySmall,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   displayMedium: {
     ...baseVariants.displayMedium,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
   displayLarge: {
     ...baseVariants.displayLarge,
-    fontFamily: "Montserrat_400Regular",
+    fontFamily: "Poppins_400Regular",
   },
 };
 
@@ -97,4 +96,4 @@ const fontConfigCustom = configureFonts({
   },
 });
 
-export { size, weight, customVariants, fontConfigCustom };
+export { customVariants, fontConfigCustom, size, weight };
