@@ -8,12 +8,14 @@ import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 import { getTemplateById } from "@app/zustand/hooks";
 import { useWorkout } from "@app/zustand/workoutStore";
 import CustomTextInput from "@app/components/core/TextInput";
+import PreventBack from "@app/components/core/buttons/PreventBack";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
 const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const { colors } = useTheme();
   const saveTemplate = useWorkout((s) => s.saveTemplate);
+  const cancelTemplate = useWorkout((s) => s.deleteWorkout);
   const templateId = route.params.templateId;
   const template = getTemplateById(templateId);
 
@@ -30,6 +32,11 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
 
   const handleSave = () => {
     saveTemplate(templateId);
+    navigation.goBack();
+  };
+
+  const handleCancel = () => {
+    cancelTemplate(templateId, true);
     navigation.goBack();
   };
 
@@ -62,8 +69,10 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-      </View>
+      <PreventBack
+        canGoBack={false}
+        callback={handleCancel}
+      />
       <View style={{ minHeight: 20, flex: 1 }}>
         <FlashList
           data={Object.values(template.exercises)}
