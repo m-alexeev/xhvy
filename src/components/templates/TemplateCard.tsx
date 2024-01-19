@@ -3,9 +3,9 @@ import React, { FC } from "react";
 import { Button, Text, TouchableRipple, useTheme } from "react-native-paper";
 import { Template } from "@app/types/templates";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
-import IconButton from "../core/IconButton";
 import { WorkoutExercise } from "@app/types/workouts";
 import { FlashList } from "@shopify/flash-list";
+import TemplateMenuOptions from "./TemplateMenuOptions";
 
 interface TemplateCardProps {
   template: Template;
@@ -14,6 +14,7 @@ interface TemplateCardProps {
 const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
   const { colors } = useTheme();
   const exercises = Object.values(template.exercises);
+  
 
   const renderExerciseItem = ({ item }: { item: WorkoutExercise }) => {
     return (
@@ -31,7 +32,7 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
             <Text variant="titleMedium">
               {template.name}
             </Text>
-            <IconButton icon="dots-vertical" />
+            <TemplateMenuOptions templateId={template.id} />
           </View>
           <View style={styles().content}>
             <Text variant="labelMedium" style={{ color: colors.outline }}>

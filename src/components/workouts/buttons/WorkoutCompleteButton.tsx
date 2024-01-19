@@ -7,7 +7,7 @@ import { useTheme } from "react-native-paper";
 
 const WorkoutCompleteButton: FC = () => {
   const {colors} = useTheme()
-  const saveWorkout = useWorkout((state) => state.saveWorkout);
+  const saveWorkout = useWorkout((state) => state.saveActiveWorkout);
   const navigation = useNavigation();
 
   const finishWorkout = () => {

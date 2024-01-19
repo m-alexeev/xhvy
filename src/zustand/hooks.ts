@@ -7,10 +7,14 @@ const getWorkout = (id: Workout["id"]) => {
   return workouts[id];
 };
 
-// TODO: UPdate with templates
 const getTemplates = (): Template[] => {
-  const workouts = useWorkout((state) => state.workouts);
-  return workouts;
+  const templates = useWorkout((s) => s.templates);
+  return Object.values(templates).filter(t => !t.wip);
 };
 
-export { getTemplates, getWorkout };
+const getTemplateById = (id: Template["id"]) => {
+  const templates = useWorkout((s) => s.templates);
+  return templates[id];
+};
+
+export { getTemplateById, getTemplates, getWorkout };

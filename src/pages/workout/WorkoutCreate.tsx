@@ -45,7 +45,6 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   const removeSet = useWorkout((s) => s.removeSet);
   const removeExercise = useWorkout((s) => s.removeExercise);
 
-
   const renderItem = useCallback(
     ({ item }: { item: WorkoutExercise }) => (
       <WorkoutExerciseCard
@@ -72,7 +71,7 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
           ListFooterComponent={() => (
             <>
               <Button
-                onPress={() => navigation.navigate("AddExericiseModal")}
+                onPress={() => navigation.navigate("AddExerciseModal", {})}
                 mode="text"
               >
                 Add Exercise

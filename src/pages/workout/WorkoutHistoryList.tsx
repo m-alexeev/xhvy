@@ -13,7 +13,7 @@ const WorkoutHistoryList = () => {
   const sortedWorkouts = useMemo(
     () =>
       Object.values(workouts).sort((a, b) =>
-        b.started_at.getTime() - a.started_at.getTime()
+        b.startedAt.getTime() - a.startedAt.getTime()
       ),
     [workouts],
   );
@@ -51,7 +51,7 @@ const WorkoutHistoryList = () => {
           }}
           sections={createSectionList(
             sortedWorkouts,
-            "started_at",
+            "startedAt",
             DateMapper,
           )}
           keyExtractor={(item) => item.id}

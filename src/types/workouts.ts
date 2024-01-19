@@ -23,10 +23,16 @@ interface Workout {
   name: string;
   exercises: WorkoutExercises;
   note?: string;
-  started_at: Date;
-  completed_at?: Date;
+  startedAt: Date;
+  completedAt?: Date;
 }
 
 type Workouts = { [id: Workout["id"]]: Workout };
 
-export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet };
+export {
+  Workout,
+  WorkoutExercise,
+  WorkoutExercises,
+  Workouts,
+  WorkoutSet,
+};

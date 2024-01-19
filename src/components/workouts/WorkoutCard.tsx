@@ -5,19 +5,19 @@ import { useWorkout } from "@app/zustand/workoutStore";
 import { calculateDuration } from "@app/utils/helpers";
 import IconButton from "@app/components/core/IconButton";
 import {
-  IWorkout,
-  IWorkoutExercise,
+  Workout,
+  WorkoutExercise,
   WorkoutExercises,
 } from "@app/types/workouts";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "@app/types/navigation";
 import { camelCase } from "@app/utils/stringParsers";
+import { RootStackNavigationProp } from "@app/types/navigation/root";
 
 interface WorkoutProps {
-  workout: IWorkout;
+  workout: Workout;
 }
 
-const WorkoutExerciseItem: FC<IWorkoutExercise> = (props) => {
+const WorkoutExerciseItem: FC<WorkoutExercise> = (props) => {
   return (
     <View style={styles.itemContainer}>
       <Text variant="bodySmall">
@@ -63,7 +63,7 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
             <Text variant="titleMedium">{workout.name}</Text>
             <View style={styles.durationStyle}>
               <Text style={{ marginEnd: 5 }}>
-                {calculateDuration(workout.started_at, workout.completed_at!)}
+                {calculateDuration(workout.startedAt, workout.completedAt!)}
               </Text>
               <Icon size={16} source="clock" />
               <IconButton
@@ -74,7 +74,7 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
               </IconButton>
             </View>
           </View>
-          <Text variant="bodySmall">{workout.started_at.toLocaleString()}</Text>
+          <Text variant="bodySmall">{workout.startedAt.toLocaleString()}</Text>
           <View style={styles.exerciseContainer}>
             <Text variant="titleSmall">Exercises</Text>
             <WorkoutCardExercises exercises={workout.exercises} />

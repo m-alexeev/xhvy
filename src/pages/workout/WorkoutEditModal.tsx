@@ -32,8 +32,8 @@ const EditHeader = ({ workout }: { workout: Workout }) => {
         onChangeText={(text) => updateField("note", text, workout.id)}
       >
       </CustomTextInput>
-      <Text>{workout!.started_at.toLocaleString()}</Text>
-      <Text>{workout!.completed_at!.toLocaleString()}</Text>
+      <Text>{workout!.startedAt.toLocaleString()}</Text>
+      <Text>{workout!.completedAt!.toLocaleString()}</Text>
     </View>
   );
 };
