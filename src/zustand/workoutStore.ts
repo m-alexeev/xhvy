@@ -22,22 +22,33 @@ const useWorkout = create<WorkoutStoreType>()(
       templates: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
-      createTemplate: (templateId: Template["id"]) =>
+      createTemplate: (
+        templateId: Template["id"],
+        mode: "new" | "copy" = "new",
+      ) =>
         set(
           produce((state: WorkoutStoreType) => {
-            const template: Template = {
-              id: templateId,
-              name: "New Template",
-              exercises: {},
-              template: true,
-              wip: true,
-            };
-            state.templates[template.id] = template;
+            if (mode === "new") {
+              const template: Template = {
+                id: templateId,
+                name: "New Template",
+                exercises: {},
+                template: true,
+                wip: true,
+              };
+              state.templates[template.id] = template;
+            }
+            if (mode === "copy") {
+              const newTemplate = { ...state.templates[templateId] };
+              newTemplate.id = uuid.v4().toString();
+              state.templates[newTemplate.id] = newTemplate;
+            }
           }),
         ),
       saveTemplate: (templateId: Template["id"]) =>
         set(
           produce((state: WorkoutStoreType) => {
+            // Deletes the wip tag that will mark the template as saved
             delete state.templates[templateId]["wip"];
           }),
         ),
