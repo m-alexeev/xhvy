@@ -15,11 +15,12 @@ import ConfirmationButton from "@app/components/core/ConfirmationButton";
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
 const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
-  const { colors } = useTheme();
   const saveTemplate = useWorkout((s) => s.saveTemplate);
   const cancelTemplate = useWorkout((s) => s.deleteWorkout);
   const templateId = route.params.templateId;
   const template = getTemplateById(templateId);
+
+  console.log(template.wip);
 
   useEffect(() => {
     // Add back button that can handle going back with confirmation
@@ -59,7 +60,9 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   };
 
   const handleCancel = () => {
-    cancelTemplate(templateId, true);
+    if (template.wip) {
+      cancelTemplate(templateId, true);
+    }
     navigation.goBack();
   };
 

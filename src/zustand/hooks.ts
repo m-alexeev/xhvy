@@ -7,9 +7,13 @@ const getWorkout = (id: Workout["id"]) => {
   return workouts[id];
 };
 
-const getTemplates = (): Template[] => {
+const getTemplates = (filter: boolean = true): Template[] => {
   const templates = useWorkout((s) => s.templates);
-  return Object.values(templates).filter(t => !t.wip);
+  if (filter) {
+    return Object.values(templates).filter((t) => !t.wip);
+  } else {
+    return Object.values(templates);
+  }
 };
 
 const getTemplateById = (id: Template["id"]) => {
