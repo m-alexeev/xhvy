@@ -20,7 +20,6 @@ const TemplateStackRouter: FC = () => {
         name="Create"
         component={TemplateCreatePage}
         options={{
-          header: () => <Header title="New Template" />,
         }}
       />
     </TemplateStack.Navigator>

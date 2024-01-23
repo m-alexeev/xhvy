@@ -11,13 +11,29 @@ interface TemplateMenuOptionsProps {
 const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const deleteTemplate = useWorkout((s) => s.deleteWorkout);
+  const duplicateTemplate = useWorkout((s) => s.createTemplate);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
 
   const sampleOptions: Array<MenuOption> = [
-    { title: "Duplicate", onPress: () => {}, leadingIcon: "content-paste" },
+    {
+      title: "Edit",
+      onPress: () => {
+
+      },
+      leadingIcon: "pencil"
+    },
+    {
+      title: "Duplicate",
+      onPress: () => {
+        // Maybe open a new template screen to edit this template
+        duplicateTemplate(templateId, "copy");
+        toggleMenu();
+      },
+      leadingIcon: "content-paste",
+    },
     {
       title: "Delete",
       onPress: () => {

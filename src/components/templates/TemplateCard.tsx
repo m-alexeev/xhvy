@@ -6,15 +6,17 @@ import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { WorkoutExercise } from "@app/types/workouts";
 import { FlashList } from "@shopify/flash-list";
 import TemplateMenuOptions from "./TemplateMenuOptions";
+import { useNavigation } from "@react-navigation/native";
+import { TemplateNavProp } from "@app/types/navigation/templates";
 
 interface TemplateCardProps {
   template: Template;
 }
 
 const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
+  const navigation = useNavigation<TemplateNavProp>();
   const { colors } = useTheme();
   const exercises = Object.values(template.exercises);
-  
 
   const renderExerciseItem = ({ item }: { item: WorkoutExercise }) => {
     return (
@@ -24,9 +26,17 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
     );
   };
 
+  const handlePress = () => {
+    navigation.navigate("Create", { templateId: template.id });
+  };
+
   return (
-    <View style={styles(colors).outerContainer}>
-      <TouchableRipple borderless>
+    <View>
+      <TouchableRipple
+        style={styles(colors).outerContainer}
+        borderless
+        onPress={handlePress}
+      >
         <View style={styles().innerContainer}>
           <View style={styles().header}>
             <Text variant="titleMedium">
