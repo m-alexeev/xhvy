@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "react-native-paper";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import { ExerciseStore } from "@app/zustand/exerciseStore";
+import { useExercise} from "@app/zustand/exerciseStore";
 import {
   equipment,
   exerciseTypes,
@@ -15,7 +15,7 @@ import {
   muscles,
   tags,
 } from "@app/utils/categories";
-import { IExercise } from "@app/types/exercises";
+import { Exercise } from "@app/types/exercises";
 import FormInput from "@app/components/core/FormInput";
 import FormDropdown from "@app/components/core/FormDropdown";
 
@@ -23,7 +23,7 @@ const ExerciseCreate: FC = () => {
   const user = auth().currentUser!;
   const navigation = useNavigation();
   const { control, handleSubmit } = useForm();
-  const createExercise = ExerciseStore((state) => state.createExercise);
+  const createExercise = useExercise((state) => state.createExercise);
 
   const majorMusclesObj = majorMuclesGroups.map((item) => ({
     label: item,
@@ -37,7 +37,7 @@ const ExerciseCreate: FC = () => {
   const movementArr = movements.map((item) => ({ label: item, value: item }));
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const newExercise: IExercise = {
+    const newExercise: Exercise = {
       id: data.name,
       name: data.name,
       primaryMuscleGroups: data.primaryMuscleGroups,
