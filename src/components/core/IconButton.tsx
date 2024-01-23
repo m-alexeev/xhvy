@@ -9,12 +9,12 @@ import { GestureResponderEvent } from "react-native-modal";
 import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
 import { Icon, MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
 
-interface IconButtonProps {
+export interface IconButtonProps {
   selected?: boolean;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: ((event: GestureResponderEvent) => void) & (() => void);
-  icon: IconSource;
+  icon?: IconSource;
   size?: number;
   rippleColor?: ColorValue;
   color?: ColorValue;

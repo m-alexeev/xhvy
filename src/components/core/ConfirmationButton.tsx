@@ -1,21 +1,35 @@
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import React, { FC, useState } from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import ConfirmationPopup from "./ConfirmationPopup";
+import IconButton, { IconButtonProps } from "./IconButton";
 
-interface ConfirmationButtonProps extends ButtonProps {
-  displayPopup?: boolean;
-  popupText?: string;
-  onCancel?: () => void;
-  onConfirm: () => void;
+interface ConfirmationTextButtonProps extends ButtonProps {
+  variant: "text";
 }
 
+interface ConfirmationIconButtonProps extends IconButtonProps {
+  variant: "icon";
+}
+
+type ConfirmationButtonProps =
+  & (
+    | ConfirmationTextButtonProps
+    | ConfirmationIconButtonProps
+  )
+  & {
+    onCancel?: () => void;
+    onConfirm: () => void;
+    displayPopup?: boolean;
+    popupText?: string;
+  };
+
 const ConfirmationButton: FC<ConfirmationButtonProps> = ({
-  children,
   popupText,
   onCancel,
   onConfirm,
   displayPopup = true,
+  variant = "text",
   ...props
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -42,10 +56,24 @@ const ConfirmationButton: FC<ConfirmationButtonProps> = ({
     }
   };
 
+  if (variant === "icon") {
+    return (
+      <View>
+        <IconButton {...props} icon={props.icon} onPress={handlePress} />
+        <ConfirmationPopup
+          text={popupText}
+          visible={modalVisible}
+          onConfirm={onPopupConfirm}
+          onCancel={onPopupCancel}
+        />
+      </View>
+    );
+  }
+  const buttonProps = props as ButtonProps;
   return (
     <View>
-      <Button {...props} onPress={handlePress}>
-        {children}
+      <Button {...buttonProps} onPress={handlePress}>
+        {buttonProps.children}
       </Button>
       <ConfirmationPopup
         text={popupText}
@@ -58,5 +86,3 @@ const ConfirmationButton: FC<ConfirmationButtonProps> = ({
 };
 
 export default ConfirmationButton;
-
-const styles = StyleSheet.create({});

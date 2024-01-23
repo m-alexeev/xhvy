@@ -19,8 +19,16 @@ const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
 
   const sampleOptions: Array<MenuOption> = [
     {
+      title: "Edit",
+      onPress: () => {
+
+      },
+      leadingIcon: "pencil"
+    },
+    {
       title: "Duplicate",
       onPress: () => {
+        // Maybe open a new template screen to edit this template
         duplicateTemplate(templateId, "copy");
         toggleMenu();
       },

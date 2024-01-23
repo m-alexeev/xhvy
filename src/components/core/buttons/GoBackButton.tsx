@@ -14,9 +14,11 @@ const GoBackButton: FC<GoBackButtonProps> = (
 
   const icon = `chevron-${variant}`;
 
+  // TODO: add go-back prevention :)
+
   return (
     <IconButton
-      style={{marginRight: 10}}
+      style={{ marginRight: 10 }}
       icon={icon}
       onPress={() => navigation.goBack()}
       size={size}

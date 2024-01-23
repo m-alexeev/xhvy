@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { WorkoutExercise } from "@app/types/workouts";
@@ -9,6 +9,8 @@ import { getTemplateById } from "@app/zustand/hooks";
 import { useWorkout } from "@app/zustand/workoutStore";
 import CustomTextInput from "@app/components/core/TextInput";
 import PreventBack from "@app/components/core/buttons/PreventBack";
+import Header from "@app/components/core/Header";
+import ConfirmationButton from "@app/components/core/ConfirmationButton";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
@@ -18,6 +20,27 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const cancelTemplate = useWorkout((s) => s.deleteWorkout);
   const templateId = route.params.templateId;
   const template = getTemplateById(templateId);
+
+  useEffect(() => {
+    // Add back button that can handle going back with confirmation
+    navigation.setOptions({
+      header: () => (
+        <Header
+          title="New Template"
+          backButton={
+            <ConfirmationButton
+              onConfirm={handleCancel}
+              icon={"chevron-left"}
+              variant="icon"
+              size={32}
+              style={{ marginRight: 5 }}
+            >
+            </ConfirmationButton>
+          }
+        />
+      ),
+    });
+  }, []);
 
   const renderTemplateExerciseCard = ({ item }: { item: WorkoutExercise }) => {
     return <TemplateExerciseCard exercise={item} onDelete={console.log} />;
