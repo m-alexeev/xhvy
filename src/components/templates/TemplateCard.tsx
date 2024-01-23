@@ -26,16 +26,12 @@ const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
     );
   };
 
-  const handlePress = () => {
-    navigation.navigate("Create", { templateId: template.id });
-  };
 
   return (
     <View>
       <TouchableRipple
         style={styles(colors).outerContainer}
         borderless
-        onPress={handlePress}
       >
         <View style={styles().innerContainer}>
           <View style={styles().header}>
