@@ -20,8 +20,6 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const templateId = route.params.templateId;
   const template = getTemplateById(templateId);
 
-  console.log(template.wip);
-
   useEffect(() => {
     // Add back button that can handle going back with confirmation
     navigation.setOptions({
