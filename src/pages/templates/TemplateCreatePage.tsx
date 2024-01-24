@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC, useEffect, useMemo, useState } from "react";
-import { Button, Text, useTheme } from "react-native-paper";
+import React, { FC, useEffect, useState } from "react";
+import { Button, Text } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { WorkoutExercise } from "@app/types/workouts";
 import TemplateExerciseCard from "@app/components/templates/TemplateExerciseCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
-import { getTemplateById } from "@app/zustand/hooks";
+import { getOrCreateTemplate } from "@app/zustand/hooks";
 import { useWorkout } from "@app/zustand/workoutStore";
 import CustomTextInput from "@app/components/core/TextInput";
 import PreventBack from "@app/components/core/buttons/PreventBack";
@@ -17,10 +17,10 @@ type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
 const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const saveTemplate = useWorkout((s) => s.saveTemplate);
-  const cancelTemplate = useWorkout((s) => s.deleteWorkout);
   const templateId = route.params.templateId;
-  const template = getTemplateById(templateId);
-  const [localTemplate, setLocalTemplate] = useState(template);
+  const [localTemplate, setLocalTemplate] = useState(
+    getOrCreateTemplate(templateId),
+  );
   const params = route.params || {};
 
   useEffect(() => {
@@ -96,14 +96,11 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   };
 
   const handleSave = () => {
-    saveTemplate(templateId);
+    saveTemplate(localTemplate);
     navigation.goBack();
   };
 
   const handleCancel = () => {
-    if (template.wip) {
-      cancelTemplate(templateId, true);
-    }
     navigation.goBack();
   };
 
