@@ -24,6 +24,7 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     getOrCreateTemplate(templateId),
   );
 
+  // Load exercises from params passed by AddExercise page
   useEffect(() => {
     Object.values(params.exercises || {}).forEach((e) => {
       handleEditExercise(e, "add");
@@ -51,6 +52,7 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     });
   }, []);
 
+ 
   const handleUpdate = <T extends keyof Template, K extends Template[T]>(
     field: T,
     value: K,
