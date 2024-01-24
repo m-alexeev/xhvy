@@ -23,7 +23,7 @@ const getOrCreateTemplate = (id: Template["id"]) => {
   } else {
     const newTemplate: Template = {
       id: id,
-      name: "",
+      name: "New Template",
       note: "",
       exercises: {},
       template: true,

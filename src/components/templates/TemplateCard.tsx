@@ -6,22 +6,20 @@ import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { WorkoutExercise } from "@app/types/workouts";
 import { FlashList } from "@shopify/flash-list";
 import TemplateMenuOptions from "./TemplateMenuOptions";
-import { useNavigation } from "@react-navigation/native";
-import { TemplateNavProp } from "@app/types/navigation/templates";
+import { camelCase } from "@app/utils/stringParsers";
 
 interface TemplateCardProps {
   template: Template;
 }
 
 const TemplateCard: FC<TemplateCardProps> = ({ template }) => {
-  const navigation = useNavigation<TemplateNavProp>();
   const { colors } = useTheme();
   const exercises = Object.values(template.exercises);
 
   const renderExerciseItem = ({ item }: { item: WorkoutExercise }) => {
     return (
       <View style={{ marginLeft: 10 }}>
-        <Text variant="bodyMedium">{item.name}</Text>
+        <Text variant="bodyMedium">{camelCase(item.name)}</Text>
       </View>
     );
   };
