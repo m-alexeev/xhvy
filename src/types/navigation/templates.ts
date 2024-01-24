@@ -7,11 +7,11 @@ import { MainBottomTabParamList } from "./main";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { RootStackParamList } from "./root";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { WorkoutExercises } from "../workouts";
 
 export type TemplateStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
-  Edit: { templateId: string };
-  Create: { templateId: string };
+  Create: { templateId: string, exercises?: WorkoutExercises };
 };
 
 export type TemplateStackNavigationProp<

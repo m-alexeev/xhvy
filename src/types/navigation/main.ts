@@ -3,6 +3,12 @@ import { CompositeScreenProps } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./root";
 
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+    interface MainTabParamList extends MainBottomTabParamList {}
+  }
+}
 //==Home Stack===//
 export type MainBottomTabParamList = {
   Home: undefined;

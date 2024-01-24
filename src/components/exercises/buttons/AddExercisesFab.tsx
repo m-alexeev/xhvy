@@ -2,36 +2,29 @@ import { StyleSheet } from "react-native";
 import React, { FC } from "react";
 import { FAB } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-import { useWorkout } from "@app/zustand/workoutStore";
 import { Exercise } from "@app/types/exercises";
-import { AddMode } from "@app/types/general";
-import { WorkoutOrTemplate } from "@app/types/templates";
 
 interface AddExercisesFabProps {
   selectedExercises: Exercise[];
-  mode: AddMode;
-  id: WorkoutOrTemplate["id"];
+  templateId?: string;
+  workoutId?: string;
 }
 
 const AddExercisesFab: FC<AddExercisesFabProps> = (
-  { selectedExercises, mode, id },
+  { selectedExercises, templateId, workoutId },
 ) => {
-  const navigation = useNavigation();
-  const addExercises = useWorkout((state) => state.addExercises);
+  const navigation = useNavigation<any>();
 
   const handlePress = () => {
-    if (mode === "active") {
-      // add to active workout
-      addExercises(selectedExercises);
+    // Navigate to back route from which we came from
+    if (templateId) {
+      return navigation.navigate("Create", {
+        templateId: templateId,
+        exercises: selectedExercises,
+      });
     }
-    if (mode === "workout") {
-      // add to workout
+    if (workoutId) {
     }
-    if (mode === "template") {
-      // add to template
-      addExercises(selectedExercises, id, mode);
-    }
-    navigation.goBack();
   };
 
   return (

@@ -5,7 +5,7 @@ import GoBackButton from "@app/components/core/buttons/GoBackButton";
 import WorkoutCompleteButton from "@app/components/workouts/buttons/WorkoutCompleteButton";
 import ViewWorkoutModal from "@app/pages/workout/ViewWorkout";
 import WorkoutEditModal from "@app/pages/workout/WorkoutEditModal";
-import AddExercise from "@app/pages/workout/AddExericse";
+import AddExercisePage from "@app/pages/modals/AddExercise";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation/root";
@@ -55,7 +55,7 @@ export const ModalGroup = () => {
       />
       <RootStack.Screen
         name="AddExerciseModal"
-        component={AddExercise}
+        component={AddExercisePage}
         options={{
           header: () => (
             <Header

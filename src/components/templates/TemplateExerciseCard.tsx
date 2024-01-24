@@ -7,11 +7,11 @@ import IconButton from "../core/IconButton";
 
 interface TemplateExerciseCardProps {
   exercise: WorkoutExercise;
-  onDelete: (exerciseId: string) => void;
+  updateExercise: (exercise: WorkoutExercise, mode: "add" | "delete") => void;
 }
 
 const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
-  { exercise, onDelete },
+  { exercise, updateExercise },
 ) => {
   const { colors } = useTheme();
   return (
@@ -21,7 +21,7 @@ const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
         <IconButton
           icon="delete"
           color={colors.error}
-          onPress={() => onDelete(exercise.id)}
+          onPress={() => updateExercise(exercise, "delete")}
         />
       </View>
     </View>

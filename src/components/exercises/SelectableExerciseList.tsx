@@ -9,16 +9,17 @@ import { Exercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import AddExercisesFab from "./buttons/AddExercisesFab";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { AddMode } from "@app/types/general";
-import { WorkoutOrTemplate } from "@app/types/templates";
+import { Workout, WorkoutExercise } from "@app/types/workouts";
+import { Template } from "@app/types/templates";
 
 interface SelectableExerciseListProps {
-  mode: AddMode;
-  id?: WorkoutOrTemplate["id"];
+  selectedExercises: Array<WorkoutExercise["id"]>;
+  templateId?: Template["id"];
+  workoutId?: Workout["id"];
 }
 
 const SelectableExerciseList: FC<SelectableExerciseListProps> = (
-  { mode, id },
+  { selectedExercises, templateId, workoutId },
 ) => {
   const search = useFilter((state) => state.search);
   const activeWorkout = useWorkout((state) => state.activeWorkout);
@@ -27,10 +28,10 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
     () => getFilteredExercises(exercises, search),
     [exercises, search],
   );
-  const [selectedExercises, setSelectedExercises] = useState<Exercise[]>([]);
+  const [newExercises, setSelectedExercises] = useState<Exercise[]>([]);
 
   const toggleExercise = (exercise: Exercise) => {
-    const index = selectedExercises.findIndex((e) => e.id === exercise.id);
+    const index = newExercises.findIndex((e) => e.id === exercise.id);
     if (index !== -1) {
       // If exericse not in selected list, add it
       setSelectedExercises((prev) => {
@@ -52,7 +53,7 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
         exercise={item}
         mode="select"
         selected={!!activeWorkout?.exercises[item.id] ||
-          selectedExercises.some((e) => e.id === item.id)}
+          newExercises.some((e) => e.id === item.id)}
         handlePress={toggleExercise}
       />
     ),
@@ -75,9 +76,9 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
       >
       </SectionList>
       <AddExercisesFab
-        selectedExercises={selectedExercises}
-        mode={mode}
-        id={id}
+        selectedExercises={newExercises}
+        templateId={templateId}
+        workoutId={workoutId}
       />
     </View>
   );

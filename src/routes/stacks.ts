@@ -2,7 +2,7 @@ import { AuthStackParamList } from "@app/types/navigation/auth";
 import {
   ExerciseDetailsTabParamList,
   ExerciseStackParamList,
-} from "@app/types/navigation/exericse";
+} from "@app/types/navigation/exercise";
 import { MainBottomTabParamList } from "@app/types/navigation/main";
 import { RootStackParamList } from "@app/types/navigation/root";
 import { TemplateStackParamList } from "@app/types/navigation/templates";
