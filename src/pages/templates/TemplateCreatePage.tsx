@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { FC, useEffect, useState } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
@@ -70,8 +70,8 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     }
     if (mode === "delete") {
       setLocalTemplate((prev) => {
-        const updatedExercises = prev.exercises;
-        delete updatedExercises[exercise.id];
+        const updatedExercises = {...prev.exercises};
+        delete updatedExercises[exercise.id]; 
         return {
           ...prev,
           exercises: updatedExercises,
