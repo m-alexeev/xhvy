@@ -23,6 +23,11 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const [localTemplate, setLocalTemplate] = useState(template);
   const params = route.params || {};
 
+  useEffect(() => {
+    Object.values(params.exercises || {}).forEach((e) => {
+      handleEditExercise(e, "add");
+    });
+  }, [params.exercises]);
 
   useEffect(() => {
     // Add back button that can handle going back with confirmation
@@ -52,7 +57,7 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     setLocalTemplate((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleEditExericse = (
+  const handleEditExercise = (
     exercise: WorkoutExercise,
     mode: "add" | "delete",
   ) => {
@@ -78,14 +83,14 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     return (
       <TemplateExerciseCard
         exercise={item}
-        updateExercise={handleEditExericse}
+        updateExercise={handleEditExercise}
       />
     );
   };
 
   const handleAdd = () => {
     navigation.navigate("AddExerciseModal", {
-      selectedExercises: [],
+      selectedExercises: Object.keys(localTemplate.exercises),
       templateId: templateId,
     });
   };

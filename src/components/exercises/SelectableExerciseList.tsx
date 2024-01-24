@@ -9,11 +9,11 @@ import { Exercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import AddExercisesFab from "./buttons/AddExercisesFab";
 import { useWorkout } from "@app/zustand/workoutStore";
-import { Workout, WorkoutExercise } from "@app/types/workouts";
+import { Workout } from "@app/types/workouts";
 import { Template } from "@app/types/templates";
 
 interface SelectableExerciseListProps {
-  selectedExercises: Array<WorkoutExercise["id"]>;
+  selectedExercises: Array<Exercise["id"]>;
   templateId?: Template["id"];
   workoutId?: Workout["id"];
 }
@@ -28,13 +28,18 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
     () => getFilteredExercises(exercises, search),
     [exercises, search],
   );
-  const [newExercises, setSelectedExercises] = useState<Exercise[]>([]);
+  const [newExercises, setNewExercises] = useState<Exercise[]>([]);
 
   const toggleExercise = (exercise: Exercise) => {
+    const prevId = selectedExercises.findIndex((id) => id === exercise.id);
+    // Dont toggle previously selected exercises
+    if (prevId !== -1) {
+      return;
+    }
     const index = newExercises.findIndex((e) => e.id === exercise.id);
     if (index !== -1) {
       // If exericse not in selected list, add it
-      setSelectedExercises((prev) => {
+      setNewExercises((prev) => {
         const updatedExercises = [...prev];
         updatedExercises.splice(index, 1);
         return updatedExercises;
@@ -42,7 +47,7 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
     } else {
       // first check if theyre already selected as part of the workout
       if (!activeWorkout?.exercises[exercise.id]) {
-        setSelectedExercises((prev) => [...prev, exercise]);
+        setNewExercises((prev) => [...prev, exercise]);
       }
     }
   };
@@ -53,11 +58,12 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
         exercise={item}
         mode="select"
         selected={!!activeWorkout?.exercises[item.id] ||
+          selectedExercises.includes(item.id) ||
           newExercises.some((e) => e.id === item.id)}
         handlePress={toggleExercise}
       />
     ),
-    [selectedExercises],
+    [newExercises],
   );
 
   return (

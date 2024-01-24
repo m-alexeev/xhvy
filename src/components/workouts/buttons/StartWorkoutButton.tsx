@@ -24,8 +24,6 @@ const StartWorkoutButton: FC<StartWorkoutButtonProps> = (
   const startWorkout = useWorkout((state) => state.startWorkout);
 
   const handleStartPress = () => {
-    console.log(workoutId);
-
     // Start empty workout
     if (!activeWorkout) {
       if (workoutId) {
@@ -39,7 +37,6 @@ const StartWorkoutButton: FC<StartWorkoutButtonProps> = (
   };
 
   const handleModalConfirm = () => {
-    console.log(workoutId);
     if (workoutId) {
       startWorkout(workouts[workoutId]);
       navigation.replace("WorkoutCreateModal");
