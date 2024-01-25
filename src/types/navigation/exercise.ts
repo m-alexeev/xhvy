@@ -7,11 +7,12 @@ import { MainBottomTabParamList } from "./main";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./root";
+import { Exercise } from "../exercises";
 
 //==Exericse Stack===//
 export type ExerciseStackParamList = {
   View: NavigatorScreenParams<MainBottomTabParamList>;
-  Details: { exercise_id: string };
+  Details: { exerciseId: Exercise["id"] };
   Create: undefined;
   Edit: { exercise_id: string };
 };
@@ -23,10 +24,10 @@ export type ExerciseStackScreenProps<T extends keyof ExerciseStackParamList> =
   >;
 
 export type ExerciseDetailsTabParamList = {
-  About: undefined;
-  History: undefined;
-  Charts: undefined;
-  Records: undefined;
+  About: { exercise: Exercise };
+  History: { exercise: Exercise };
+  Charts: { exercise: Exercise };
+  Records: { exercise: Exercise };
 };
 
 export type ExerciseDetailsTabProps = NavigationProp<ExerciseStackParamList>;

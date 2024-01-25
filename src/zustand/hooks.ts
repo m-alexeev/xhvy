@@ -1,6 +1,13 @@
 import { Workout } from "@app/types/workouts";
 import { useWorkout } from "./workoutStore";
 import { Template } from "@app/types/templates";
+import { Exercise } from "@app/types/exercises";
+import { useExercise } from "./exerciseStore";
+
+const getExerciseById = (id: Exercise["id"]): Exercise | undefined => {
+  const exercises = useExercise((s) => s.exercises);
+  return exercises.find((e) => e.id === id);
+};
 
 const getWorkout = (id: Workout["id"]) => {
   const workouts = useWorkout((state) => state.workouts);
@@ -32,4 +39,4 @@ const getOrCreateTemplate = (id: Template["id"]) => {
   }
 };
 
-export { getOrCreateTemplate, getTemplates, getWorkout };
+export { getOrCreateTemplate, getTemplates, getWorkout, getExerciseById };
