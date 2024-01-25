@@ -8,6 +8,7 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "./root";
 import { Exercise } from "../exercises";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 
 //==Exericse Stack===//
 export type ExerciseStackParamList = {
@@ -29,5 +30,9 @@ export type ExerciseDetailsTabParamList = {
   Charts: { exercise: Exercise };
   Records: { exercise: Exercise };
 };
+
+export type ExerciseTabsScreenProps<
+  T extends keyof ExerciseDetailsTabParamList,
+> = MaterialTopTabScreenProps<ExerciseDetailsTabParamList, T>;
 
 export type ExerciseDetailsTabProps = NavigationProp<ExerciseStackParamList>;
