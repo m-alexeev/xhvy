@@ -24,6 +24,10 @@ const AddExercisesFab: FC<AddExercisesFabProps> = (
       });
     } else if (workoutId) {
       // Navigate back to saved workout edit page
+      return navigation.navigatie("WorkoutEditModal", {
+        workoutId: workoutId,
+        exercises: selectedExercises,
+      });
     } else {
       // Navigate back to Active Workout page
       return navigation.navigate("WorkoutCreateModal", {
