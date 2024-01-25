@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
 import WorkoutDuration from "@app/components/core/WorkoutDuration";
@@ -40,10 +40,19 @@ const ListHeader: FC = () => {
 const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   { navigation, route },
 ) => {
+  const params = route.params || {};
   const activeWorkout = useWorkout((state) => state.activeWorkout);
+  const addExercises = useWorkout((s) => s.addExercises);
   const updateSet = useWorkout((s) => s.updateSet);
   const removeSet = useWorkout((s) => s.removeSet);
   const removeExercise = useWorkout((s) => s.removeExercise);
+
+  useEffect(() => {
+    console.log(params.exercises);
+    if (params.exercises) {
+      addExercises(params.exercises, undefined, "active");
+    }
+  }, [params.exercises]);
 
   const renderItem = useCallback(
     ({ item }: { item: WorkoutExercise }) => (
@@ -71,7 +80,10 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
           ListFooterComponent={() => (
             <>
               <Button
-                onPress={() => navigation.navigate("AddExerciseModal", {})}
+                onPress={() =>
+                  navigation.navigate("AddExerciseModal", {
+                    selectedExercises: Object.keys(activeWorkout?.exercises || {}),
+                  })}
                 mode="text"
               >
                 Add Exercise

@@ -4,25 +4,36 @@ import { WorkoutExercise } from "@app/types/workouts";
 import { Text, useTheme } from "react-native-paper";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import IconButton from "../core/IconButton";
+import { camelCase } from "@app/utils/stringParsers";
 
 interface TemplateExerciseCardProps {
   exercise: WorkoutExercise;
-  onDelete: (exerciseId: string) => void;
+  updateExercise: (exercise: WorkoutExercise, mode: "add" | "delete") => void;
 }
 
 const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
-  { exercise, onDelete },
+  { exercise, updateExercise },
 ) => {
   const { colors } = useTheme();
   return (
     <View style={styles(colors).container}>
       <View style={styles().header}>
-        <Text variant="titleMedium">{exercise.name}</Text>
+        <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
         <IconButton
           icon="delete"
           color={colors.error}
-          onPress={() => onDelete(exercise.id)}
+          onPress={() => updateExercise(exercise, "delete")}
         />
+      </View>
+      <View style={styles().body}>
+        <Text variant="labelMedium">
+          {camelCase(exercise.primaryMuscleGroups!.toString(), ",", ", ")}
+        </Text>
+        {exercise.tags && exercise.tags?.length > 0 && (
+          <Text variant="labelMedium" style={{ color: colors.outline }}>
+            {camelCase(exercise.tags.toString(), ",", ", ")}
+          </Text>
+        )}
       </View>
     </View>
   );
@@ -43,4 +54,5 @@ const styles = (colors?: MD3Colors) =>
       flex: 1,
       justifyContent: "space-between",
     },
+    body: {},
   });

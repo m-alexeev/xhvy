@@ -1,24 +1,35 @@
 import { StyleSheet, View } from "react-native";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
 import { FlashList } from "@shopify/flash-list";
 import { WorkoutExercise } from "@app/types/workouts";
 import TemplateExerciseCard from "@app/components/templates/TemplateExerciseCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
-import { getTemplateById } from "@app/zustand/hooks";
+import { getOrCreateTemplate } from "@app/zustand/hooks";
 import { useWorkout } from "@app/zustand/workoutStore";
-import CustomTextInput from "@app/components/core/TextInput";
 import PreventBack from "@app/components/core/buttons/PreventBack";
 import Header from "@app/components/core/Header";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
+import { Template } from "@app/types/templates";
+import TemplateHeader from "@app/components/templates/TemplateHeader";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
 const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
+  const { colors } = useTheme();
+  const params = route.params || {};
   const saveTemplate = useWorkout((s) => s.saveTemplate);
-  const cancelTemplate = useWorkout((s) => s.deleteWorkout);
   const templateId = route.params.templateId;
-  const template = getTemplateById(templateId);
+  const [localTemplate, setLocalTemplate] = useState(
+    getOrCreateTemplate(templateId),
+  );
+
+  // Load exercises from params passed by AddExercise page
+  useEffect(() => {
+    Object.values(params.exercises || {}).forEach((e) => {
+      handleEditExercise(e, "add");
+    });
+  }, [params.exercises]);
 
   useEffect(() => {
     // Add back button that can handle going back with confirmation
@@ -41,49 +52,80 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     });
   }, []);
 
+ 
+  const handleUpdate = <T extends keyof Template, K extends Template[T]>(
+    field: T,
+    value: K,
+  ) => {
+    setLocalTemplate((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleEditExercise = (
+    exercise: WorkoutExercise,
+    mode: "add" | "delete",
+  ) => {
+    if (mode === "add") {
+      setLocalTemplate((prev) => ({
+        ...prev,
+        exercises: { ...prev.exercises, [exercise.id]: exercise },
+      }));
+    }
+    if (mode === "delete") {
+      setLocalTemplate((prev) => {
+        const updatedExercises = {...prev.exercises};
+        delete updatedExercises[exercise.id]; 
+        return {
+          ...prev,
+          exercises: updatedExercises,
+        };
+      });
+    }
+  };
+
   const renderTemplateExerciseCard = ({ item }: { item: WorkoutExercise }) => {
-    return <TemplateExerciseCard exercise={item} onDelete={console.log} />;
+    return (
+      <TemplateExerciseCard
+        exercise={item}
+        updateExercise={handleEditExercise}
+      />
+    );
   };
 
   const handleAdd = () => {
     navigation.navigate("AddExerciseModal", {
-      mode: "template",
-      id: templateId,
+      selectedExercises: Object.keys(localTemplate.exercises),
+      templateId: templateId,
     });
   };
 
   const handleSave = () => {
-    saveTemplate(templateId);
+    saveTemplate(localTemplate);
     navigation.goBack();
   };
 
   const handleCancel = () => {
-    if (template.wip) {
-      cancelTemplate(templateId, true);
-    }
     navigation.goBack();
   };
 
-  const renderListHeader = () => (
-    <View style={styles.headerContainer}>
-      <Text variant="titleMedium">{template.name}</Text>
-      <CustomTextInput value={template.note} placeholder="Workout Notes" />
-      <Text variant="bodySmall">Exercises</Text>
+  const renderEmptyList = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={{ textAlign: "center" }} variant="bodyLarge">
+        No Exercises here yet...
+      </Text>
     </View>
   );
 
   const renderListFooter = () => (
     <View style={styles.footerContainer}>
       <Button
-        style={{ borderRadius: 10 }}
-        mode="contained-tonal"
+        mode="text"
         onPress={handleAdd}
       >
         Add Exercise
       </Button>
       <Button
-        style={{ borderRadius: 10 }}
-        mode="elevated"
+        textColor={colors.tertiary}
+        mode="text"
         onPress={handleSave}
       >
         Save Template
@@ -97,13 +139,20 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
         canGoBack={false}
         callback={handleCancel}
       />
+
       <View style={{ minHeight: 20, flex: 1 }}>
         <FlashList
-          data={Object.values(template.exercises)}
+          data={Object.values(localTemplate.exercises)}
           renderItem={renderTemplateExerciseCard}
           estimatedItemSize={120}
-          ListHeaderComponent={renderListHeader}
+          ListHeaderComponent={
+            <TemplateHeader
+              localTemplate={localTemplate}
+              onUpdate={handleUpdate}
+            />
+          }
           ListFooterComponent={renderListFooter}
+          ListEmptyComponent={renderEmptyList}
         />
       </View>
     </View>
@@ -117,7 +166,8 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
   },
-  headerContainer: {},
+  emptyContainer: { marginVertical: 20 },
+  headerContainer: { marginBottom: 10, gap: 5 },
   contentContainer: {},
   footerContainer: { gap: 10 },
 });

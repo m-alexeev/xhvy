@@ -16,9 +16,20 @@ const getTemplates = (filter: boolean = true): Template[] => {
   }
 };
 
-const getTemplateById = (id: Template["id"]) => {
+const getOrCreateTemplate = (id: Template["id"]) => {
   const templates = useWorkout((s) => s.templates);
-  return templates[id];
+  if (templates[id]) {
+    return templates[id];
+  } else {
+    const newTemplate: Template = {
+      id: id,
+      name: "New Template",
+      note: "",
+      exercises: {},
+      template: true,
+    };
+    return newTemplate;
+  }
 };
 
-export { getTemplateById, getTemplates, getWorkout };
+export { getOrCreateTemplate, getTemplates, getWorkout };

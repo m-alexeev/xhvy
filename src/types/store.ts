@@ -12,7 +12,7 @@ export type WorkoutState = {
 
 export type WorkoutAction = {
   createTemplate: (templateId: Template["id"], mode?: "new" | "copy") => void;
-  saveTemplate: (templateId: Template["id"]) => void;
+  saveTemplate: (template: Template) => void;
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
   deleteWorkout: (id: string, template?: boolean) => void;
   startWorkout: (template?: WorkoutOrTemplate) => void;

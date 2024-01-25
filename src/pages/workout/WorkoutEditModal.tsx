@@ -39,9 +39,12 @@ const EditHeader = ({ workout }: { workout: Workout }) => {
 };
 
 const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
+
   const { colors } = useTheme();
   const { workoutId } = route.params;
   const workout = getWorkout(workoutId);
+
+  
 
   const renderItem = useCallback(
     ({ item }: { item: WorkoutExercise }) => (

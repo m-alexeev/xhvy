@@ -6,14 +6,12 @@ import { Template } from "@app/types/templates";
 import TemplateCard from "@app/components/templates/TemplateCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 import uuid from "react-native-uuid";
-import { useWorkout } from "@app/zustand/workoutStore";
 import { getTemplates } from "@app/zustand/hooks";
 
 type TemplateHomePageNavProps = TemplateStackNavigationProp<"View">;
 
 const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
   const { colors } = useTheme();
-  const createTemplate = useWorkout((s) => s.createTemplate);
   const templates = getTemplates();
 
   const renderTemplateItem = ({ item }: { item: Template }) => {
@@ -32,7 +30,6 @@ const TemplateHomePage: FC<TemplateHomePageNavProps> = ({ navigation }) => {
 
   const handlePress = () => {
     const templateId = uuid.v4().toString();
-    createTemplate(templateId);
     navigation.navigate("Create", { templateId: templateId });
   };
 

@@ -45,11 +45,11 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           }),
         ),
-      saveTemplate: (templateId: Template["id"]) =>
+      saveTemplate: (template: Template) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Deletes the wip tag that will mark the template as saved
-            delete state.templates[templateId]["wip"];
+            state.templates[template.id] = template;
           }),
         ),
       deleteWorkout: (id: string, template?: boolean) =>

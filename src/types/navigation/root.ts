@@ -1,30 +1,21 @@
 import { NavigationProp } from "@react-navigation/native";
-import { Template } from "../templates";
-import { Workout } from "../workouts";
+import { Workout, WorkoutExercise } from "../workouts";
 
-type ActiveAddMode = {
-  mode: "active";
-};
-
-type WorkoutAddMode = {
-  mode: "workout";
-  id: Workout["id"];
-};
-
-type TemplateAddMode = {
-  mode: "template";
-  id: Template["id"];
-};
-
-type AddExerciseModalParams = WorkoutAddMode | TemplateAddMode | ActiveAddMode;
 //==Root Stack===/
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
-  WorkoutCreateModal: undefined;
+  WorkoutCreateModal: {
+    workoutId?: Workout["id"];
+    exercises?: Array<WorkoutExercise>;
+  };
   WorkoutViewModal: { workoutId: string }; // Move to WorkoutStack
   WorkoutEditModal: { workoutId: string };
-  AddExerciseModal: AddExerciseModalParams;
+  AddExerciseModal: {
+    selectedExercises?: Array<WorkoutExercise["id"]>;
+    templateId?: string;
+    workoutId?: string;
+  };
 };
 
 // For useNavigation Hook

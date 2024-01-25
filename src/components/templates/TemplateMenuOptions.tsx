@@ -3,12 +3,15 @@ import { useWorkout } from "@app/zustand/workoutStore";
 import { MenuOption } from "@app/types/general";
 import BaseMenu from "../core/menus/BaseMenu";
 import IconButton from "../core/IconButton";
+import { useNavigation } from "@react-navigation/native";
+import { TemplateNavProp } from "@app/types/navigation/templates";
 
 interface TemplateMenuOptionsProps {
   templateId: string;
 }
 
 const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
+  const navigation = useNavigation<TemplateNavProp>();
   const [menuOpen, setMenuOpen] = useState(false);
   const deleteTemplate = useWorkout((s) => s.deleteWorkout);
   const duplicateTemplate = useWorkout((s) => s.createTemplate);
@@ -21,9 +24,10 @@ const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
     {
       title: "Edit",
       onPress: () => {
-
+        navigation.navigate("Create", { templateId: templateId });
+        toggleMenu();
       },
-      leadingIcon: "pencil"
+      leadingIcon: "pencil",
     },
     {
       title: "Duplicate",
