@@ -22,8 +22,13 @@ const AddExercisesFab: FC<AddExercisesFabProps> = (
         templateId: templateId,
         exercises: selectedExercises,
       });
-    }
-    if (workoutId) {
+    } else if (workoutId) {
+      // Navigate back to saved workout edit page
+    } else {
+      // Navigate back to Active Workout page
+      return navigation.navigate("WorkoutCreateModal", {
+        exercises: selectedExercises,
+      });
     }
   };
 

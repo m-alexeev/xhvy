@@ -1,11 +1,14 @@
 import { NavigationProp } from "@react-navigation/native";
-import { WorkoutExercise } from "../workouts";
+import { Workout, WorkoutExercise } from "../workouts";
 
 //==Root Stack===/
 export type RootStackParamList = {
   HomeStack: undefined;
   AuthStack: undefined;
-  WorkoutCreateModal: undefined;
+  WorkoutCreateModal: {
+    workoutId?: Workout["id"];
+    exercises?: Array<WorkoutExercise>;
+  };
   WorkoutViewModal: { workoutId: string }; // Move to WorkoutStack
   WorkoutEditModal: { workoutId: string };
   AddExerciseModal: {
