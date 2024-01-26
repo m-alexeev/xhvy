@@ -3,13 +3,13 @@ import {
   MD3LightTheme,
   MD3Theme,
   adaptNavigationTheme,
-  configureFonts,
 } from "react-native-paper";
 import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
 import { fontConfigCustom } from "./fonts";
+import { Dimensions } from "react-native";
 
 const MaterialDarkTheme: MD3Theme = {
   ...MD3DarkTheme,
@@ -130,4 +130,6 @@ const CombinedDarkTheme = {
   },
 };
 
-export { CombinedDarkTheme, CombinedDefaultTheme };
+const screenDimensions = Dimensions.get('screen');
+
+export { CombinedDarkTheme, CombinedDefaultTheme, screenDimensions };
