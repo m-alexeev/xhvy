@@ -39,12 +39,12 @@ const EditHeader = ({ workout }: { workout: Workout }) => {
 };
 
 const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
-
   const { colors } = useTheme();
   const { workoutId } = route.params;
   const workout = getWorkout(workoutId);
-
-  
+  const updateSet = useWorkout((s) => s.updateSet);
+  const removeSet = useWorkout((s) => s.removeSet);
+  const removeExercise = useWorkout((s) => s.removeExercise);
 
   const renderItem = useCallback(
     ({ item }: { item: WorkoutExercise }) => (
@@ -52,6 +52,9 @@ const WorkoutEditModal: FC<EditWorkoutNavigationProps> = ({ route }) => {
         key={item.id}
         workoutExercise={item}
         workoutId={workoutId}
+        updateSet={updateSet}
+        removeExercise={removeExercise}
+        removeSet={removeSet}
       >
       </WorkoutExerciseCard>
     ),
