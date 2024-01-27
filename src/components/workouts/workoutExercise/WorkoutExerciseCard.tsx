@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React, { FC, memo, useEffect } from "react";
 import { Button, Text, useTheme } from "react-native-paper";
-import { IWorkoutExercise } from "@app/types/workouts";
+import { WorkoutExercise } from "@app/types/workouts";
 import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
 import { useWorkout } from "@app/zustand/workoutStore";
@@ -9,7 +9,7 @@ import IconButton from "@app/components/core/IconButton";
 import { WorkoutAction } from "@app/types/store";
 
 interface WorkoutExerciseItemProps {
-  workoutExercise: IWorkoutExercise;
+  workoutExercise: WorkoutExercise;
   workoutId?: string;
   removeExercise: WorkoutAction["removeExercise"];
   updateSet: WorkoutAction["updateSet"];

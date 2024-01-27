@@ -9,6 +9,7 @@ import { WorkoutExercise } from "@app/types/workouts";
 import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@app/types/navigation/root";
+import { FlashList } from "@shopify/flash-list";
 
 type WorkoutCreateNavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -48,7 +49,6 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   const removeExercise = useWorkout((s) => s.removeExercise);
 
   useEffect(() => {
-    console.log(params.exercises);
     if (params.exercises) {
       addExercises(params.exercises, undefined, "active");
     }
@@ -71,12 +71,12 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
-        <FlatList
+        <FlashList
           ListHeaderComponent={ListHeader}
           data={Object.values(activeWorkout!.exercises)}
+          estimatedItemSize={120}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          initialNumToRender={5}
           ListFooterComponent={() => (
             <>
               <Button
