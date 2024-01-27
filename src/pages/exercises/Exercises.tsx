@@ -5,7 +5,7 @@ import ExerciseSearch from "@app/components/exercises/ExerciseSearch";
 import ExerciseList from "@app/components/exercises/ExerciseList";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 import SwipableModal from "@app/components/core/SwipableModal";
-import { ExerciseStackScreenProps } from "@app/types/navigation/exericse";
+import { ExerciseStackScreenProps } from "@app/types/navigation/exercise";
 
 type ExerciseNavigationProps = ExerciseStackScreenProps<"View">;
 

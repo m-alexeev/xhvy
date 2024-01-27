@@ -8,7 +8,7 @@ import ExerciseItem from "./ExerciseItem";
 import { Exercise } from "@app/types/exercises";
 import { getFilteredExercises } from "@app/utils/exercises";
 import { useNavigation } from "@react-navigation/native";
-import { ExerciseDetailsTabProps } from "@app/types/navigation/exericse";
+import { ExerciseDetailsTabProps } from "@app/types/navigation/exercise";
 
 interface ExerciseListProps {}
 
@@ -27,7 +27,7 @@ const ExerciseList: FC<ExerciseListProps> = () => {
         exercise={item}
         mode="link"
         handlePress={() =>
-          navigation.navigate("Details", { exercise_id: item.id })}
+          navigation.navigate("Details", { exerciseId: item.id })}
       />
     ),
     [],

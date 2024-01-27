@@ -1,12 +1,11 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import ExerciseDetailsTabRoutes from "./ExerciseDetailsTab";
 import { Appbar } from "react-native-paper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import ExerciseCreate from "@app/pages/exercises/Create";
 import Header from "@app/components/core/Header";
 import ExercisesScreen from "@app/pages/exercises/Exercises";
-import { ExerciseStackParamList } from "@app/types/navigation/exericse";
 import { ExercisedStack } from "./stacks";
+import { ExerciseStackParamList } from "@app/types/navigation/exercise";
 
 const ExerciseStackRouter = () => {
   const navigation = useNavigation<NavigationProp<ExerciseStackParamList>>();
