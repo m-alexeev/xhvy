@@ -1,18 +1,17 @@
-import { IWorkoutExercise, IWorkoutSet } from "@app/types/workouts";
+import { WorkoutExercise, WorkoutSet } from "@app/types/workouts";
 import { StyleSheet, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import { brzyckiFormula } from "@app/utils/formulas";
 import { camelCase } from "@app/utils/stringParsers";
-import { FlashList } from "@shopify/flash-list";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 const WorkoutExerciseCardView = (
-  { exercise }: { exercise: IWorkoutExercise },
+  { exercise }: { exercise: WorkoutExercise },
 ) => {
   const { colors } = useTheme();
 
-  const renderSetItem = (
-    { set, index }: { set: IWorkoutSet; index: number },
+  const SetEntry = (
+    { set, index }: { set: WorkoutSet; index: number },
   ) => (
     <View key={set.id} style={styles(colors).row}>
       <Text variant="bodyMedium" style={styles(colors).index}>
@@ -50,14 +49,9 @@ const WorkoutExerciseCardView = (
             1RM
           </Text>
         </View>
-        <View style={{ minHeight: 10 }}>
-          <FlashList
-            data={exercise.sets}
-            estimatedItemSize={20}
-            renderItem={({ item, index }) =>
-              renderSetItem({ set: item, index })}
-          />
-        </View>
+        {exercise.sets.map((item, index) => (
+          <SetEntry key={item.id} set={item} index={index} />
+        ))}
       </View>
     </View>
   );

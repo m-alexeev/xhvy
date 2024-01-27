@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import React, { FC, memo, useCallback } from "react";
-import { IWorkoutSet } from "@app/types/workouts";
+import { WorkoutSet as IWorkoutSet } from "@app/types/workouts";
 import { Text } from "react-native-paper";
 import WorkoutSet from "./WorkoutSet";
 import { tableStyles } from "./styles";
@@ -23,7 +23,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
     removeSet(exerciseId, index);
   };
 
-  const renderItem = useCallback(
+  const RenderSet = useCallback(
     ({ item, index }: { item: IWorkoutSet; index: number }) => (
       <SwipableWorkoutSetWrapper
         onSwipeableOpen={() => closeSwipable(index)}
@@ -58,13 +58,9 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
         </View>
       </View>
       <View style={{ minHeight: 20 }}>
-        <FlashList
-          estimatedItemSize={20}
-          scrollEnabled={false}
-          data={sets}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
+        {sets.map((set, index) => (
+          <RenderSet key={set.id} item={set} index={index}/> 
+        ))}
       </View>
     </View>
   );
