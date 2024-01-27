@@ -171,6 +171,7 @@ const useWorkout = create<WorkoutStoreType>()(
       addSet: (exercise_id: string) =>
         set(
           produce((state: WorkoutStoreType) => {
+            // Add to active workout
             if (state.activeWorkout) {
               state.activeWorkout.exercises[exercise_id].sets.push({
                 id: uuid.v4().toString(),
@@ -180,6 +181,7 @@ const useWorkout = create<WorkoutStoreType>()(
                 completed: false,
               });
             }
+            // Add to saved workout 
           }),
         ),
       removeSet: (exerciseId: string, setIndex: number) =>

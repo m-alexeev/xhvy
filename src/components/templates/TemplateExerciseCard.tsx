@@ -15,6 +15,16 @@ const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
   { exercise, updateExercise },
 ) => {
   const { colors } = useTheme();
+      // <View style={styles().body}>
+      //   <Text variant="labelMedium">
+      //     // {camelCase(exercise.primaryMuscleGroups!.toString(), ",", ", ")}
+      //   </Text>
+      //   {exercise.tags && exercise.tags?.length > 0 && (
+      //     <Text variant="labelMedium" style={{ color: colors.outline }}>
+      //       {camelCase(exercise.tags.toString(), ",", ", ")}
+      //     </Text>
+      //   )}
+      // </View>
   return (
     <View style={styles(colors).container}>
       <View style={styles().header}>
@@ -24,16 +34,6 @@ const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
           color={colors.error}
           onPress={() => updateExercise(exercise, "delete")}
         />
-      </View>
-      <View style={styles().body}>
-        <Text variant="labelMedium">
-          {camelCase(exercise.primaryMuscleGroups!.toString(), ",", ", ")}
-        </Text>
-        {exercise.tags && exercise.tags?.length > 0 && (
-          <Text variant="labelMedium" style={{ color: colors.outline }}>
-            {camelCase(exercise.tags.toString(), ",", ", ")}
-          </Text>
-        )}
       </View>
     </View>
   );
