@@ -1,10 +1,10 @@
 import {
   equipment,
-  forces,
-  movements,
   exerciseTypes,
-  muscles,
+  forces,
   majorMuclesGroups,
+  movements,
+  muscles,
   tags,
 } from "@app/utils/categories";
 
@@ -32,3 +32,7 @@ export interface Exercise {
   modifiable?: boolean;
   user_id?: string;
 }
+
+export interface ExercisePreview
+  extends Pick<Exercise, "id" | "name" | "user_id" | "modifiable"> {}
+

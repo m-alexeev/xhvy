@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import React, { FC, useCallback, useEffect } from "react";
 import { Button, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
@@ -82,7 +82,9 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
               <Button
                 onPress={() =>
                   navigation.navigate("AddExerciseModal", {
-                    selectedExercises: Object.keys(activeWorkout?.exercises || {}),
+                    selectedExercises: Object.keys(
+                      activeWorkout?.exercises || {},
+                    ),
                   })}
                 mode="text"
               >
