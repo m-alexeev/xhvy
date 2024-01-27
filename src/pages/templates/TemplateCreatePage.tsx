@@ -12,6 +12,7 @@ import Header from "@app/components/core/Header";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
 import { Template } from "@app/types/templates";
 import TemplateHeader from "@app/components/templates/TemplateHeader";
+import { Exercise } from "@app/types/exercises";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
@@ -26,8 +27,15 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
 
   // Load exercises from params passed by AddExercise page
   useEffect(() => {
-    Object.values(params.exercises || {}).forEach((e) => {
-      handleEditExercise(e, "add");
+    Object.values(params.exercises || {}).forEach((e: Exercise) => {
+      const exercisePreviewObj: WorkoutExercise = {
+        id: e.id,
+        name: e.name,
+        user_id: e.user_id,
+        modifiable: e.modifiable,
+        sets: [],
+      };
+      handleEditExercise(exercisePreviewObj, "add");
     });
   }, [params.exercises]);
 
@@ -52,7 +60,6 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     });
   }, []);
 
- 
   const handleUpdate = <T extends keyof Template, K extends Template[T]>(
     field: T,
     value: K,
@@ -72,8 +79,9 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
     }
     if (mode === "delete") {
       setLocalTemplate((prev) => {
-        const updatedExercises = {...prev.exercises};
-        delete updatedExercises[exercise.id]; 
+        const updatedExercises = { ...prev.exercises };
+
+        delete updatedExercises[exercise.id];
         return {
           ...prev,
           exercises: updatedExercises,

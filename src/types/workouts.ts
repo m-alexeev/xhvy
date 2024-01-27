@@ -1,4 +1,4 @@
-import { Exercise } from "./exercises";
+import { Exercise, ExercisePreview } from "./exercises";
 
 export type SetType = "R" | "W" | "D" | "F";
 
@@ -14,7 +14,7 @@ interface WorkoutSet {
 
 type WorkoutExercises = { [id: Exercise["id"]]: WorkoutExercise };
 
-interface WorkoutExercise extends Exercise {
+interface WorkoutExercise extends ExercisePreview{
   sets: WorkoutSet[];
 }
 
@@ -29,10 +29,4 @@ interface Workout {
 
 type Workouts = { [id: Workout["id"]]: Workout };
 
-export {
-  Workout,
-  WorkoutExercise,
-  WorkoutExercises,
-  Workouts,
-  WorkoutSet,
-};
+export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet };

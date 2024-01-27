@@ -11,6 +11,7 @@ import uuid from "react-native-uuid";
 import { WorkoutStoreType } from "@app/types/store";
 import { CustomStorage } from "./customStorage";
 import { Template, WorkoutOrTemplate } from "@app/types/templates";
+import { Exercise } from "@app/types/exercises";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -112,11 +113,12 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           }),
         ),
-      addExercises: (newExercises, id, mode) =>
+      addExercises: (newExercises: Exercise[], id, mode) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Add exercises to active workout
             // Create a WorkoutExercise object
+
             const workoutExercises: WorkoutExercises = newExercises.reduce(
               (a, e) => {
                 const sets: WorkoutSet[] = [
@@ -128,11 +130,19 @@ const useWorkout = create<WorkoutStoreType>()(
                     completed: false,
                   },
                 ];
-                const workoutExercise: WorkoutExercise = { ...e, sets };
+                const workoutExercise: WorkoutExercise = {
+                  id: e.id,
+                  name: e.name,
+                  user_id: e.user_id,
+                  modifiable: e.modifiable,
+                  sets,
+                };
+
                 return { ...a, [workoutExercise.id]: workoutExercise };
               },
               {},
             );
+
             // Merge existing exercises and new exercises prioritizing existing exercises
             // in case of overlap
             // TODO: Refactor this as code is repeating
