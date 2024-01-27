@@ -6,9 +6,9 @@ import { getWorkout } from "@app/zustand/hooks";
 import { Text, useTheme } from "react-native-paper";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import { Workout, WorkoutExercise } from "@app/types/workouts";
-import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import CustomTextInput from "@app/components/core/TextInput";
 import { RootStackParamList } from "@app/types/navigation/root";
+import WorkoutExerciseCard from "@app/components/workouts/WorkoutForm/WorkoutExerciseCard";
 
 type EditWorkoutNavigationProps = NativeStackScreenProps<
   RootStackParamList,

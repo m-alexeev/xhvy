@@ -4,7 +4,6 @@ import { Button, Text, useTheme } from "react-native-paper";
 import { WorkoutExercise } from "@app/types/workouts";
 import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
-import { useWorkout } from "@app/zustand/workoutStore";
 import IconButton from "@app/components/core/IconButton";
 import { WorkoutAction } from "@app/types/store";
 
@@ -19,11 +18,12 @@ interface WorkoutExerciseItemProps {
 // Card for workout exercises
 const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
   ({ workoutExercise, workoutId, removeSet, removeExercise, updateSet }) => {
-    const addSet = useWorkout((state) => state.addSet);
+    // const addSet = useWorkout((state) => state.addSet);
     const { colors } = useTheme();
     const { name, id, sets } = workoutExercise;
 
     // Remove exercise once all sets are removed
+    // TODO: move to form level
     useEffect(() => {
       if (sets.length == 0) {
         removeExercise(id);
@@ -50,7 +50,7 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
           {/*Add sets to the table*/}
           <Button
             mode="text"
-            onPress={() => addSet(id)}
+            // onPress={() => addSet(id)}
           >
             Add Set
           </Button>

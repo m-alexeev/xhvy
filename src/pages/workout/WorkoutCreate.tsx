@@ -6,10 +6,10 @@ import WorkoutDuration from "@app/components/core/WorkoutDuration";
 import CustomTextInput from "@app/components/core/TextInput";
 import CancelWorkout from "@app/components/workouts/CancelWorkout";
 import { WorkoutExercise } from "@app/types/workouts";
-import WorkoutExerciseCard from "@app/components/workouts/workoutExercise/WorkoutExerciseCard";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "@app/types/navigation/root";
 import { FlashList } from "@shopify/flash-list";
+import WorkoutExerciseCard from "@app/components/workouts/WorkoutForm/WorkoutExerciseCard";
 
 type WorkoutCreateNavigationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -45,8 +45,19 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const addExercises = useWorkout((s) => s.addExercises);
   const updateSet = useWorkout((s) => s.updateSet);
+  const addSet = useWorkout(s => s.addSet);
   const removeSet = useWorkout((s) => s.removeSet);
   const removeExercise = useWorkout((s) => s.removeExercise);
+  
+  const mutateSet = (mode: 'edit' | 'add' | 'delete') => {
+    if (mode === 'add'){
+      
+    }else if (mode === 'edit'){
+
+    }else {
+
+    }
+  }
 
   useEffect(() => {
     if (params.exercises) {
