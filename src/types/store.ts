@@ -30,10 +30,10 @@ export type WorkoutAction = {
     id?: WorkoutOrTemplate["id"],
     mode?: AddMode,
   ) => void;
-  removeExercise: (exercise_id: string) => void;
+  removeExercise: (exercise_id: string, workoutId?:Workout["id"]) => void;
   saveActiveWorkout: () => void;
-  addSet: (exercise_id: string) => void;
-  removeSet: (exerciseId: string, setIndex: number) => void;
+  addSet: (exercise_id: string, workoutId?: Workout["id"]) => void;
+  removeSet: (exerciseId: string, setIndex: number, workoutId?: Workout["id"]) => void;
   updateSet: <T extends keyof WorkoutSet, K extends WorkoutSet[T]>(
     exerciseId: string,
     index: number,

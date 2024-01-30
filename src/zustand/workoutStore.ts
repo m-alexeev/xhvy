@@ -159,35 +159,50 @@ const useWorkout = create<WorkoutStoreType>()(
             });
           }),
         ),
-      removeExercise: (exerciseId: string) =>
+      removeExercise: (exerciseId: string, workoutId?: Workout["id"]) =>
         set(
           produce((state: WorkoutStoreType) => {
-            // Remove exercise from active workout
-            if (state.activeWorkout) {
+            if (workoutId) {
+              delete state.workouts[workoutId].exercises[exerciseId];
+            } // Remove exercise from active workout
+            else if (state.activeWorkout) {
               delete state.activeWorkout.exercises[exerciseId];
             }
           }),
         ),
-      addSet: (exercise_id: string) =>
+      addSet: (exercise_id: string, workoutId?: Workout["id"]) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Add to active workout
-            if (state.activeWorkout) {
-              state.activeWorkout.exercises[exercise_id].sets.push({
-                id: uuid.v4().toString(),
-                type: "R",
-                weight: 0,
-                reps: 0,
-                completed: false,
-              });
+            const newSet: WorkoutSet = {
+              id: uuid.v4().toString(),
+              type: "R",
+              weight: 0,
+              reps: 0,
+              completed: false,
+            };
+            if (workoutId) {
+              state.workouts[workoutId].exercises[exercise_id].sets.push(
+                newSet,
+              );
+            } else if (state.activeWorkout) {
+              state.activeWorkout.exercises[exercise_id].sets.push(newSet);
             }
-            // Add to saved workout 
           }),
         ),
-      removeSet: (exerciseId: string, setIndex: number) =>
+      removeSet: (
+        exerciseId: string,
+        setIndex: number,
+        workoutId?: Workout["id"],
+      ) =>
         set(
           produce((state: WorkoutStoreType) => {
-            if (state.activeWorkout) {
+            if (workoutId) {
+              state.workouts[workoutId].exercises[exerciseId].sets.splice(
+                setIndex,
+                1,
+              );
+            } else if (state.activeWorkout) {
               // Remove set by index from array
               state.activeWorkout.exercises[exerciseId].sets.splice(
                 setIndex,
