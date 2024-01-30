@@ -193,7 +193,7 @@ const useWorkout = create<WorkoutStoreType>()(
       removeSet: (
         exerciseId: string,
         setIndex: number,
-        workoutId: Workout["id"],
+        workoutId?: Workout["id"],
       ) =>
         set(
           produce((state: WorkoutStoreType) => {
