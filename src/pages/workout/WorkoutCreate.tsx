@@ -41,23 +41,9 @@ const ListHeader: FC = () => {
 const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
   { navigation, route },
 ) => {
+  const activeWorkout = useWorkout((s) => s.activeWorkout);
   const params = route.params || {};
-  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const addExercises = useWorkout((s) => s.addExercises);
-  const updateSet = useWorkout((s) => s.updateSet);
-  const addSet = useWorkout(s => s.addSet);
-  const removeSet = useWorkout((s) => s.removeSet);
-  const removeExercise = useWorkout((s) => s.removeExercise);
-  
-  const mutateSet = (mode: 'edit' | 'add' | 'delete') => {
-    if (mode === 'add'){
-      
-    }else if (mode === 'edit'){
-
-    }else {
-
-    }
-  }
 
   useEffect(() => {
     if (params.exercises) {
@@ -70,9 +56,6 @@ const WorkoutCreate: FC<WorkoutCreateNavigationProps> = (
       <WorkoutExerciseCard
         key={item.id}
         workoutExercise={item}
-        updateSet={updateSet}
-        removeExercise={removeExercise}
-        removeSet={removeSet}
       >
       </WorkoutExerciseCard>
     ),

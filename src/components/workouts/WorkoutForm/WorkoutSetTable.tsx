@@ -23,7 +23,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
 ) => {
   const theme = useTheme();
   const closeSwipable = (index: number) => {
-    removeSet(exerciseId, index);
+    removeSet(exerciseId, index, workoutId);
   };
 
   const update = <T extends keyof WorkoutSet>(

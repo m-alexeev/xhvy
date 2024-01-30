@@ -5,28 +5,26 @@ import { WorkoutExercise } from "@app/types/workouts";
 import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
 import IconButton from "@app/components/core/IconButton";
-import { WorkoutAction } from "@app/types/store";
+import { useWorkout } from "@app/zustand/workoutStore";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: WorkoutExercise;
   workoutId?: string;
-  removeExercise: WorkoutAction["removeExercise"];
-  updateSet: WorkoutAction["updateSet"];
-  removeSet: WorkoutAction["removeSet"];
 }
 
 // Card for workout exercises
 const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
-  ({ workoutExercise, workoutId, removeSet, removeExercise, updateSet }) => {
-    // const addSet = useWorkout((state) => state.addSet);
+  ({ workoutExercise, workoutId }) => {
     const { colors } = useTheme();
     const { name, id, sets } = workoutExercise;
+    const addSet = useWorkout((s) => s.addSet);
+    const removeSet = useWorkout((s) => s.removeSet);
+    const removeExercise = useWorkout((s) => s.removeExercise);
+    const updateSet = useWorkout((s) => s.updateSet);
 
-    // Remove exercise once all sets are removed
-    // TODO: move to form level
     useEffect(() => {
       if (sets.length == 0) {
-        removeExercise(id);
+        removeExercise(id, workoutId);
       }
     }, [sets]);
 
@@ -48,10 +46,7 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
             updateSet={updateSet}
           />
           {/*Add sets to the table*/}
-          <Button
-            mode="text"
-            // onPress={() => addSet(id)}
-          >
+          <Button mode="text" onPress={() => addSet(id, workoutId)}>
             Add Set
           </Button>
         </View>
