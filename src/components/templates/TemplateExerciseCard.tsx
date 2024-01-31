@@ -5,6 +5,7 @@ import { Text, useTheme } from "react-native-paper";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 import IconButton from "../core/IconButton";
 import { camelCase } from "@app/utils/stringParsers";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface TemplateExerciseCardProps {
   exercise: WorkoutExercise;
@@ -30,7 +31,7 @@ const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
       <View style={styles().header}>
         <Text variant="titleMedium">{camelCase(exercise.name)}</Text>
         <IconButton
-          icon="delete"
+          icon={faTrash}
           color={colors.error}
           onPress={() => updateExercise(exercise, "delete")}
         />

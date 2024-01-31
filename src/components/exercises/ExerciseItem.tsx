@@ -1,8 +1,10 @@
 import { StyleSheet, View } from "react-native";
 import { FC, memo } from "react";
-import { Icon, Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { Exercise } from "@app/types/exercises";
 import { camelCase } from "@app/utils/stringParsers";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 interface SelectableExerciseProps {
   mode: "select";
@@ -56,7 +58,11 @@ const ExerciseItem: FC<ExerciseItemProps> = (props) => {
           </View>
           {selected && (
             <View style={styles.iconContainer}>
-              <Icon size={32} source={"check"} color={colors.primary} />
+              <FontAwesomeIcon
+                size={24}
+                icon={faCheck}
+                color={colors.primary}
+              />
             </View>
           )}
         </View>

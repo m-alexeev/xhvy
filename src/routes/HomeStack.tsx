@@ -6,6 +6,14 @@ import ProfileScreen from "@app/pages/home/Profile";
 import ExerciseStackRouter from "./ExerciseStack";
 import { HomeStack } from "./stacks";
 import TemplateStackRouter from "./TemplateStack";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faDumbbell,
+  faFolder,
+  faHome,
+  faPlus,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const HomeStackComponent: FC = ({}) => {
   return (
@@ -17,27 +25,37 @@ const HomeStackComponent: FC = ({}) => {
         <HomeStack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ tabBarIcon: (props) => <Icon {...props} source="home" /> }}
+          options={{
+            tabBarIcon: (props) => (
+              <FontAwesomeIcon {...props} icon={faHome} size={20} />
+            ),
+          }}
         />
         <HomeStack.Screen
           name="Templates"
           component={TemplateStackRouter}
           options={{
-            tabBarIcon: (props) => <Icon {...props} source="folder" />,
+            tabBarIcon: (props) => (
+              <FontAwesomeIcon {...props} icon={faFolder} size={20} />
+            ),
           }}
         />
         <HomeStack.Screen
           name="Workout"
           component={WorkoutStackRouter}
           options={{
-            tabBarIcon: (props) => <Icon {...props} source="plus" />,
+            tabBarIcon: (props) => (
+              <FontAwesomeIcon {...props} icon={faPlus} size={20} />
+            ),
           }}
         />
         <HomeStack.Screen
           name="Exercises"
           component={ExerciseStackRouter}
           options={{
-            tabBarIcon: (props) => <Icon {...props} source="dumbbell" />,
+            tabBarIcon: (props) => (
+              <FontAwesomeIcon {...props} icon={faDumbbell} size={20} />
+            ),
           }}
         />
 
@@ -45,7 +63,9 @@ const HomeStackComponent: FC = ({}) => {
           name="Profile"
           component={ProfileScreen}
           options={{
-            tabBarIcon: (props) => <Icon {...props} source="account" />,
+            tabBarIcon: (props) => (
+              <FontAwesomeIcon {...props} icon={faUser} size={20} />
+            ),
           }}
         />
       </HomeStack.Navigator>

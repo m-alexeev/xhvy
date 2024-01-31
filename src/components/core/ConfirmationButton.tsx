@@ -57,9 +57,14 @@ const ConfirmationButton: FC<ConfirmationButtonProps> = ({
   };
 
   if (variant === "icon") {
+    const iconProps = props as IconButtonProps;
     return (
       <View>
-        <IconButton {...props} icon={props.icon} onPress={handlePress} />
+        <IconButton
+          {...iconProps}
+          icon={iconProps.icon}
+          onPress={handlePress}
+        />
         <ConfirmationPopup
           text={popupText}
           visible={modalVisible}

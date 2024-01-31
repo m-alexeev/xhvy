@@ -1,8 +1,11 @@
 import { useFilter } from "@app/zustand/filterStore";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon, IconButton, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import CustomTextInput from "../core/TextInput";
+import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import IconButton from "../core/IconButton";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 interface ExerciseSearchProps {
   onShowFilter: () => void;
@@ -20,9 +23,19 @@ const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
         onChangeText={updateSearch}
         placeholder="Search"
         placeholderTextColor={theme.colors.onSurfaceVariant}
-        right={<Icon size={24} source="magnify" />}
+        right={
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            color={theme.colors.onSurface}
+          />
+        }
       />
-      <IconButton mode="contained" icon="menu" onPress={onShowFilter} />
+      <IconButton
+        style={{ padding: 10, borderRadius: 50 }}
+        containerColor={theme.colors.secondaryContainer}
+        icon={faBars}
+        onPress={onShowFilter}
+      />
     </View>
   );
 };

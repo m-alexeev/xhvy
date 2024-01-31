@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import { useNavigation } from "@react-navigation/native";
 import IconButton from "../IconButton";
+import {
+  faChevronDown,
+  faChevronLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 interface GoBackButtonProps {
   variant?: "left" | "down";
@@ -12,7 +16,7 @@ const GoBackButton: FC<GoBackButtonProps> = (
 ) => {
   const navigation = useNavigation();
 
-  const icon = `chevron-${variant}`;
+  const icon = variant === "left" ? faChevronLeft : faChevronDown;
 
   // TODO: add go-back prevention :)
 

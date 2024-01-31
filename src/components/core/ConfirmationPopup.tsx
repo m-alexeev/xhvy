@@ -1,8 +1,10 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import React, { FC } from "react";
-import { Button, Icon, Text, useTheme } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import Modal from "react-native-modal";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 interface ConfirmationPopupProps {
   text?: string;
@@ -31,8 +33,8 @@ const ConfirmationPopup: FC<ConfirmationPopupProps> = (
     >
       <View style={styles(colors).container}>
         <View style={styles().headerContainer}>
-          <Icon
-            source={"alert-circle-outline"}
+          <FontAwesomeIcon
+            icon={faCircleExclamation}
             size={32}
             color={colors.error}
           />
