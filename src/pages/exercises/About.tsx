@@ -1,16 +1,24 @@
 import { Exercise } from "@app/types/exercises";
 import { ExerciseTabsScreenProps } from "@app/types/navigation/exercise";
 import { camelCase } from "@app/utils/stringParsers";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import {
+  faAtom,
+  faDumbbell,
+  faHandRock,
+  faPersonWalking,
+  faTag,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { FC } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { Icon, Text, useTheme } from "react-native-paper";
-import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
+import { Text, useTheme } from "react-native-paper";
 import { MD3Colors } from "react-native-paper/lib/typescript/types";
 
 type ExerciseAboutNavProps = ExerciseTabsScreenProps<"About">;
 
 const ExerciseDetailCard = <T extends keyof Exercise>(
-  { label, item, icon }: { label: string; item: Exercise[T]; icon: IconSource },
+  { label, item, icon }: { label: string; item: Exercise[T]; icon: IconProp },
 ) => {
   const { colors } = useTheme();
 
@@ -31,11 +39,11 @@ const ExerciseDetailCard = <T extends keyof Exercise>(
         style={{
           flexDirection: "row",
           alignItems: "center",
-          gap: 10
+          gap: 10,
         }}
       >
         <Text variant="titleSmall">{label}</Text>
-        <Icon source={icon} size={16} />
+        <FontAwesomeIcon icon={icon} size={16} color={colors.onSurface} />
       </View>
       {Array.isArray(item)
         ? <Text variant="bodySmall">{camelCase(item.join(", "))}</Text>
@@ -64,11 +72,23 @@ const ExerciseAboutScreen: FC<ExerciseAboutNavProps> = ({ route }) => {
       <View>
       </View>
       <View style={styles.muscleTable}>
-        <ExerciseDetailCard label="Tags" item={exercise.tags} icon="tag" />
-        <ExerciseDetailCard label="Equipment" item={exercise.equipment} icon="dumbbell" />
-        <ExerciseDetailCard label="Type" item={exercise.type} icon="atom"/>
-        <ExerciseDetailCard label="Force" item={exercise.force} icon="weight-lifter"/>
-        <ExerciseDetailCard label="Movement" item={exercise.movement} icon="yoga"/>
+        <ExerciseDetailCard label="Tags" item={exercise.tags} icon={faTag} />
+        <ExerciseDetailCard
+          label="Equipment"
+          item={exercise.equipment}
+          icon={faDumbbell}
+        />
+        <ExerciseDetailCard label="Type" item={exercise.type} icon={faAtom} />
+        <ExerciseDetailCard
+          label="Force"
+          item={exercise.force}
+          icon={faHandRock}
+        />
+        <ExerciseDetailCard
+          label="Movement"
+          item={exercise.movement}
+          icon={faPersonWalking}
+        />
       </View>
       <View>
         <Text variant="titleSmall">Instructions</Text>

@@ -6,10 +6,12 @@ import { Animated } from "react-native";
 import { Exercise } from "@app/types/exercises";
 import { useExercise } from "@app/zustand/exerciseStore";
 import ExerciseItem from "./ExerciseItem";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
 interface IExerciseListItem {
   exercise: Exercise;
-  onPress: (exercise_id: string) => void;
+  onPress: (exercise: Exercise) => void;
   swipable: boolean;
 }
 
@@ -71,10 +73,10 @@ const ExerciseListItem: FC<IExerciseListItem> = (
   ) => (
     <View style={{ width: 128, flexDirection: "row" }}>
       {renderRightAction(
-        <Icon
+        <FontAwesomeIcon
           color={theme.colors.onSecondaryContainer}
           size={24}
-          source="pencil"
+          icon={faPencil}
         />,
         theme.colors.secondaryContainer,
         128,
@@ -82,10 +84,9 @@ const ExerciseListItem: FC<IExerciseListItem> = (
         handleEdit,
       )}
       {renderRightAction(
-        <Icon
+        <FontAwesomeIcon
           color={theme.colors.onErrorContainer}
-          size={24}
-          source="trash-can"
+          icon={faTrash}
         />,
         theme.colors.errorContainer,
         64,
@@ -100,11 +101,11 @@ const ExerciseListItem: FC<IExerciseListItem> = (
       <Swipeable
         renderRightActions={rightActions}
       >
-        <ExerciseItem exercise={exercise} onPress={onPress} />
+        <ExerciseItem exercise={exercise} handlePress={onPress} />
       </Swipeable>
     );
   }
-  return <ExerciseItem exercise={exercise} onPress={onPress} />;
+  return <ExerciseItem exercise={exercise} handlePress={onPress} />;
 };
 
 const styles = StyleSheet.create({
