@@ -9,6 +9,7 @@ import { formatNumberField } from "@app/utils/stringParsers";
 import CustomTextInput from "@app/components/core/TextInput";
 import IconButton from "@app/components/core/IconButton";
 import Animated, { FadeIn } from "react-native-reanimated";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 interface WorkoutSetTableProps {
   sets: IWorkoutSet[];
@@ -80,7 +81,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
             onPress={() => update("completed", !item.completed, index)}
             size={20}
             color={theme.colors.onSurfaceVariant}
-            icon={"check-bold"}
+            icon={faCheck}
             selected={item.completed}
           >
           </IconButton>

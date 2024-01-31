@@ -5,6 +5,7 @@ import BaseMenu from "../core/menus/BaseMenu";
 import IconButton from "../core/IconButton";
 import { useNavigation } from "@react-navigation/native";
 import { TemplateNavProp } from "@app/types/navigation/templates";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 interface TemplateMenuOptionsProps {
   templateId: string;
@@ -51,7 +52,7 @@ const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
       visible={menuOpen}
       options={sampleOptions}
       onDismiss={toggleMenu}
-      anchor={<IconButton icon="dots-vertical" onPress={toggleMenu} />}
+      anchor={<IconButton icon={faEllipsisV} onPress={toggleMenu} />}
     />
   );
 };

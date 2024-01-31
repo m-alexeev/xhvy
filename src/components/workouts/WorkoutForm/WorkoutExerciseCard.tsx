@@ -6,6 +6,7 @@ import { camelCase } from "@app/utils/stringParsers";
 import WorkoutSetTable from "./WorkoutSetTable";
 import IconButton from "@app/components/core/IconButton";
 import { useWorkout } from "@app/zustand/workoutStore";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 interface WorkoutExerciseItemProps {
   workoutExercise: WorkoutExercise;
@@ -35,7 +36,7 @@ const WorkoutExerciseCard: FC<WorkoutExerciseItemProps> = memo(
         <View>
           <View style={styles.titleBar}>
             <Text variant="titleMedium">{camelCase(name)}</Text>
-            <IconButton size={20} icon="dots-vertical" onPress={console.log} />
+            <IconButton size={20} icon={faEllipsisV} onPress={console.log} />
           </View>
           {/*Render exercise table*/}
           <WorkoutSetTable

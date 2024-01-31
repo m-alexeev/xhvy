@@ -12,6 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { camelCase } from "@app/utils/stringParsers";
 import { RootStackNavigationProp } from "@app/types/navigation/root";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface WorkoutProps {
   workout: Workout;
@@ -68,7 +69,8 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
               <Icon size={16} source="clock" />
               <IconButton
                 onPress={() => deleteWorkout(workout.id)}
-                icon={"delete-outline"}
+                icon={faTrash}
+                size={16}
                 color={theme.colors.onErrorContainer}
               >
               </IconButton>

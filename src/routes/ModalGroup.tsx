@@ -20,7 +20,7 @@ export const ModalGroup = () => {
         options={{
           header: () => (
             <Header
-              backButton={<GoBackButton size={32} />}
+              backButton={<GoBackButton size={24} />}
             >
               <WorkoutCompleteButton />
             </Header>
@@ -34,7 +34,7 @@ export const ModalGroup = () => {
           header: () => (
             <Header
               title="View Workout"
-              backButton={<GoBackButton size={32} />}
+              backButton={<GoBackButton size={24} />}
             >
             </Header>
           ),
@@ -47,7 +47,7 @@ export const ModalGroup = () => {
           header: () => (
             <Header
               title="Editing Workout"
-              backButton={<GoBackButton size={32} />}
+              backButton={<GoBackButton size={24} />}
             >
             </Header>
           ),

@@ -1,20 +1,16 @@
 import { FC } from "react";
-import {
-  ColorValue,
-  StyleProp,
-  StyleSheet,
-  ViewStyle,
-} from "react-native";
+import { ColorValue, StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { GestureResponderEvent } from "react-native-modal";
-import { IconSource } from "react-native-paper/lib/typescript/components/Icon";
-import { Icon, MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { MD3Theme, TouchableRipple, useTheme } from "react-native-paper";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export interface IconButtonProps {
   selected?: boolean;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: ((event: GestureResponderEvent) => void) & (() => void);
-  icon?: IconSource;
+  icon: IconProp;
   size?: number;
   rippleColor?: ColorValue;
   color?: ColorValue;
@@ -24,7 +20,7 @@ export interface IconButtonProps {
 const IconButton: FC<IconButtonProps> = ({
   selected = false,
   disabled = false,
-  size = 24,
+  size = 16,
   rippleColor,
   style,
   onPress,
@@ -47,8 +43,7 @@ const IconButton: FC<IconButtonProps> = ({
   const iconColor = disabled
     ? theme.colors.onSurfaceDisabled
     : color
-    ? selected ? theme.colors.primary
-    : color
+    ? selected ? theme.colors.primary : color
     : theme.colors.onSurface;
 
   return (
@@ -61,7 +56,7 @@ const IconButton: FC<IconButtonProps> = ({
       }, selectedStyle]}
       onPress={onPress}
     >
-      <Icon color={iconColor as string} size={size} source={icon} />
+      <FontAwesomeIcon color={iconColor as string} size={size} icon={icon} />
     </TouchableRipple>
   );
 };
