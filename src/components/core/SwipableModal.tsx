@@ -48,6 +48,7 @@ const SwipableModal: FC<SwipableModalProps> = (
 
 const styles = StyleSheet.create({
   modal: {
+    flex:1,
     justifyContent: "flex-end",
     margin: 0,
   },

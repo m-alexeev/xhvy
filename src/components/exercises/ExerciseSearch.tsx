@@ -3,7 +3,7 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { useTheme } from "react-native-paper";
 import CustomTextInput from "../core/TextInput";
-import { faBars, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faList, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import IconButton from "../core/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 
@@ -33,7 +33,8 @@ const ExerciseSearch: FC<ExerciseSearchProps> = ({ onShowFilter }) => {
       <IconButton
         style={{ padding: 10, borderRadius: 50 }}
         containerColor={theme.colors.secondaryContainer}
-        icon={faBars}
+        size={20}
+        icon={faList}
         onPress={onShowFilter}
       />
     </View>
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
+    gap: 10,
     paddingHorizontal: 4,
     paddingVertical: 8,
   },
