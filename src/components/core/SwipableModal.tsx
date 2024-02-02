@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   modalDragger: {
     alignSelf: "center",
     width: 90,
+    marginVertical: 5,
     height: 3,
     borderRadius: 2,
   },

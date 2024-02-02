@@ -22,10 +22,6 @@ const TogglePillButton: FC<TogglePillButtonProps> = (
 ) => {
   const { colors } = useTheme();
 
-  const handlePress = () => {
-    onToggle();
-  };
-
   return (
     <View style={styles().container}>
       <TouchableRipple
@@ -33,7 +29,7 @@ const TogglePillButton: FC<TogglePillButtonProps> = (
         style={styles(colors).button}
         rippleColor={colors.onPrimary}
         underlayColor={colors.primary}
-        onPress={handlePress}
+        onPress={onToggle}
       >
         <View
           style={styles(colors).buttonContent}
@@ -54,9 +50,7 @@ export default TogglePillButton;
 
 const styles = (colors?: MD3Colors) =>
   StyleSheet.create({
-    container: {
-      marginHorizontal: 5,
-    },
+    container: {},
     buttonContent: {
       flexDirection: "row",
       justifyContent: "space-between",
@@ -68,8 +62,8 @@ const styles = (colors?: MD3Colors) =>
       justifyContent: "center",
       alignItems: "center",
       paddingVertical: 5,
-      paddingHorizontal: 5,
+      paddingHorizontal: 10,
       borderRadius: 10,
-      backgroundColor: colors?.primary
+      backgroundColor: colors?.primary,
     },
   });
