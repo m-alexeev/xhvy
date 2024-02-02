@@ -15,10 +15,11 @@ interface ExerciseListProps {}
 const ExerciseList: FC<ExerciseListProps> = () => {
   const navigation = useNavigation<ExerciseDetailsTabProps>();
   const search = useFilter((state) => state.search);
+  const categories = useFilter(state => state.filterCategories);
   const exercises = useExercise((state) => state.exercises);
   const filteredExercises = useMemo(
-    () => getFilteredExercises(exercises, search),
-    [exercises, search],
+    () => getFilteredExercises(exercises, search, categories),
+    [exercises, search, categories],
   );
 
   const renderItem = useCallback(

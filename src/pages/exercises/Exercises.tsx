@@ -6,7 +6,7 @@ import ExerciseList from "@app/components/exercises/ExerciseList";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 import SwipableModal from "@app/components/core/SwipableModal";
 import { ExerciseStackScreenProps } from "@app/types/navigation/exercise";
-import TogglePillButton from "@app/components/core/buttons/TogglePill";
+import ExerciseFilters from "@app/components/exercises/ExerciseFilters";
 
 type ExerciseNavigationProps = ExerciseStackScreenProps<"View">;
 
@@ -15,14 +15,16 @@ const ExercisesScreen: FC<ExerciseNavigationProps> = () => {
 
   const toggleModal = () => setShowModal(!showModal);
 
-
   return (
     <View style={styles.container}>
       <ExerciseSearch onShowFilter={toggleModal} />
       <ExerciseList />
       <ActiveWorkoutPopup />
       <SwipableModal visible={showModal} toggleModal={toggleModal}>
-        <Text variant="titleSmall">Filters</Text>
+        <Text style={{ textAlign: "center" }} variant="titleLarge">
+          Exercise Filters
+        </Text>
+        <ExerciseFilters />
       </SwipableModal>
     </View>
   );
