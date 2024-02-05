@@ -1,16 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import auth from "@react-native-firebase/auth";
-import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import AuthStackRoutes from "./AuthStack";
 import HomeStackComponent from "./HomeStack";
 import { ModalGroup } from "./ModalGroup";
 import { RootStack } from "./stacks";
+import { useOptions } from "@app/zustand/optionsStore";
 
-
-const RootStackComponent: FC = ({}) => {
+const RootStackComponent: FC = ({ }) => {
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
+  const theme = useOptions((state) => state.theme);
 
   const onAuthStateChanged = (user: any) => {
     setUser(user);
@@ -24,11 +24,9 @@ const RootStackComponent: FC = ({}) => {
     return subscriber;
   }, []);
 
-  const { isThemeDark } = useThemeSwitch();
-
   return (
     <>
-      <StatusBar animated style={isThemeDark ? "light" : "dark"} />
+      <StatusBar animated style={theme === "dark" ? "light" : "dark"} />
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Group>
           {user

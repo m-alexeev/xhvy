@@ -1,26 +1,37 @@
 import { FC, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
+import { Button, Text } from "react-native-paper";
 import OptionDialog from "./OptionPopup";
-import { List, Text } from "react-native-paper";
-import { useOptions } from "@app/contexts/OptionsContext";
+import { useOptions } from "@app/zustand/optionsStore";
+
+const OptionComponent = (
+  { title, option, onPress }: { title: string; option: any; onPress: any },
+) => {
+  return (
+    <View style={styles.optionContainer}>
+      <Text variant="bodyMedium">{title}</Text>
+      <Button
+        onPress={onPress}
+      >
+        {option}
+      </Button>
+    </View>
+  );
+};
 
 const OptionsConfigurator: FC = () => {
-  const { options, updateOptions } = useOptions();
   const [visible, setVisible] = useState(false);
+  const units = useOptions((s) => s.units);
+  const updateOption = useOptions((s) => s.updateOption);
 
   return (
     <View style={styles.container}>
-      {Object.keys(options).map((option, index) => (
-        <List.Item
-          key={index}
-          title={`${option.charAt(0).toUpperCase()}${option.slice(1)}`}
-          right={() => <Text>{options[option]}</Text>}
-          onPress={() => {
-            setVisible(true);
-          }}
-        ></List.Item>
-      ))}
+      <OptionComponent
+        title="Units"
+        option={units}
+        onPress={() =>
+          updateOption("units", units === "metric" ? "imperial" : "metric")}
+      />
       <OptionDialog visible={visible} onClose={() => setVisible(false)} />
     </View>
   );
@@ -28,6 +39,11 @@ const OptionsConfigurator: FC = () => {
 
 const styles = StyleSheet.create({
   container: {},
+  optionContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   optionTitleStyle: {},
   optionValueStyle: {},
 });
