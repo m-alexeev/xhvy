@@ -30,10 +30,14 @@ export type WorkoutAction = {
     id?: WorkoutOrTemplate["id"],
     mode?: AddMode,
   ) => void;
-  removeExercise: (exercise_id: string, workoutId?:Workout["id"]) => void;
+  removeExercise: (exercise_id: string, workoutId?: Workout["id"]) => void;
   saveActiveWorkout: () => void;
   addSet: (exercise_id: string, workoutId?: Workout["id"]) => void;
-  removeSet: (exerciseId: string, setIndex: number, workoutId?: Workout["id"]) => void;
+  removeSet: (
+    exerciseId: string,
+    setIndex: number,
+    workoutId?: Workout["id"],
+  ) => void;
   updateSet: <T extends keyof WorkoutSet, K extends WorkoutSet[T]>(
     exerciseId: string,
     index: number,
@@ -54,5 +58,18 @@ export type ExerciseAction = {
   deleteExercise: (exerciseId: string) => void;
 };
 
+export type OptionsState = {
+  theme: "dark" | "light";
+  units: "imperial" | "metric";
+};
+
+export type OptionsActions = {
+  updateOption: <T extends keyof OptionsState>(
+    option: T,
+    value: OptionsState[T],
+  ) => void;
+};
+
+export type OptionsStoreType = OptionsState & OptionsActions;
 export type WorkoutStoreType = WorkoutState & WorkoutAction;
 export type ExerciseStoreType = ExerciseState & ExerciseAction;

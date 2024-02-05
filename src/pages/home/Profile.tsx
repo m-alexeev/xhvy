@@ -3,16 +3,17 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import auth from "@react-native-firebase/auth";
-import { useThemeSwitch } from "@app/contexts/ThemeContext";
 import UserDetails from "@app/components/profile/UserDetails";
 import OptionsConfigurator from "@app/components/profile/Options";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 import { MainTabsNavigationProp } from "@app/types/navigation/main";
+import { useOptions } from "@app/zustand/optionsStore";
 
 type ProfileScreenProps = MainTabsNavigationProp<"Profile">;
 
 const ProfileScreen: FC<ProfileScreenProps> = () => {
-  const { toggleTheme } = useThemeSwitch();
+  const theme = useOptions((state) => state.theme);
+  const updateOptions = useOptions((state) => state.updateOption);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -20,7 +21,12 @@ const ProfileScreen: FC<ProfileScreenProps> = () => {
         <Divider />
         <View>
           <Text>Options</Text>
-          <Button onPress={toggleTheme}>Toggle theme</Button>
+          <Button
+            onPress={() =>
+              updateOptions("theme", theme === "dark" ? "light" : "dark")}
+          >
+            Toggle theme
+          </Button>
           <OptionsConfigurator />
         </View>
         <Button
