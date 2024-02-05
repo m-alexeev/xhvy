@@ -19,8 +19,9 @@ const HomeStackComponent: FC = ({}) => {
   return (
     <>
       <HomeStack.Navigator
-        screenOptions={{ headerShown: false }}
+        screenOptions={{ headerShown: false, tabBarLabelStyle: {fontFamily: "Poppins_400Regular"} }}
         initialRouteName="Exercises"
+        
       >
         <HomeStack.Screen
           name="Home"
