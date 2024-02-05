@@ -26,7 +26,7 @@ const RootStackComponent: FC = ({ }) => {
 
   return (
     <>
-      <StatusBar animated style={theme} />
+      <StatusBar animated style={theme === "dark" ? "light" : "dark"} />
       <RootStack.Navigator screenOptions={{ headerShown: false }}>
         <RootStack.Group>
           {user
