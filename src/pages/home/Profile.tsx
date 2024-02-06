@@ -20,14 +20,14 @@ const ProfileScreen: FC<ProfileScreenProps> = () => {
         <UserDetails />
         <Divider />
         <View>
-          <Text>Options</Text>
+          <Text style={{marginVertical: 10}}variant="titleLarge">Options</Text>
+          <OptionsConfigurator />
           <Button
             onPress={() =>
               updateOptions("theme", theme === "dark" ? "light" : "dark")}
           >
             Toggle theme
           </Button>
-          <OptionsConfigurator />
         </View>
         <Button
           onPress={() => {
