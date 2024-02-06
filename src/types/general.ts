@@ -9,6 +9,5 @@ export type MenuOption = {
   trailingIcon?: IconSource;
 };
 
-export type AddMode = "active" | "template" | "workout";
 
 export { UnitsType };
