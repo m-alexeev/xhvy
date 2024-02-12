@@ -26,7 +26,6 @@ const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
       title: "Edit",
       onPress: () => {
         navigation.navigate("Create", { templateId: templateId });
-        toggleMenu();
       },
       leadingIcon: "pencil",
     },
@@ -35,7 +34,6 @@ const TemplateMenuOptions: FC<TemplateMenuOptionsProps> = ({ templateId }) => {
       onPress: () => {
         // Maybe open a new template screen to edit this template
         duplicateTemplate(templateId, "copy");
-        toggleMenu();
       },
       leadingIcon: "content-paste",
     },
