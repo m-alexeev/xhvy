@@ -9,6 +9,10 @@ import {
   useFonts,
 } from "@expo-google-fonts/poppins";
 import { useOptions } from "@app/zustand/optionsStore";
+import * as SpashScreen from "expo-splash-screen";
+import { useCallback} from "react";
+
+SpashScreen.preventAutoHideAsync();
 
 export default function App() {
   const themeMode = useOptions((state) => state.theme);
@@ -19,10 +23,16 @@ export default function App() {
     Poppins_500Medium,
   });
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontsError) {
+      await SpashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontsError]);
+
   if (!fontsLoaded || fontsError) return null;
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <RootStackComponent />
