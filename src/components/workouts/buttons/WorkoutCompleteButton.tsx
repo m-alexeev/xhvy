@@ -6,13 +6,20 @@ import { View } from "react-native";
 import { useTheme } from "react-native-paper";
 
 const WorkoutCompleteButton: FC = () => {
-  const {colors} = useTheme()
-  const saveWorkout = useWorkout((state) => state.saveActiveWorkout);
+  const { colors } = useTheme();
+  const activeWorkout = useWorkout((state) => state.activeWorkout);
   const navigation = useNavigation();
 
   const finishWorkout = () => {
-    saveWorkout();
-    navigation.goBack();
+    const workoutId = activeWorkout!.id;
+
+    // Navigate to workout complete screen
+    navigation.reset({
+      index: 0,
+      routes: [
+        { name: "WorkoutCompleteModal", params: { workoutId: workoutId } },
+      ],
+    });
   };
 
   return (
@@ -24,6 +31,7 @@ const WorkoutCompleteButton: FC = () => {
       }}
     >
       <ConfirmationButton
+        variant="text"
         style={{ borderRadius: 5 }}
         compact
         textColor={colors.primary}

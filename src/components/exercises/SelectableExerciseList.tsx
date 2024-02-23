@@ -22,10 +22,12 @@ const SelectableExerciseList: FC<SelectableExerciseListProps> = (
   { selectedExercises, templateId, workoutId },
 ) => {
   const search = useFilter((state) => state.search);
+  const filterCategories = useFilter(state => state.filterCategories);
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const exercises = useExercise((state) => state.exercises);
+  
   const filteredExercises = useMemo(
-    () => getFilteredExercises(exercises, search),
+    () => getFilteredExercises(exercises, search, filterCategories),
     [exercises, search],
   );
   const [newExercises, setNewExercises] = useState<Exercise[]>([]);

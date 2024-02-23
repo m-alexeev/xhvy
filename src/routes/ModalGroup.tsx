@@ -9,11 +9,19 @@ import AddExercisePage from "@app/pages/modals/AddExercise";
 import { Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { RootStackNavigationProp } from "@app/types/navigation/root";
+import CompleteWorkout from "@app/pages/workout/CompleteWorkout";
 
 export const ModalGroup = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <>
+      <RootStack.Screen
+        name="WorkoutCompleteModal"
+        component={CompleteWorkout}
+        options={{
+          headerShown: false,
+        }}
+      />
       <RootStack.Screen
         name="WorkoutCreateModal"
         component={WorkoutCreate}
