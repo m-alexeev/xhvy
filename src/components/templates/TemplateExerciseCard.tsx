@@ -26,6 +26,7 @@ const TemplateExerciseCard: FC<TemplateExerciseCardProps> = (
       //     </Text>
       //   )}
       // </View>
+  // TODO: add number of sets as well 
   return (
     <View style={styles(colors).container}>
       <View style={styles().header}>
@@ -53,6 +54,7 @@ const styles = (colors?: MD3Colors) =>
     header: {
       flexDirection: "row",
       flex: 1,
+      alignItems: "center",
       justifyContent: "space-between",
     },
     body: {},

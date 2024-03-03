@@ -11,6 +11,7 @@ export type RootStackParamList = {
   };
   WorkoutViewModal: { workoutId: string }; // Move to WorkoutStack
   WorkoutEditModal: { workoutId: string };
+  WorkoutCompleteModal: {workoutId: string};
   AddExerciseModal: {
     selectedExercises?: Array<WorkoutExercise["id"]>;
     templateId?: string;
