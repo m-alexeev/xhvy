@@ -13,6 +13,7 @@ import ConfirmationButton from "@app/components/core/ConfirmationButton";
 import { Template } from "@app/types/templates";
 import TemplateHeader from "@app/components/templates/TemplateHeader";
 import { Exercise } from "@app/types/exercises";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
@@ -48,9 +49,9 @@ const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
           backButton={
             <ConfirmationButton
               onConfirm={handleCancel}
-              icon={"chevron-left"}
+              icon={faChevronLeft}
               variant="icon"
-              size={32}
+              size={20}
               style={{ marginRight: 5 }}
             >
             </ConfirmationButton>
