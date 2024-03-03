@@ -9,10 +9,11 @@ const WorkoutCompleteButton: FC = () => {
   const { colors } = useTheme();
   const activeWorkout = useWorkout((state) => state.activeWorkout);
   const navigation = useNavigation();
+  const saveWorkout = useWorkout(state => state.saveActiveWorkout);
 
   const finishWorkout = () => {
     const workoutId = activeWorkout!.id;
-
+    saveWorkout();
     // Navigate to workout complete screen
     navigation.reset({
       index: 0,
