@@ -1,10 +1,8 @@
-import { Dimensions, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import React from "react";
 import { useWorkout } from "@app/zustand/workoutStore";
-import XhvyBarChart from "../charts/BarChart";
-import { chartConfig } from "../charts/base";
 import { createWeeklyList } from "@app/utils/helpers";
-import { values } from "lodash";
+import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
 
 const WeeklyChart = () => {
   const workouts = useWorkout((state) => state.workouts);
@@ -29,27 +27,17 @@ const WeeklyChart = () => {
   };
   // Map by date, use section mapper?
   const weeklyWorkouts = createWeeklyList(filterWorkouts());
-
-  const sampleData = [3, 4, 2, 5, 4, 5, 4];
-
+  const data = [
+    { quarter: 1, earnings: 13000 },
+    { quarter: 2, earnings: 16500 },
+    { quarter: 3, earnings: 14250 },
+    { quarter: 4, earnings: 19000 },
+  ];
   return (
     <View style={{ flex: 1, justifyContent: "center" }}>
-      <XhvyBarChart
-        data={{
-          labels: [...Object.keys(weeklyWorkouts)],
-          datasets: [{
-            data: [
-              ...Object.values(weeklyWorkouts).map((values) => values.length),
-            ],
-          }],
-        }}
-        yAxisLabel=""
-        yAxisSuffix=""
-        width={Dimensions.get("window").width - 20}
-        height={220}
-        chartConfig={chartConfig}
-        withInnerLines={false}
-      />
+      <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryBar data={data} x="quarter" y="earnings" />
+      </VictoryChart>
     </View>
   );
 };

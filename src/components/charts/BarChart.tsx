@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { BarChart } from "react-native-chart-kit";
-import { chartConfig, chartStyles } from "./base";
+import { chartStyles } from "./base";
 import { BarChartProps } from "react-native-chart-kit/dist/BarChart";
 
 interface XhvyBarChart extends BarChartProps{

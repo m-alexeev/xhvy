@@ -36,7 +36,6 @@
     "react": "18.2.0",
     "react-hook-form": "^7.49.2",
     "react-native": "0.72.6",
-    "react-native-chart-kit": "^6.12.0",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "6.2.0",
@@ -50,6 +49,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^10.0.2",
     "superjson": "^2.2.1",
+    "victory-native": "^37.0.3-next.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

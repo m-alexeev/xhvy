@@ -11,7 +11,13 @@ const chartConfig: ChartConfig = {
   decimalPlaces: 0,
   color: () => "rgba(255,255,255,1)",
   labelColor: () => "rgba(255,255,255,1)",
+  barRadius: 5,
+  propsForLabels: {
+    fontSize: 12
+  },
   style: {
+    margin: 50,
+    padding: 50,
     borderRadius: 12,
   },
 };
