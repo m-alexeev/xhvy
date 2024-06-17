@@ -27,6 +27,7 @@ interface Workout {
   completedAt?: Date;
 }
 
+
 type Workouts = { [id: Workout["id"]]: Workout };
 
 export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet };

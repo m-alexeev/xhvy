@@ -1,3 +1,6 @@
+import { ChartWorkouts } from "@app/types/charts";
+import { Workout, Workouts } from "@app/types/workouts";
+
 interface FieldMapper<T> {
   (field: T): string;
 }
@@ -12,6 +15,38 @@ export const FirstLetterMapper: FieldMapper<string> = (field) => {
 
 export const NameMapper: FieldMapper<string> = (field) => {
   return field;
+};
+
+export const getMonday = (d: Date) => {
+  let day = d.getDay()
+  if (day !== 1) { // Only manipulate the date if it isn't Mon.
+    return new Date(d.setHours(-24 * (day - 1))); // Set the hours to day number minus 1
+  } else {
+    return d;
+  }
+};
+
+export const createWeeklyList = (workouts: Workout[]): ChartWorkouts => {
+  // Works for year grouping, add weekly grouping
+  const groupedWorkouts = workouts.reduce(
+    (grouped: ChartWorkouts, workout) => {
+      const weekStart = getMonday(workout.startedAt).toLocaleDateString(
+        "en-US",
+        {
+          day: "numeric",
+          "month": "numeric",
+        },
+      );
+      if (!(weekStart in grouped)) {
+        grouped[weekStart] = [];
+      }
+      grouped[weekStart].push(workout);
+      return grouped;
+    },
+    {},
+  );
+  
+  return groupedWorkouts;
 };
 
 export const createSectionList = <T, K extends keyof T>(

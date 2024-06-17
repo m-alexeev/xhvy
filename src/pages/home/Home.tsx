@@ -3,13 +3,14 @@ import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ActiveWorkoutPopup from "@app/components/workouts/ActiveWorkoutPopup";
 import HomeProfile from "@app/components/home/HomeProfile";
+import WeeklyChart from "@app/components/home/WeeklyChart";
 
-const HomeScreen: FC = ({}) => {
+const HomeScreen: FC = ({ }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <HomeProfile />
-        {/* <WeeklyChart /> */}
+        <WeeklyChart />
       </View>
       <ActiveWorkoutPopup />
     </SafeAreaView>
