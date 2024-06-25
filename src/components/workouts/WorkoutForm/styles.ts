@@ -13,6 +13,7 @@ export const tableStyles = (
       justifyContent: "space-between",
       opacity: 0.6,
       marginBottom: 5,
+      flex: 5,
     },
     headerColumn: {
       flex: 1,
@@ -24,8 +25,7 @@ export const tableStyles = (
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      height: 30,
-      gap: 5,
+      padding: 5,
       borderRadius: 3,
     },
     tableCol: {
