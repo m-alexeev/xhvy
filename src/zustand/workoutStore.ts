@@ -12,6 +12,7 @@ import { WorkoutStoreType } from "@app/types/store";
 import { CustomStorage } from "./customStorage";
 import { Template, WorkoutOrTemplate } from "@app/types/templates";
 import { Exercise } from "@app/types/exercises";
+import { exerciseTypes } from "@app/utils/categories";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -65,8 +66,24 @@ const useWorkout = create<WorkoutStoreType>()(
         set(
           produce((state: WorkoutStoreType) => {
             if (state.activeWorkout) {
-              // Save to workout array
               state.activeWorkout.completedAt = new Date();
+
+              // Remove any 0 rep sets
+              Object.values(state.activeWorkout.exercises).forEach(
+                (exercise) => {
+                  exercise.sets = exercise.sets.filter((set) =>
+                    set.reps && set.reps > 0
+                  );
+                },
+              );
+
+              // Removes empty exercises from exercises object 
+              Object.keys(state.activeWorkout.exercises).forEach((id) => {
+                if (state.activeWorkout?.exercises[id].sets.length === 0) {
+                  delete state.activeWorkout.exercises[id];
+                }
+              });
+
               // Add to start of workout array
               state.workouts[state.activeWorkout.id] = state.activeWorkout;
               // Clear active workout

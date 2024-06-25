@@ -41,12 +41,23 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
     updateSet(exerciseId, index, field, value, workoutId);
   };
 
-  const completeSet = <T extends keyof WorkoutSet>(
-    field: T,
-    value: WorkoutSet[T],
+  const completeSet = (
+    item: IWorkoutSet,
+    completed: boolean,
     index: number,
   ) => {
-    update(field, value, index);
+    if (item.reps === undefined || item.reps === 0) {
+      // prevent from saving
+    } else if (item.weight === undefined) {
+      // if weight is not entered,
+      // TODO: set it to 0 (set to previous weight in future)
+      update("weight", 0, index);
+    }
+
+    if (item.reps !== undefined && item.reps > 0) {
+      // mark as completed only if reps are added
+      update("completed", completed, index);
+    }
   };
 
   const RenderSet = useCallback(
@@ -99,7 +110,7 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
             <Col span={1}>
               <IconButton
                 style={tableStyles({}).tableCol}
-                onPress={() => update("completed", !item.completed, index)}
+                onPress={() => completeSet(item, !item.completed, index)}
                 size={20}
                 color={theme.colors.onSurfaceVariant}
                 icon={faCheck}
@@ -142,23 +153,3 @@ const WorkoutSetTable: FC<WorkoutSetTableProps> = memo((
 });
 
 export default WorkoutSetTable;
-
-//   <Text style={tableStyles({ width: 0.6 }).headerColumn}>
-//     Set
-//   </Text>
-//   <Text style={tableStyles({}).headerColumn}>
-//     Previous
-//   </Text>
-//   <Text style={tableStyles({}).headerColumn}>
-//     Weight
-//   </Text>
-//   <Text style={tableStyles({}).headerColumn}>
-//     Reps
-//   </Text>
-//   <View style={tableStyles({ width: 0.6 }).headerColumn}>
-//   </View>
-// </View>
-// <View style={{ minHeight: 20 }}>
-//   {sets.map((set, index) => (
-//     <RenderSet key={set.id} item={set} index={index} />
-//   ))}
