@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
-import { Icon, Text, TouchableRipple, useTheme } from "react-native-paper";
+import { Text, TouchableRipple, useTheme } from "react-native-paper";
 import { useWorkout } from "@app/zustand/workoutStore";
 import { calculateDuration } from "@app/utils/helpers";
 import IconButton from "@app/components/core/IconButton";
@@ -14,6 +14,7 @@ import { camelCase } from "@app/utils/stringParsers";
 import { RootStackNavigationProp } from "@app/types/navigation/root";
 import { faClock, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import ConfirmationButton from "../core/ConfirmationButton";
 
 interface WorkoutProps {
   workout: Workout;
@@ -68,13 +69,15 @@ const WorkoutCard: FC<WorkoutProps> = ({ workout }) => {
                 {calculateDuration(workout.startedAt, workout.completedAt!)}
               </Text>
               <FontAwesomeIcon icon={faClock} color={theme.colors.onSurface} />
-              <IconButton
-                onPress={() => deleteWorkout(workout.id)}
+              <ConfirmationButton
+                variant="icon"
+                popupText="Are you sure you want to delete this workout?"
+                onConfirm={() => deleteWorkout(workout.id)}
                 icon={faTrash}
                 size={16}
                 color={theme.colors.onErrorContainer}
               >
-              </IconButton>
+              </ConfirmationButton>
             </View>
           </View>
           <Text variant="bodySmall">{workout.startedAt.toLocaleString()}</Text>
