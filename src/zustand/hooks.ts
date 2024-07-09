@@ -3,6 +3,7 @@ import { useWorkout } from "./workoutStore";
 import { Template } from "@app/types/templates";
 import { Exercise } from "@app/types/exercises";
 import { useExercise } from "./exerciseStore";
+import { useTemplate } from "./templateStore";
 
 const getExerciseById = (id: Exercise["id"]): Exercise | undefined => {
   const exercises = useExercise((s) => s.exercises);
@@ -15,7 +16,7 @@ const getWorkout = (id: Workout["id"]) => {
 };
 
 const getTemplates = (filter: boolean = true): Template[] => {
-  const templates = useWorkout((s) => s.templates);
+  const templates = useTemplate((s) => s.templates);
   if (filter) {
     return Object.values(templates).filter((t) => !t.wip);
   } else {
@@ -24,7 +25,7 @@ const getTemplates = (filter: boolean = true): Template[] => {
 };
 
 const getOrCreateTemplate = (id: Template["id"]) => {
-  const templates = useWorkout((s) => s.templates);
+  const templates = useTemplate((s) => s.templates);
   if (templates[id]) {
     return templates[id];
   } else {

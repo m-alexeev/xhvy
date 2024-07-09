@@ -78,5 +78,5 @@ export type OptionsActions = {
 
 export type OptionsStoreType = OptionsState & OptionsActions;
 export type WorkoutStoreType = WorkoutState & WorkoutAction;
-export type TemplateStoreType = TemplatesState & TemplateAction;
+export type TemplateStoreType = TemplateState & TemplateAction;
 export type ExerciseStoreType = ExerciseState & ExerciseAction;

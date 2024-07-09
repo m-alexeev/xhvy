@@ -6,7 +6,7 @@ import { Template } from "@app/types/templates";
 import uuid from "react-native-uuid";
 import { CustomStorage } from "./customStorage";
 
-const useTemplates = create<TemplateStoreType>()(
+const useTemplate = create<TemplateStoreType>()(
   persist((set) => ({
     templates: {},
     createTemplate: (
@@ -49,4 +49,4 @@ const useTemplates = create<TemplateStoreType>()(
   }),
 );
 
-export { useTemplates };
+export { useTemplate };
