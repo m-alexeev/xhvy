@@ -16,7 +16,7 @@ const Col: FC<ColumnProps> = ({ span, children, style }) => {
 };
 
 const styles = StyleSheet.create({
-  col: { flex: 1, marginVertical: 0, marginHorizontal: 5 },
+  col: { flex: 1, marginVertical: 0, marginHorizontal: 0 },
 
 });
 

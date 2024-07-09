@@ -18,6 +18,11 @@ interface WorkoutExercise extends ExercisePreview{
   sets: WorkoutSet[];
 }
 
+interface HistoricExercise extends WorkoutExercise{
+  completedAt: Date,
+}
+
+
 interface Workout {
   id: string;
   name: string;
@@ -29,4 +34,4 @@ interface Workout {
 
 type Workouts = { [id: Workout["id"]]: Workout };
 
-export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet };
+export { Workout, WorkoutExercise, WorkoutExercises, Workouts, WorkoutSet, HistoricExercise };
