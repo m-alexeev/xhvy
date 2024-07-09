@@ -1,25 +1,28 @@
 import { Exercise } from "./exercises";
 import { AddMode } from "./general";
-import { Template, Templates, WorkoutOrTemplate } from "./templates";
+import { Template, Templates} from "./templates";
 import { Workout, Workouts, WorkoutSet } from "./workouts";
 
 export type WorkoutState = {
-  templates: Templates;
   workouts: Workouts;
   activeWorkout?: Workout;
   pending_workout_updates: Array<Workout>;
 };
+
+export type TemplateState = {
+  templates: Templates;
+}
 
 export type WorkoutAction = {
   createTemplate: (templateId: Template["id"], mode?: "new" | "copy") => void;
   saveTemplate: (template: Template) => void;
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
   deleteWorkout: (id: string, template?: boolean) => void;
-  startWorkout: (template?: WorkoutOrTemplate) => void;
+  startWorkout: (template?: Workout) => void;
   cancelWorkout: () => void;
   updateField: <
-    T extends keyof WorkoutOrTemplate,
-    K extends WorkoutOrTemplate[T],
+    T extends keyof Workout,
+    K extends Workout[T],
   >(
     field: T,
     value: K,
@@ -27,7 +30,7 @@ export type WorkoutAction = {
   ) => void;
   addExercises: (
     exercises: Exercise[],
-    id?: WorkoutOrTemplate["id"],
+    id?: Workout["id"],
     mode?: AddMode,
   ) => void;
   removeExercise: (exercise_id: string, workoutId?: Workout["id"]) => void;
@@ -46,6 +49,11 @@ export type WorkoutAction = {
     workoutId?: string,
   ) => void;
 };
+
+export type TemplateAction = {
+  createTemplate: (templateId: Template["id"], mode?: "new" | "copy") => void;
+  saveTemplate: (template: Template) => void;
+}
 
 export type ExerciseState = {
   exercises: Array<Exercise>;
@@ -72,4 +80,5 @@ export type OptionsActions = {
 
 export type OptionsStoreType = OptionsState & OptionsActions;
 export type WorkoutStoreType = WorkoutState & WorkoutAction;
+export type TemplateStoreType = TemplatesState & TemplateAction;
 export type ExerciseStoreType = ExerciseState & ExerciseAction;

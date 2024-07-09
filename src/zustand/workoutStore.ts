@@ -10,9 +10,8 @@ import {
 import uuid from "react-native-uuid";
 import { WorkoutStoreType } from "@app/types/store";
 import { CustomStorage } from "./customStorage";
-import { Template, WorkoutOrTemplate } from "@app/types/templates";
+import { Template } from "@app/types/templates";
 import { Exercise } from "@app/types/exercises";
-import { exerciseTypes } from "@app/utils/categories";
 
 //NOTE: Think about manually saving and writing to storage as currently it will do so on every state update
 //which is really inefficient
@@ -21,7 +20,6 @@ const useWorkout = create<WorkoutStoreType>()(
   persist(
     (set) => ({
       workouts: {},
-      templates: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
       createTemplate: (
@@ -77,7 +75,7 @@ const useWorkout = create<WorkoutStoreType>()(
                 },
               );
 
-              // Removes empty exercises from exercises object 
+              // Removes empty exercises from exercises object
               Object.keys(state.activeWorkout.exercises).forEach((id) => {
                 if (state.activeWorkout?.exercises[id].sets.length === 0) {
                   delete state.activeWorkout.exercises[id];
@@ -91,17 +89,18 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           }),
         ),
-      startWorkout: (base?: WorkoutOrTemplate) =>
+      startWorkout: (base?: Workout) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Reset active workout if one exists
             state.activeWorkout = undefined;
             // Create workout from the template or previous workout
             if (base) {
-              //FIX: Fix this typing issue, check type of base first
-              const newWorkout: Workout = { ...base };
-              newWorkout.startedAt = new Date();
-              newWorkout.id = uuid.v4().toString();
+              const newWorkout: Workout = {
+                ...base,
+                startedAt: new Date(),
+                id: uuid.v4().toString(),
+              };
               state.activeWorkout = newWorkout;
             } else {
               // Create empty workout
