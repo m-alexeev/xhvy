@@ -6,7 +6,6 @@ import { WorkoutExercise } from "@app/types/workouts";
 import TemplateExerciseCard from "@app/components/templates/TemplateExerciseCard";
 import { TemplateStackNavigationProp } from "@app/types/navigation/templates";
 import { getOrCreateTemplate } from "@app/zustand/hooks";
-import { useWorkout } from "@app/zustand/workoutStore";
 import PreventBack from "@app/components/core/buttons/PreventBack";
 import Header from "@app/components/core/Header";
 import ConfirmationButton from "@app/components/core/ConfirmationButton";
@@ -14,13 +13,14 @@ import { Template } from "@app/types/templates";
 import TemplateHeader from "@app/components/templates/TemplateHeader";
 import { Exercise } from "@app/types/exercises";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import { useTemplate } from "@app/zustand/templateStore";
 
 type TemplateCreateNavProps = TemplateStackNavigationProp<"Create">;
 
 const TemplateCreate: FC<TemplateCreateNavProps> = ({ navigation, route }) => {
   const { colors } = useTheme();
   const params = route.params || {};
-  const saveTemplate = useWorkout((s) => s.saveTemplate);
+  const saveTemplate = useTemplate((s) => s.saveTemplate);
   const templateId = route.params.templateId;
   const [localTemplate, setLocalTemplate] = useState(
     getOrCreateTemplate(templateId),
