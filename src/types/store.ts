@@ -14,11 +14,9 @@ export type TemplateState = {
 }
 
 export type WorkoutAction = {
-  createTemplate: (templateId: Template["id"], mode?: "new" | "copy") => void;
-  saveTemplate: (template: Template) => void;
   // updateWorkout: (workout_id: string, workout: IWorkout) => void;
-  deleteWorkout: (id: string, template?: boolean) => void;
-  startWorkout: (template?: Workout) => void;
+  deleteWorkout: (id: string) => void;
+  startWorkout: (template?: Template) => void;
   cancelWorkout: () => void;
   updateField: <
     T extends keyof Workout,

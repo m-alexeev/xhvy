@@ -39,6 +39,10 @@ const useTemplates = create<TemplateStoreType>()(
           state.templates[template.id] = template;
         }),
       ),
+    deleteTemplate: (id: string) =>
+      set(produce((state: TemplateStoreType) => {
+        delete state.templates[id];
+      })),
   }), {
     name: "template-storage",
     storage: CustomStorage<TemplateStoreType>(),

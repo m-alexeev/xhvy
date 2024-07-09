@@ -22,43 +22,9 @@ const useWorkout = create<WorkoutStoreType>()(
       workouts: {},
       activeWorkout: undefined,
       pending_workout_updates: [],
-      createTemplate: (
-        templateId: Template["id"],
-        mode: "new" | "copy" = "new",
-      ) =>
-        set(
-          produce((state: WorkoutStoreType) => {
-            if (mode === "new") {
-              const template: Template = {
-                id: templateId,
-                name: "New Template",
-                exercises: {},
-                template: true,
-                wip: true,
-              };
-              state.templates[template.id] = template;
-            }
-            if (mode === "copy") {
-              const newTemplate = { ...state.templates[templateId] };
-              newTemplate.id = uuid.v4().toString();
-              state.templates[newTemplate.id] = newTemplate;
-            }
-          }),
-        ),
-      saveTemplate: (template: Template) =>
-        set(
-          produce((state: WorkoutStoreType) => {
-            // Deletes the wip tag that will mark the template as saved
-            state.templates[template.id] = template;
-          }),
-        ),
-      deleteWorkout: (id: string, template?: boolean) =>
+      deleteWorkout: (id: string) =>
         set(produce((state: WorkoutStoreType) => {
-          if (template) {
-            delete state.templates[id];
-          } else {
-            delete state.workouts[id];
-          }
+          delete state.workouts[id];
         })),
       saveActiveWorkout: () =>
         set(
@@ -89,15 +55,15 @@ const useWorkout = create<WorkoutStoreType>()(
             }
           }),
         ),
-      startWorkout: (base?: Workout) =>
+      startWorkout: (template?: Template) =>
         set(
           produce((state: WorkoutStoreType) => {
             // Reset active workout if one exists
             state.activeWorkout = undefined;
             // Create workout from the template or previous workout
-            if (base) {
+            if (template) {
               const newWorkout: Workout = {
-                ...base,
+                ...template,
                 startedAt: new Date(),
                 id: uuid.v4().toString(),
               };
@@ -161,7 +127,6 @@ const useWorkout = create<WorkoutStoreType>()(
 
             // Merge existing exercises and new exercises prioritizing existing exercises
             // in case of overlap
-            // TODO: Refactor this as code is repeating
             Object.keys(workoutExercises).forEach((key) => {
               if (mode === "active") {
                 if (!state.activeWorkout!.exercises[key]) {
@@ -169,8 +134,6 @@ const useWorkout = create<WorkoutStoreType>()(
                 }
               } else if (mode === "workout") {
                 state.workouts[id!].exercises[key] = workoutExercises[key];
-              } else if (mode === "template") {
-                state.templates[id!].exercises[key] = workoutExercises[key];
               }
             });
           }),
